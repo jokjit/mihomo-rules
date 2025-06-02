@@ -1,0 +1,504 @@
+# 代理
+PR: &Pr {type: select, proxies: [ 🚀节点选择, ♻️自动选择, 🟢手动选择, 🔯故障转移, ⚡️负载均衡, 🇭🇰香港, 🇹🇼台湾, 🇯🇵日本, 🇺🇸美国, 🇸🇬新加坡, 🌐全部节点, 🎯全球直连]}
+# 直连
+PE: &Pe {type: select, proxies: [🎯全球直连, 🚀节点选择]}
+# 自动选择组锚点
+UrlTest: &U {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, timeout: 5000, max-failed-times: 5, lazy: true, proxies: [香港自动, 新加坡自动, 日本自动, 台湾自动, 美国自动]}
+# 自动选择节点配置锚点
+urltest: &u {type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, timeout: 5000, max-failed-times: 5, lazy: true, hidden: true}
+# 故障转移组锚点
+Fallback: &F {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5, proxies: [香港故转, 新加坡故转, 日本故转, 台湾故转, 美国故转]}
+# 故障转移节点配置锚点
+fallback: &f {type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5}
+# 负载均衡组锚点
+Load-Balance: &L {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300,tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5, proxies: [香港均衡, 新加坡均衡, 日本均衡, 台湾均衡, 美国均衡]} 
+# 负载均衡节点配置锚点
+load-balance: &l {type: load-balance, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, strategy: consistent-hashing, hidden: true, timeout: 5000, max-failed-times: 5}
+#直连
+Direct: &D {type: select, proxies: [🎯全球直连, 🚀节点选择]}
+#规则集锚点  
+ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs, proxy: 🎯全球直连}
+ip_text: &ip_text {type: http, interval: 86400, behavior: ipcidr, format: text, proxy: 🎯全球直连}
+ip_yaml: &ip_yaml {type: http, interval: 86400, behavior: ipcidr, format: yaml, proxy: 🎯全球直连}
+domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs, proxy: 🎯全球直连}
+domain_text: &domain_text {type: http, interval: 86400, behavior: domain, format: text, proxy: 🎯全球直连}
+domain_yaml: &domain_yaml {type: http, interval: 86400, behavior: domain, format: yaml, proxy: 🎯全球直连}
+class: &class {type: http, interval: 86400, behavior: classical, format: text, proxy: 🎯全球直连}
+class_yaml: &class_yaml {type: http, interval: 86400, behavior: classical, format: yaml, proxy: 🎯全球直连}  
+# 订阅配置锚点
+P: &P {type: http, interval: 86400, health-check: {enable: true, url: 'https://edge.microsoft.com/captiveportal/generate_204', interval: 300}, filter: '^(?!.*(拒绝|等级|可用|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))'}
+# 机场名称不能重复,
+# 订阅链接用来写订阅链接
+# 前缀用来给节点添加备注
+proxy-providers:
+  名称1:
+    url: "订阅链接"
+    <<: *P
+    proxy: "🎯直连"
+    override:
+      additional-prefix: '[前缀] '
+      skip-cert-verify: true
+      udp: true
+      
+  名称2:
+    url: "订阅链接"
+    <<: *P
+    proxy: "🎯直连"
+    override:
+      additional-prefix: '[前缀] '
+      skip-cert-verify: true
+      udp: true
+ 
+  名称3:
+    url: "订阅链接"
+    <<: *P
+    proxy: "🎯直连"
+    override:
+      additional-prefix: '[前缀] '
+      skip-cert-verify: true
+      udp: true
+
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+find-process-mode: strict
+mode: rule
+geodata-mode: false
+geodata-loader: standard
+geox-url:
+    geoip: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+    geosite: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+    mmdb: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
+    asn: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb
+geo-auto-update: true
+geo-update-interval: 24
+geosite-matcher: succinct
+
+global-ua: clash.meta
+
+etag-support: true
+log-level: info
+ipv6: true
+external-controller: 0.0.0.0:9090
+secret: ''
+external-controller-cors:
+    allow-origins:
+    - '*'
+    allow-private-network: true
+unified-delay: true
+tcp-concurrent: true
+
+external-ui: ui
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+external-doh-server: /dns-query
+global-client-fingerprint: chrome
+disable-keep-alive: true
+keep-alive-idle: 15
+keep-alive-interval: 15
+
+experimental:
+    quic-go-disable-gso: false
+    quic-go-disable-ecn: false
+    dialer-ip4p-convert: false
+    
+hosts:
+    ntp.ntsc.ac.cn:
+    - 114.118.7.161
+    - 114.118.7.163
+    dns.alidns.com:
+    - 223.5.5.5
+    - 223.6.6.6
+    - 2400:3200:baba::1
+    - 2400:3200::1
+    
+profile:
+    store-selected: true
+    store-fake-ip: true
+    
+sniffer:
+    enable: true
+    force-dns-mapping: true
+    parse-pure-ip: true
+    override-destination: false
+    sniff:
+        HTTP:
+            ports:
+            - 80
+            - 8080-8880
+            override-destination: true
+        TLS:
+            ports:
+            - 443
+            - 8443
+        QUIC:
+            ports:
+            - 443
+            - 8443
+    force-domain:
+    - +.v2ex.com
+    skip-domain:
+    - Mijia.Cloud.com
+    skip-src-address:
+    - 192.168.0.3/32
+    skip-dst-address:
+    - 192.168.0.3/32
+    
+tun:
+    enable: true
+    stack: mixed
+    auto-route: true
+    auto-detect-interface: true
+    dns-hijack:
+    - any:53
+    - tcp://any:53
+    mtu: 9000
+    strict-route: true
+    gso: true
+    gso-max-size: 65536
+    udp-timeout: 300
+    endpoint-independent-nat: false
+    
+dns:
+    enable: true
+    cache-algorithm: arc
+    prefer-h3: false
+    use-hosts: true
+    use-system-hosts: false
+    respect-rules: true
+    listen: 0.0.0.0:1053
+    ipv6: true
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.0/15
+    fake-ip-filter-mode: blacklist
+    fake-ip-filter:
+      - RULE-SET:Fakeip-Filter,Private,CN
+    nameserver-policy:
+      RULE-SET:CN,Private:
+      - quic://223.5.5.5 
+      - quic://223.6.6.6
+    default-nameserver:
+      - quic://223.5.5.5 
+      - quic://223.6.6.6
+      - 119.29.29.29
+    nameserver:
+      - https://cloudflare-dns.com/dns-query#h3=true
+      - https://dns.google/dns-query#h3=true
+      - quic://unfiltered.adguard-dns.com
+    proxy-server-nameserver:
+      - quic://223.5.5.5 
+    direct-nameserver:
+      - quic://223.5.5.5 
+    direct-nameserver-follow-policy: true
+      
+proxies:
+-   name: 🎯直连
+    type: direct
+-   name: 🚫拒绝
+    type: reject
+    
+proxy-groups:
+-  { name: 🚀节点选择, type: select, proxies: [♻️自动选择, 🟢手动选择, ⚡️负载均衡, 🔯故障转移, 🎯直连, 🇭🇰香港, 🇹🇼台湾, 🇯🇵日本, 🇺🇸美国, 🇸🇬新加坡, 🌐全部节点]} 
+- { name: 🟢手动选择, type: select, tolerance: 20, strategy: consistent-hashing, url: "https://www.gstatic.com/generate_204",interval: 300, lazy: true, timeout: 5000, max-failed-times: 5, include-all-providers: true}
+- { name: 🚫广告拦截, type: select, hidden: true, include-all-providers: true, proxies: [🚫拒绝, 🎯直连] }  
+- {name: 🚫泄漏拦截, hidden: true, type: select, include-all-providers: true, proxies: [🚫拒绝, 🎯直连]}  
+- { name: 🎯全球直连, type: select, hidden: true, proxies: [🎯直连]} 
+- { name: ♻️自动选择, <<: *U}
+- { name: ⚡️负载均衡, <<: *L}  
+- { name: 🔯故障转移, <<: *F}
+- { name: 🌐全部节点, type: select, include-all-providers: true}
+- { name: Telegram, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Telegram.png }
+- { name: Twitter, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Twitter.png }
+- { name: Talkatone, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Talkatone.png }
+- { name: Instagram, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Instagram.png }
+- { name: Netflix, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Netflix.png }
+- { name: AI, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/OpenAI.png }
+- { name: YouTube, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/YouTube.png }
+- { name: Emby, <<: *Pr, icon: https://cdn.jsdmirror.cn/jokjit/mihomo-rules@main/icon/Emby.png }
+- { name: FCM, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/FCM.png }
+- { name: GitHub, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/GitHub.png }
+- { name: Google, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Google.png }
+- { name: 中国媒体, <<: *D, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/CN_Media.png }
+- { name: 国际媒体, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png }
+# 手动选择分组（select 类型）
+- { name: 🇭🇰香港, type: select, include-all: true, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong" }
+- { name: 🇹🇼台湾, type: select, include-all: true, filter: "(?i)🇹🇼|\\bTW\\b|台湾|Taiwan|Tai wan" }
+- { name: 🇯🇵日本, type: select, include-all: true, filter: "(?i)🇯🇵|\\bJP\\b|日本|Japan" }
+- { name: 🇺🇸美国, type: select, include-all: true, filter: "(?i)🇺🇸|\\bUS\\b|美国|United States" }
+- { name: 🇸🇬新加坡, type: select, include-all: true, filter: "(?i)🇸🇬|\\bSG\\b|新加坡|Singapore" }
+
+# 自动分组
+- { name: 香港自动, <<: *u, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong", exclude-filter: "(?i)(The_HK_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 新加坡自动, <<: *u, filter: "(?i)🇸🇬|\\bSG\\b|新加坡|Singapore", exclude-filter: "(?i)(The_SG_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 日本自动, <<: *u, filter: "(?i)🇯🇵|\\bJP\\b|日本|Japan", exclude-filter: "(?i)(The_JP_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 台湾自动, <<: *u, filter: "(?i)🇹🇼|\\bTW\\b|台湾|Taiwan|Tai wan", exclude-filter: "(?i)(The_TW_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 美国自动, <<: *u, filter: "(?i)🇺🇸|\\bUS\\b|美国|United States", exclude-filter: "(?i)(The_US_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|russia|austria|plus|traffic|Australia|rus|aus)" }
+
+# 故障转移分组
+- { name: 香港故转, <<: *f, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong", exclude-filter: "(?i)(The_HK_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 新加坡故转, <<: *f, filter: "(?i)🇸🇬|\\bSG\\b|新加坡|Singapore", exclude-filter: "(?i)(The_SG_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 日本故转, <<: *f, filter: "(?i)🇯🇵|\\bJP\\b|日本|Japan", exclude-filter: "(?i)(The_JP_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 台湾故转, <<: *f, filter: "(?i)🇹🇼|\\bTW\\b|台湾|Taiwan|Tai wan", exclude-filter: "(?i)(The_TW_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 美国故转, <<: *f, filter: "(?i)🇺🇸|\\bUS\\b|美国|United States", exclude-filter: "(?i)(The_US_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|russia|austria|plus|traffic|Australia|rus|aus)" }
+
+# 均衡分组
+- { name: 香港均衡, <<: *l, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong" }
+- { name: 新加坡均衡, <<: *l, filter: "(?i)🇸🇬|\\bSG\\b|新加坡|Singapore" }
+- { name: 日本均衡, <<: *l, filter: "(?i)🇯🇵|\\bJP\\b|日本|Japan" }
+- { name: 台湾均衡, <<: *l, filter: "(?i)🇹🇼|\\bTW\\b|台湾|Taiwan|Tai wan" }
+- { name: 美国均衡, <<: *l, filter: "(?i)🇺🇸|\\bUS\\b|美国|United States" }
+
+# 漏网之鱼
+- { name: 🐟漏网之鱼, <<: *Pr }
+ 
+rules:
+  - RULE-SET,Advertising,🚫广告拦截
+  - RULE-SET,Category-ads-all,🚫广告拦截
+  - RULE-SET,BlockHttpDNS,🚫泄漏拦截
+  - RULE-SET,BlockHttpDNScidr,🚫泄漏拦截,no-resolve
+  - RULE-SET,Category-httpdns-cn,🚫泄漏拦截
+  - RULE-SET,STUN,🚫泄漏拦截
+  - DOMAIN,stun.cloudflare.com,🚫泄漏拦截
+  - RULE-SET,STUNcidr,🚫泄漏拦截
+  # 中国联通
+  - DOMAIN-SUFFIX,ad.10010.com,🚫广告拦截
+# 小蚕惠生活
+  - DOMAIN,sdk.1rtb.net,🚫广告拦截
+# 阿里巴巴
+  - DOMAIN-SUFFIX,ut.taobao.com,🚫广告拦截
+  - DOMAIN,ems.youku.com,🚫广告拦截
+  - DOMAIN,hudong.alicdn.com,🚫广告拦截
+  - DOMAIN,ossgw.alicdn.com,🚫广告拦截
+# 阿里云盘
+  - IP-CIDR,203.107.1.1/24,🚫广告拦截,no-resolve
+# 爱奇艺
+  - DOMAIN,api.iqiyi.com,🚫广告拦截
+# 百度
+  - DOMAIN,mobads.baidu.com,🚫广告拦截
+# 百度地图
+  - DOMAIN,afd.baidu.com,🚫广告拦截
+  - DOMAIN,afdconf.baidu.com,🚫广告拦截
+# 昌原云充
+  - DOMAIN,m.adyounger.com,🚫广告拦截
+# Clue 智库
+  - DOMAIN,api.helloclue.com,🚫广告拦截
+  - DOMAIN,brahe.apptimize.com,🚫广告拦截
+  - DOMAIN,collector.clue.run,🚫广告拦截
+  - DOMAIN,images.ctfassets.net,🚫广告拦截
+  - DOMAIN,mapi.apptimize.com,🚫广告拦截
+  - DOMAIN,md-i-s.apptimize.com,🚫广告拦截
+# 放松双眼
+  - DOMAIN,adservice.sigmob.cn,🚫广告拦截
+# 工商银行
+  - DOMAIN-SUFFIX,mall.icbc.com.cn,🚫广告拦截
+  - DOMAIN,pageviewp.icbc.com.cn,🚫广告拦截
+#什么值得买
+  - DOMAIN,aaid.uyunad.com,🚫广告拦截
+  - DOMAIN,acs4baichuan.m.taobao.com,🚫广告拦截
+  - DOMAIN,adashxgc.ut.taobao.com,🚫广告拦截
+  - DOMAIN,analytics-api.smzdm.com,🚫广告拦截
+  - DOMAIN,baichuan-sdk.alicdn.com,🚫广告拦截
+  - DOMAIN,dgstatic.jd.com,🚫广告拦截
+  - DOMAIN,msg.umengcloud.com,🚫广告拦截
+  - DOMAIN,sec.umeng.com,🚫广告拦截
+  - DOMAIN,ulogs.umeng.com,🚫广告拦截
+  - DOMAIN,ynuf.aliapp.org,🚫广告拦截
+  - DOMAIN,api.zuihuimai.com,🚫广告拦截
+# 广告联盟
+  - DOMAIN-KEYWORD,asiad.byteactivity,🚫广告拦截
+  - DOMAIN-KEYWORD,pangolin-sdk-toutiao,🚫广告拦截
+  - DOMAIN-KEYWORD,pangolin.snssdk.com,🚫广告拦截
+  - DOMAIN-KEYWORD,pglstatp-toutiao,🚫广告拦截
+  - DOMAIN-KEYWORD,video-cn.snssdk.com,🚫广告拦截
+  - DOMAIN-SUFFIX,ads.linkedin.com,🚫广告拦截
+  - DOMAIN-SUFFIX,ads.vungle.com,🚫广告拦截
+  - DOMAIN-SUFFIX,adukwai.com,🚫广告拦截
+  - DOMAIN-SUFFIX,applovin.com,🚫广告拦截
+  - DOMAIN-SUFFIX,applvn.com,🚫广告拦截
+  - DOMAIN-SUFFIX,appsflyer.com,🚫广告拦截
+  - DOMAIN-SUFFIX,kuaishouzt.com,🚫广告拦截
+  - DOMAIN-SUFFIX,miaozhen.com,🚫广告拦截
+  - DOMAIN-SUFFIX,ubixioe.com,🚫广告拦截
+  - DOMAIN-SUFFIX,unityads.unity3d.com,🚫广告拦截
+  - DOMAIN-SUFFIX,v.smtcdns.com,🚫广告拦截
+  - DOMAIN,adapi.izuiyou.com,🚫广告拦截
+  - DOMAIN,adtracker.adfunlink.com,🚫广告拦截
+  - DOMAIN,dsp-x.jd.com,🚫广告拦截
+  - DOMAIN,et.tanx.com,🚫广告拦截
+  - DOMAIN,gdfp.gifshow.com,🚫广告拦截
+  - DOMAIN,init.supersonicads.com,🚫广告拦截
+  - DOMAIN,janapi.jd.com,🚫广告拦截
+  - DOMAIN,mercury-gateway.ixiaochuan.cn,🚫广告拦截
+  - DOMAIN,mon.toutiaocloud.com,🚫广告拦截
+  - DOMAIN,tangram.e.qq.com,🚫广告拦截
+  - DOMAIN,ws.tapjoyads.com,🚫广告拦截
+# 海尔智家
+  - DOMAIN-SUFFIX,ehaier.com,🚫广告拦截
+# 建设银行
+  - DOMAIN-KEYWORD,adv.ccb.com,🚫广告拦截
+# 京东
+  - DOMAIN,dns.jd.com,🚫广告拦截
+  - IP-CIDR,101.124.19.122/32,🚫广告拦截,no-resolve
+  - IP-CIDR6,2402:DB40:5100:1011::5/128,🚫广告拦截,no-resolve
+# 酷狗音乐
+  - DOMAIN,adserviceretry.kglink.cn,DIRECT
+  - DOMAIN,ads.service.kugou.com,🚫广告拦截
+  - DOMAIN,adserviceretry.kugou.com,🚫广告拦截
+# 酷我音乐
+  - DOMAIN,ad.tencentmusic.com,🚫广告拦截
+  - DOMAIN,g.koowo.com,🚫广告拦截
+  - DOMAIN,mobilead.kuwo.cn,🚫广告拦截
+  - DOMAIN,rich.kuwo.cn,🚫广告拦截
+# 蓝奏云
+  - DOMAIN,statics.woozooo.com,🚫广告拦截
+# 芒果TV
+  - DOMAIN-SUFFIX,da.mgtv.com,🚫广告拦截
+  - DOMAIN,credits.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,credits2.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,credits3.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,dflow.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,encounter.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,floor.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,layer.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,mob.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,rc-topic-api.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,rprain.bz.mgtv.com,🚫广告拦截
+  - DOMAIN,rprain.log.mgtv.com,🚫广告拦截
+  - DOMAIN,vip.bz.mgtv.com,🚫广告拦截
+# 美团
+  - DOMAIN,maplocatesdksnapshot.d.meituan.net,🚫广告拦截
+  - DOMAIN,metrics-picture.d.meituan.net,🚫广告拦截
+  - IP-CIDR,103.37.155.60/32,🚫广告拦截,no-resolve
+# 美颜相机
+  - DOMAIN,aaid.uyunad.com,🚫广告拦截
+  - DOMAIN,adui.tg.meitu.com,🚫广告拦截
+# Outlook
+  - DOMAIN,acdn.adnxs.com,🚫广告拦截
+  - DOMAIN,mediation.adnxs.com,🚫广告拦截
+  - DOMAIN,sin3-ib.adnxs.com,🚫广告拦截
+# 其他
+  - DOMAIN,affcpatrk.com,🚫广告拦截
+# 数字联盟
+  - DOMAIN-SUFFIX,shuzilm.cn,🚫广告拦截
+# Speedtest
+  - DOMAIN-KEYWORD,-adsystem.com,🚫广告拦截
+  - DOMAIN,ads.pubmatic.com,🚫广告拦截
+  - DOMAIN,id.hadron.ad.gt,🚫广告拦截
+# 太平洋保险
+  - DOMAIN,a.cpic.com.cn,🚫广告拦截
+# 微信
+  - DOMAIN,badjs.weixinbridge.com,🚫广告拦截
+# 小米
+  - DOMAIN,sdkconfig.ad.xiaomi.com,🚫广告拦截
+# 迅雷 解除版权限制
+  - DOMAIN, hub5btmain.v6.shub.sandai.net, 🚫广告拦截
+  - DOMAIN, hub5emu.v6.shub.sandai.net, 🚫广告拦截
+  - DOMAIN, hub5idx.v6.shub.sandai.net, 🚫广告拦截
+# 云闪付 开屏广告
+  - DOMAIN,ads.95516.com,🚫广告拦截
+  - DOMAIN,switch.cup.com.cn,🚫广告拦截
+# Yandex
+  - DOMAIN,yandexmetrica.com,🚫广告拦截
+# Talkatone
+  - DOMAIN-SUFFIX,ads.inmobi.com,🚫广告拦截
+  - DOMAIN-SUFFIX,tappx.com,🚫广告拦截
+  - DOMAIN-SUFFIX,criteo.com,🚫广告拦截
+  - DOMAIN-SUFFIX,pubmatic.com,🚫广告拦截
+  - DOMAIN-SUFFIX,smaato.net,🚫广告拦截
+  - DOMAIN-SUFFIX,amazon-adsystem.com,🚫广告拦截
+  - DOMAIN-SUFFIX,adsappier.com,🚫广告拦截
+  - DOMAIN-SUFFIX,appier.net,🚫广告拦截
+  - DOMAIN-SUFFIX,appiersig.com,🚫广告拦截
+  - DOMAIN-SUFFIX,googleads.g.doubleclick.net,🚫广告拦截
+  - RULE-SET,Private,🎯全球直连
+  - RULE-SET,Privatecidr,🎯全球直连,no-resolve
+  - RULE-SET,Fakeip-Filter,🎯全球直连
+  - SUB-RULE,(NETWORK,UDP),SUB-DIRECT
+  - RULE-SET,YouTube,YouTube
+  - RULE-SET,Telegram,Telegram
+  - RULE-SET,Telegramcidr,Telegram,no-resolve
+  - RULE-SET,Claude,AI
+  - RULE-SET,GitHub,GitHub
+  - RULE-SET,Instagram,Instagram
+  - RULE-SET,Copilot,AI
+  - RULE-SET,Copilotcidr,AI,no-resolve
+  - RULE-SET,OpenAI,AI
+  - RULE-SET,OpenAIcidr,AI,no-resolve
+  - RULE-SET,GoogleFCM,FCM
+  - RULE-SET,GoogleFCMcidr,FCM,no-resolve
+  - RULE-SET,Gemini,AI
+  - RULE-SET,emby_domain,Emby
+  - RULE-SET,emby_ip,Emby,no-resolve
+  - RULE-SET,Talkatone,Talkatone
+  - RULE-SET,Talkatonecidr,Talkatone,no-resolve
+  - RULE-SET,Twitter,Twitter
+  - RULE-SET,Twittercidr,Twitter,no-resolve
+  - RULE-SET,Google,Google
+  - RULE-SET,Googlecidr,Google,no-resolve
+  - RULE-SET,GlobalMedia,国际媒体
+  - RULE-SET,GlobalMediacidr,国际媒体,no-resolve
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,Netflixcidr,Netflix,no-resolve
+  - RULE-SET,Category-anticensorship,🚀节点选择
+  - RULE-SET,Geolocation-!cn,🚀节点选择
+  - RULE-SET,Proxy,🚀节点选择
+  - RULE-SET,Gfw,🚀节点选择
+  - RULE-SET,US,🚀节点选择
+  - RULE-SET,ChinaMedia,🎯直连
+  - RULE-SET,ChinaMediacidr,🎯直连,no-resolve
+  - RULE-SET,CN,🎯直连
+  - RULE-SET,CNcidr,🎯直连,no-resolve
+  - MATCH,🐟漏网之鱼
+
+sub-rules:
+    SUB-DIRECT:
+    - RULE-SET,CN,🎯全球直连
+    - RULE-SET,CNcidr,🎯全球直连
+    
+rule-providers:
+  Applecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Apple/Apple_OCD_IP.mrs" }
+  BlockHttpDNS: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_Domain.mrs" }
+  BlockHttpDNScidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs" }
+  ChinaMedia: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_Domain.mrs" }
+  ChinaMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_IP.mrs" }
+  Google: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_Domain.mrs" }
+  Googlecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_IP.mrs" }
+  Twitter: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs" }
+  Twittercidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs" }
+  Telegram: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Telegram/Telegram_OCD_Domain.mrs" }
+  Telegramcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Telegram/Telegram_OCD_IP.mrs" }
+  OpenAI: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_Domain.mrs" }
+  OpenAIcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_IP.mrs" }
+  GitHub:  { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GitHub/GitHub_OCD_Domain.mrs" }
+  Claude: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Claude/Claude_OCD_Domain.mrs" }
+  Copilot: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_Domain.mrs" }
+  Copilotcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_IP.mrs" }
+  Gemini: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Gemini/Gemini_OCD_Domain.mrs" }
+  GoogleFCM: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_Domain.mrs" }
+  GoogleFCMcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_IP.mrs" }
+  Instagram: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Instagram/Instagram_OCD_Domain.mrs" }
+  Category-httpdns-cn: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-httpdns-cn.mrs" }
+  Category-anticensorship: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-anticensorship.mrs" }
+  Geolocation-!cn: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs" }
+  Category-ads-all: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs" }
+  Gfw: { <<: *domain, url: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/gfw.mrs" }
+  Private: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/private.mrs" }
+  Privatecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/privateip.mrs" }
+  Fakeip-Filter: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs" }
+  Proxy: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/proxy.mrs" }
+  CN: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs" }
+  CNcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cnip.mrs" }
+  Netflix: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflix.mrs" }
+  Netflixcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflixip.mrs" }
+  Media: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/media.mrs" }
+  Mediacidr: { <<: *ip,  url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/mediaip.mrs" }
+  YouTube: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
+  Advertising: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
+  US: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/US/US_Domain.mrs" }
+  Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }
+  Talkatonecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs" }
+  STUN: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_Domain.mrs" }
+  STUNcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_IP.mrs" }
+  emby_domain: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs" }
+  emby_ip: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs" }
+  GlobalMedia: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_Domain.mrs" }
+  GlobalMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_IP.mrs" }

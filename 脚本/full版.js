@@ -9,7 +9,7 @@ const ruleProviderCommon = {
 // 策略组通用配置
 const groupBaseOption = {
   "interval": 300,
-  "url": "http://www.gstatic.com/generate_204",
+  "url": "https://www.gstatic.com/generate_204",
   "max-failed-times": 3,
 };
 
@@ -41,7 +41,7 @@ const main = (config) => {
     "ipv6": true,
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
-    "fake-ip-filter": ["*", "+.lan", "+.local", "+.direct", "+.msftconnecttest.com", "+.msftncsi.com"],
+      "fake-ip-filter": ["*", "+.lan", "+.local", "+.direct", "+.msftconnecttest.com", "+.msftncsi.com", "*.market.xiaomi.com"],
     "default-nameserver": ["223.5.5.5", "119.29.29.29"],
     "nameserver": ["https://cloudflare-dns.com/dns-query#h3=true", "https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com"],
     "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],
@@ -74,6 +74,7 @@ const main = (config) => {
       }
     }
   };
+  
 
   // 覆盖 tun 配置
   config["tun"] = {
@@ -737,7 +738,7 @@ const main = (config) => {
     },
     "spotify-ip": {
       ...ruleProviderCommon,
-      "behavior": "domain",
+      "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/spotify-ip.mrs",
       "path": "./rules/spotify-ip.mrs",
       "type": "http",
@@ -876,6 +877,7 @@ const main = (config) => {
       ...ruleProviderCommon,
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/EA/EA_OCD_Domain.mrs",
+      "path": "./rules/ea-domain.mrs",
       "type": "http",
       "format": "mrs",
       "interval": 86400
@@ -953,33 +955,6 @@ const main = (config) => {
       "interval": 86400
     },
     
-    "cn-domain": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs",
-      "path": "./rules/cn-domain.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
-    "cn-ip": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cnip.mrs",
-      "path": "./rules/cn-ip.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
-    "proxy-domain": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/proxy.mrs",
-      "path": "./rules/proxy-domain.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
     
     //聊天通讯
     "talkatone-domain": {
@@ -1292,6 +1267,33 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "cn-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs",
+      "path": "./rules/cn-domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
+    "cn-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cnip.mrs",
+      "path": "./rules/cn-ip.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
+    "proxy-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/proxy.mrs",
+      "path": "./rules/proxy-domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    }
 
   };
 
@@ -1382,7 +1384,7 @@ const main = (config) => {
     "DOMAIN-KEYWORD,adv.ccb.com,REJECT",
 // 京东
     "DOMAIN,dns.jd.com,REJECT",
-    "IP-CIDR,101.124.19.122/32,REJECT,no-resolve"
+    "IP-CIDR,101.124.19.122/32,REJECT,no-resolve",
     "IP-CIDR6,2402:DB40:5100:1011::5/128,REJECT,no-resolve",
 // 酷狗音乐
     "DOMAIN,adserviceretry.kglink.cn,DIRECT",
@@ -1412,7 +1414,7 @@ const main = (config) => {
 // 美团
     "DOMAIN,maplocatesdksnapshot.d.meituan.net,REJECT",
     "DOMAIN,metrics-picture.d.meituan.net,REJECT",
-    "IP-CIDR,103.37.155.60/32,REJECT,no-resolve"
+    "IP-CIDR,103.37.155.60/32,REJECT,no-resolve",
 // 美颜相机
     "DOMAIN,aaid.uyunad.com,REJECT",
     "DOMAIN,adui.tg.meitu.com,REJECT",
@@ -1435,9 +1437,9 @@ const main = (config) => {
 // 小米
     "DOMAIN,sdkconfig.ad.xiaomi.com,REJECT",
 // 迅雷 解除版权限制
-    "DOMAIN, hub5btmain.v6.shub.sandai.net, REJECT",
-    "DOMAIN, hub5emu.v6.shub.sandai.net, REJECT",
-    "DOMAIN, hub5idx.v6.shub.sandai.net, REJECT",
+    "DOMAIN,hub5btmain.v6.shub.sandai.net,REJECT",
+    "DOMAIN,hub5emu.v6.shub.sandai.net,REJECT",
+    "DOMAIN,hub5idx.v6.shub.sandai.net,REJECT",
 // 云闪付 开屏广告
     "DOMAIN,ads.95516.com,REJECT",
     "DOMAIN,switch.cup.com.cn,REJECT",
@@ -1535,6 +1537,5 @@ const main = (config) => {
   ];
 
   // 返回修改后的配置
-  return config;
   return config;
 };

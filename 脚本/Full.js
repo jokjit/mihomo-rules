@@ -41,7 +41,7 @@ const main = (config) => {
     "ipv6": true,
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
-      "fake-ip-filter": ["*", "+.lan", "+.local", "+.direct", "+.msftconnecttest.com", "+.msftncsi.com", "*.market.xiaomi.com"],
+    "fake-ip-filter": ["*", "+.lan", "+.local", "+.direct", "+.msftconnecttest.com", "+.msftncsi.com", "*.market.xiaomi.com", "localhost.ptlogin2.qq.com","localhost.sec.qq.com", "localhost.work.weixin.qq.com"],
     "default-nameserver": ["223.5.5.5", "119.29.29.29"],
     "nameserver": ["https://cloudflare-dns.com/dns-query#h3=true", "https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com"],
     "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],

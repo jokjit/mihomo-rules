@@ -112,7 +112,7 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "YouTube",
       "type": "select",
-      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
+      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "Macau","AllServer"],
       "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/YouTube.png"
     },
     {
@@ -166,7 +166,7 @@ const main = (config) => {
       "name": "Emby",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/jokjit/mihomo-rules@main/icon/Emby.png"
+      "icon": "https://img.icons8.com/?size=100&id=suRQWSRjJjXn&format=png&color=000000"
     },
     {
       ...groupBaseOption,
@@ -179,7 +179,7 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "哔哩哔哩",
       "type": "select",
-      "proxies": ["DIRECT", "HongKong", "TaiWan"],
+      "proxies": ["DIRECT", "HongKong", "TaiWan", "Macau"],
       "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/BiliBili.png"
     },
     {
@@ -395,6 +395,46 @@ const main = (config) => {
       "filter": "(?i)🇭🇰|香港|(\b(HK|Hong)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
     },
+    {
+  ...groupBaseOption,
+  "name": "Macau",
+  "type": "select",
+  "proxies": ["MO-Auto", "MO-FallBack", "MO-LoadBalance"],
+  "include-all": true,
+  "filter": "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b",
+  "icon": "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000"
+},
+{
+  ...groupBaseOption,
+  "name": "MO-Auto",
+  "type": "url-test",
+  "tolerance": 50,
+  "lazy": true,
+  "include-all": true,
+  "hidden": true,
+  "filter": "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b",
+  "icon": "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000"
+},
+{
+  ...groupBaseOption,
+  "name": "MO-FallBack",
+  "type": "fallback",
+  "lazy": true,
+  "include-all": true,
+  "hidden": true,
+  "filter": "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b",
+  "icon": "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000"
+},
+{
+  ...groupBaseOption,
+  "name": "MO-LoadBalance",
+  "type": "load-balance",
+  "lazy": true,
+  "include-all": true,
+  "hidden": true,
+  "filter": "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b",
+  "icon": "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000"
+}
     {
       ...groupBaseOption,
       "name": "TaiWan",

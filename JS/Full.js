@@ -1,7 +1,3 @@
-// 参考 Verge Rev 示例 Script 配置
-//
-// Clash Verge Rev (Version ≥ 17.2) & Mihomo-Party (Version ≥ 1.5.10)
-
 // 规则集通用配置
 const ruleProviderCommon = {
 };
@@ -34,16 +30,26 @@ const main = (config) => {
   config["find-process-mode"] = "strict";
   config["global-client-fingerprint"] = "chrome";
 
+  //覆盖hosts配置
+  config["hosts"] = {
+    "dns.alidns.com": ["223.5.5.5", "223.6.6.6", "2400:3200::1", "2400:3200:baba::1"],
+    "doh.pub": ["1.12.12.12", "1.12.12.21", "120.53.53.53"],
+    "dns.google": ["8.8.8.8", "8.8.4.4", "2001:4860:4860::8888", "2001:4860:4860::8844"],
+    "dns11.quad9.net": ["9.9.9.11", "149.112.112.11", "2620:fe::11", "2620:fe::fe:11"]
+  };
+  
   // 覆盖 dns 配置
   config["dns"] = {
     "enable": true,
     "listen": "0.0.0.0:1053",
+    "use-hosts": true,
+    "prefer-h3": true,
     "ipv6": true,
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
     "fake-ip-filter": ["*", "+.lan", "+.local", "+.direct", "+.msftconnecttest.com", "+.msftncsi.com", "*.market.xiaomi.com", "localhost.ptlogin2.qq.com","localhost.sec.qq.com", "localhost.work.weixin.qq.com"],
     "default-nameserver": ["223.5.5.5", "119.29.29.29"],
-    "nameserver": ["https://cloudflare-dns.com/dns-query#h3=true", "https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com"],
+    "nameserver": ["https://dns.google/dns-query", "quic://unfiltered.adguard-dns.com", "https://doh.opendns.com/dns-query", "https://dns11.quad9.net/dns-query"],
     "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],
     "direct-nameserver": ["quic://223.5.5.5"],
   };
@@ -59,20 +65,24 @@ const main = (config) => {
 
   // 覆盖 sniffer 配置
   config["sniffer"] = {
-    "enable": true,
-    "parse-pure-ip": true,
-    "sniff": {
-      "TLS": {
-        "ports": ["443", "8443"]
-      },
-      "HTTP": {
-        "ports": ["80", "8080-8880"],
-        "override-destination": true
-      },
-      "QUIC": {
-        "ports": ["443", "8443"]
-      }
+  "enable": true,
+  "parse-pure-ip": true,
+  "sniff": {
+    "TLS": {
+      "ports": ["443", "8443"]
+    },
+    "HTTP": {
+      "ports": ["80", "8080-8880"],
+      "override-destination": true
+    },
+    "QUIC": {
+      "ports": ["443", "8443"]
     }
+  },
+  "force-domain": ["+.v2ex.com"],
+  "skip-domain": ["Mijia.Cloud.com"],
+  "skip-src-address": ["192.168.0.3/32"],
+  "skip-dst-address": ["192.168.0.3/32"]
   };
   
 

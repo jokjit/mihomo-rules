@@ -314,7 +314,7 @@ const main = (config) => {
       "name": "Emby",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://img.icons8.com/?size=100&id=suRQWSRjJjXn&format=png&color=000000"
+      "icon": "https://img.icons8.com/?size=100&id=FHnoYAFmyvu0&format=png&color=000000"
     },
     {
       ...groupBaseOption,

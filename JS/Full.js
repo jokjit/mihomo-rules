@@ -315,7 +315,7 @@ const main = (config) => {
       "name": "Emby",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://img.icons8.com/?size=100&id=FHnoYAFmyvu0&format=png&color=000000"
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"
     },
     {
       ...groupBaseOption,
@@ -358,7 +358,7 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "国内媒体",
       "type": "select",
-      "proxies": ["Proxy", "DIRECT"],
+      "proxies": ["DIRECT", "Proxy"],
       "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/CN_Media.png"
     },
     {

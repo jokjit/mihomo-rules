@@ -177,7 +177,7 @@ const main = (config) => {
             "+.xiami.com",
             "+.y.qq.com"],
 "default-nameserver": ["223.5.5.5", "119.29.29.29"],
-    "nameserver": ["https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com", "https://doh.opendns.com/dns-query", "https://dns11.quad9.net/dns-query"],
+    "nameserver": ["https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com", "https://doh.opendns.com/dns-query"],
     "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],
     "direct-nameserver": ["quic://223.5.5.5", "quic://223.6.6.6"],
     "direct-nameserver-follow-policy": true

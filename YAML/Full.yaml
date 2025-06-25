@@ -57,10 +57,8 @@ proxy-providers:
       additional-prefix: '[前缀] '
       skip-cert-verify: true
       udp: true
+     
 
-      
-port: 7891
-socks-port: 7892
 mixed-port: 7890
 allow-lan: true
 bind-address: '*'
@@ -104,14 +102,9 @@ experimental:
     dialer-ip4p-convert: false
     
 hosts:
-    ntp.ntsc.ac.cn:
-    - 114.118.7.161
-    - 114.118.7.163
-    dns.alidns.com:
-    - 223.5.5.5
-    - 223.6.6.6
-    - 2400:3200:baba::1
-    - 2400:3200::1
+  dns.alidns.com: [223.5.5.5, 223.6.6.6, 2400:3200::1, 2400:3200:baba::1]
+  doh.pub: [1.12.12.12, 1.12.12.21, 120.53.53.53]
+  ntp.ntsc.ac.cn: [114.118.7.161, 114.118.7.163]
     
 profile:
     store-selected: true
@@ -165,7 +158,7 @@ dns:
     cache-algorithm: arc
     prefer-h3: false
     use-hosts: true
-    use-system-hosts: false
+    use-system-hosts: true
     respect-rules: true
     listen: 0.0.0.0:1053
     ipv6: true
@@ -175,21 +168,30 @@ dns:
     fake-ip-filter:
       - RULE-SET:Fakeip-Filter,Private,CN
     nameserver-policy:
-      RULE-SET:CN,Private:
-      - quic://223.5.5.5 
-      - quic://223.6.6.6
+    "+.jp":
+      - "https://public.dns.iij.jp/dns-query#h3=true" # IIJ （日本） DNS over H3
+    "+.hk":
+      - "quic://dns.nextdns.io" # NextDNS（香港） DNS over DOQ
+    "+.eu":
+      - "quic://dns0.eu" # 公共（欧洲） DNS over DOQ
+    "RULE-SET:Private,direct":
+      - "quic://dns.18bit.cn" # 18bit DNS over DOQ
+      - "quic://2025.dns1.top" # 关圣 DNS over DOQ
+      - "quic://dns.alidns.com" # 阿里 DNS over DOQ
     default-nameserver:
       - quic://223.5.5.5 
       - quic://223.6.6.6
       - 119.29.29.29
     nameserver:
-      - https://cloudflare-dns.com/dns-query#h3=true
       - https://dns.google/dns-query#h3=true
       - quic://unfiltered.adguard-dns.com
+      - https://doh.opendns.com/dns-query
     proxy-server-nameserver:
-      - quic://223.5.5.5 
+      - https://dns.alidns.com/dns-query 
+      - https://doh.pub/dns-query
     direct-nameserver:
       - quic://223.5.5.5 
+      - quic://223.6.6.6
     direct-nameserver-follow-policy: true
       
 proxies:
@@ -495,6 +497,7 @@ rules:
   - RULE-SET,Wikipedia,维基百科
   - RULE-SET,Blizzard,游戏平台 
   - RULE-SET,Steam,游戏平台
+  - RULE-SET,SteamCN,🎯直连
   - RULE-SET,Rockstar,游戏平台
   - RULE-SET,PlayStation,游戏平台
   - RULE-SET,Epic,游戏平台 
@@ -538,6 +541,7 @@ rules:
   - RULE-SET,US,🚀节点选择
   - RULE-SET,Tracker,BT追踪器
   - RULE-SET,Trackercidr,BT追踪器,no-resolve
+  - RULE-SET,direct,🎯直连
   - RULE-SET,ChinaMedia,🎯直连
   - RULE-SET,ChinaMediacidr,🎯直连,no-resolve
   - RULE-SET,CN,🎯直连
@@ -607,6 +611,7 @@ rule-providers:
   PayPal: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/PayPal/PayPal_OCD_Domain.mrs" }
   Speedtest: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs" }
   Steam: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Steam/Steam_OCD_Domain.mrs" }
+  SteamCN: {<<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs"}
   HBO: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/HBO/HBO_OCD_Domain.mrs" }
   Category-httpdns-cn: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-httpdns-cn.mrs" }
   Category-anticensorship: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-anticensorship.mrs" }
@@ -638,6 +643,7 @@ rule-providers:
   Trackercidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/Tracker/Tracker_IP.mrs" }
   STUN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_Domain.mrs" }
   STUNcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_IP.mrs" }
+  direct: {<<: *domain, url: "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/direct.mrs"}
   Spotifycidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/spotify-ip.mrs" }
   emby_domain: { <<: *domain, url: "https://cdn.jsdelivr.net/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs" }
   emby_ip: { <<: *ip, url: "https://cdn.jsdelivr.net/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs" }

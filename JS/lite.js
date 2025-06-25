@@ -34,7 +34,6 @@ const main = (config) => {
   config["hosts"] = {
     "dns.alidns.com": ["223.5.5.5", "223.6.6.6", "2400:3200::1", "2400:3200:baba::1"],
     "doh.pub": ["1.12.12.12", "1.12.12.21", "120.53.53.53"],
-    "dns.google": ["8.8.8.8", "8.8.4.4", "2001:4860:4860::8888", "2001:4860:4860::8844"],
     "ntp.ntsc.ac.cn": ["114.118.7.161", "114.118.7.163"]
   };
   
@@ -47,25 +46,57 @@ const main = (config) => {
   };
   
   // 覆盖 dns 配置
-  config["dns"] = {
-    "enable": true,
-    "listen": "0.0.0.0:1053",
-    "use-hosts": true,
-    "use-system-hosts": false,
-    "respect-rules": true,
-    "prefer-h3": false,
-    "ipv6": true,
-    "enhanced-mode": "fake-ip",
-    "fake-ip-range": "198.18.0.1/16",
-    "fake-ip-filter": ["geosite:private",
-            "RULE-SET:fakeip-filter",
-            "RULE-SET:cn-domain"],
-    "default-nameserver": ["223.5.5.5", "119.29.29.29"],
-    "nameserver": ["https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com", "https://doh.opendns.com/dns-query"],
-    "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],
-    "direct-nameserver": ["quic://223.5.5.5", "quic://223.6.6.6"],
-    "direct-nameserver-follow-policy": true
-  };
+config["dns"] = {
+  "enable": "true",
+  "listen": "0.0.0.0:1053",
+  "cache-algorithm": "arc",
+  "use-hosts": "true",
+  "use-system-hosts": "true",
+  "respect-rules": "true",
+  "prefer-h3": "false",
+  "ipv6": "true",
+  "enhanced-mode": "fake-ip",
+  "fake-ip-range": "198.18.0.1/16",
+  "fake-ip-filter": [
+    "geosite:private",
+    "RULE-SET:fakeip-filter",
+    "RULE-SET:cn-domain"
+  ],
+  "default-nameserver": [
+    "223.5.5.5",
+    "119.29.29.29"
+  ],
+  "nameserver": [
+    "https://dns.google/dns-query#h3=true",
+    "quic://unfiltered.adguard-dns.com",
+    "https://doh.opendns.com/dns-query"
+  ],
+  "proxy-server-nameserver": [
+    "https://dns.alidns.com/dns-query",
+    "https://doh.pub/dns-query"
+  ],
+  "direct-nameserver": [
+    "quic://223.5.5.5",
+    "quic://223.6.6.6"
+  ],
+  "direct-nameserver-follow-policy": "true",
+  "nameserver-policy": {
+    "+.jp": [
+      "https://public.dns.iij.jp/dns-query#h3=true"
+    ],
+    "+.hk": [
+      "quic://dns.nextdns.io"
+    ],
+    "+.eu": [
+      "quic://dns0.eu"
+    ],
+    "RULE-SET:Private,direct": [
+      "quic://dns.18bit.cn",
+      "quic://2025.dns1.top",
+      "quic://dns.alidns.com"
+    ]
+  }
+};
 
   // 覆盖 geodata 配置
   config["geodata-mode"] = true;
@@ -643,6 +674,15 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "steamcn-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs",
+      "path": "./rules/steamcn-domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
     "ea-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -946,8 +986,16 @@ const main = (config) => {
       "type": "http",
       "format": "mrs",
       "interval": 86400
+    },
+    "direct": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/direct.mrs",
+      "path": "./rules/direct.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
     }
-
 
   };
 
@@ -1130,6 +1178,7 @@ const main = (config) => {
     "RULE-SET,OpenAI-ip,AI,no-resolve",
     "RULE-SET,Blizzard-domain,游戏平台",
     "RULE-SET,steam-domain,游戏平台",
+    "RULE-SET,steamcn-domain,DIRECT",
     "RULE-SET,Rockstar-domain,游戏平台",
     "RULE-SET,PlayStation-domain,游戏平台",
     "RULE-SET,epic-domain,游戏平台",
@@ -1154,6 +1203,7 @@ const main = (config) => {
     "RULE-SET,proxy-domain,Proxy",
     "RULE-SET,gfw-domain,Proxy",
     "RULE-SET,us-domain,Proxy",
+    "RULE-SET,direct,DIRECT",
     "RULE-SET,ChinaMedia-domain,DIRECT",
     "RULE-SET,ChinaMedia-ip,DIRECT,no-resolve",
     "RULE-SET,cn-domain,DIRECT",

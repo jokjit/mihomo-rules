@@ -46,41 +46,26 @@ const main = (config) => {
   };
   
   // 覆盖 dns 配置
-config["dns"] = {
-  "enable": "true",
-  "listen": "0.0.0.0:1053",
-  "cache-algorithm": "arc",
-  "use-hosts": "true",
-  "use-system-hosts": "true",
-  "respect-rules": "true",
-  "prefer-h3": "false",
-  "ipv6": "true",
-  "enhanced-mode": "fake-ip",
-  "fake-ip-range": "198.18.0.1/16",
-  "fake-ip-filter": [
-    "geosite:private",
-    "RULE-SET:fakeip-filter",
-    "RULE-SET:cn-domain"
-  ],
-  "default-nameserver": [
-    "223.5.5.5",
-    "119.29.29.29"
-  ],
-  "nameserver": [
-    "https://dns.google/dns-query#h3=true",
-    "quic://unfiltered.adguard-dns.com",
-    "https://doh.opendns.com/dns-query"
-  ],
-  "proxy-server-nameserver": [
-    "https://dns.alidns.com/dns-query",
-    "https://doh.pub/dns-query"
-  ],
-  "direct-nameserver": [
-    "quic://223.5.5.5",
-    "quic://223.6.6.6"
-  ],
-  "direct-nameserver-follow-policy": "true",
-  "nameserver-policy": {
+  config["dns"] = {
+    "enable": true,
+    "listen": "0.0.0.0:1053",
+    "use-hosts": true,
+    "cache-algorithm": "arc",
+    "use-system-hosts": true,
+    "respect-rules": true,
+    "prefer-h3": false,
+    "ipv6": true,
+    "enhanced-mode": "fake-ip",
+    "fake-ip-range": "198.18.0.1/16",
+    "fake-ip-filter": ["geosite:private",
+            "RULE-SET:fakeip-filter",
+            "RULE-SET:cn-domain"],
+    "default-nameserver": ["223.5.5.5", "119.29.29.29"],
+    "nameserver": ["https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com", "https://doh.opendns.com/dns-query"],
+    "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],
+    "direct-nameserver": ["quic://223.5.5.5", "quic://223.6.6.6"],
+    "direct-nameserver-follow-policy": true,
+      "nameserver-policy": {
     "+.jp": [
       "https://public.dns.iij.jp/dns-query#h3=true"
     ],
@@ -90,13 +75,13 @@ config["dns"] = {
     "+.eu": [
       "quic://dns0.eu"
     ],
-    "RULE-SET:Private,direct": [
+    "RULE-SET:private-domain,direct": [
       "quic://dns.18bit.cn",
       "quic://2025.dns1.top",
       "quic://dns.alidns.com"
     ]
   }
-};
+  };
 
   // 覆盖 geodata 配置
   config["geodata-mode"] = true;

@@ -87,3 +87,12 @@ payload:
   - "+.wowsgame.cn"
   - "+.xiami.com"
   - "+.y.qq.com"
+  - dns.alidns.com
+  - cloudflare-dns.com
+  - dns.google
+  - dns.adguard-dns.com
+  - dns.nextdns.io
+  - public.dns.iij.jp
+  - dns0.eu
+  - dns.18bit.cn
+  - 2025.dns1.top

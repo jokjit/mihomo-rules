@@ -30,56 +30,43 @@ const main = (config) => {
   config["find-process-mode"] = "strict";
   config["global-client-fingerprint"] = "chrome";
 
-  //覆盖hosts配置
-  config["hosts"] = {
-    "dns.alidns.com": ["223.5.5.5", "223.6.6.6", "2400:3200::1", "2400:3200:baba::1"],
-    "doh.pub": ["1.12.12.12", "1.12.12.21", "120.53.53.53"],
-    "ntp.ntsc.ac.cn": ["114.118.7.161", "114.118.7.163"]
-  };
-  
-  config["ntp"] = {
-        "enable": false,
-        "write-to-system": false,
-        "server": "ntp.ntsc.ac.cn",
-        "port": 123,
-        "interval": 30
-  };
-  
+  // 国内DNS服务器
+  const domesticNameservers = [
+    "https://dns.alidns.com/dns-query", // 阿里DoH
+    "https://doh.pub/dns-query" // 腾讯DoH，
+  ];
+  // 国外DNS服务器
+  const foreignNameservers = [
+    "https://cloudflare-dns.com/dns-query", // CloudflareDNS
+    "https://8.8.4.4/dns-query#ecs=1.1.1.1/24&ecs-override=true", // GoogleDNS
+    "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true", // OpenDNS
+  ];
   // 覆盖 dns 配置
   config["dns"] = {
     "enable": true,
     "listen": "0.0.0.0:1053",
-    "use-hosts": true,
-    "use-system-hosts": true,
     "respect-rules": true,
     "prefer-h3": false,
     "ipv6": true,
+    "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
-    "fake-ip-filter": ["geosite:private",
-            "RULE-SET:fakeip-filter",
-            "RULE-SET:cn-domain"],
-    "default-nameserver": ["223.5.5.5", "119.29.29.29"],
-    "nameserver": ["https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com", "https://doh.opendns.com/dns-query"],
-    "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],
-    "direct-nameserver": ["quic://223.5.5.5", "quic://223.6.6.6"],
-    "direct-nameserver-follow-policy": true,
-      "nameserver-policy": {
-    "+.jp": [
-      "https://public.dns.iij.jp/dns-query#h3=true"
-    ],
-    "+.hk": [
-      "quic://dns.nextdns.io"
-    ],
-    "+.eu": [
-      "quic://dns0.eu"
-    ],
-    "RULE-SET:private-domain,direct": [
-      "quic://dns.18bit.cn",
-      "quic://2025.dns1.top",
-      "quic://dns.alidns.com"
-    ]
-  }
+    "fake-ip-filter": [
+      "+.lan",
+      "+.local",
+      "+.msftconnecttest.com",
+      "+.msftncsi.com",
+      "geosite:private",
+      "RULE-SET:fakeip-filter",
+      "RULE-SET:cn-domain"],
+    "default-nameserver": ["223.5.5.5", "1.2.4.8"],
+    "nameserver": [...foreignNameservers],
+    "proxy-server-nameserver": [...domesticNameservers],
+    "direct-nameserver": [...domesticNameservers],
+    "direct-nameserver-follow-policy": false,
+    "nameserver-policy": {
+      "geosite:cn": domesticNameservers
+    }
   };
 
   // 覆盖 geodata 配置
@@ -93,44 +80,44 @@ const main = (config) => {
 
   // 覆盖 sniffer 配置
   config["sniffer"] = {
-  "enable": true,
-  "parse-pure-ip": true,
-  "sniff": {
-    "TLS": {
-      "ports": ["443", "8443"]
+    "enable": true,
+    "parse-pure-ip": true,
+    "sniff": {
+      "TLS": {
+        "ports": ["443", "8443"]
+      },
+      "HTTP": {
+        "ports": ["80", "8080-8880"],
+        "override-destination": true
+      },
+      "QUIC": {
+        "ports": ["443", "8443"]
+      }
     },
-    "HTTP": {
-      "ports": ["80", "8080-8880"],
-      "override-destination": true
-    },
-    "QUIC": {
-      "ports": ["443", "8443"]
-    }
-  },
-  "force-domain": ["+.v2ex.com"],
-  "skip-domain": ["Mijia.Cloud.com"],
-  "skip-src-address": ["192.168.0.3/32"],
-  "skip-dst-address": ["192.168.0.3/32"]
+    "force-domain": ["+.v2ex.com"],
+    "skip-domain": ["Mijia.Cloud.com"],
+    "skip-src-address": ["192.168.0.3/32"],
+    "skip-dst-address": ["192.168.0.3/32"]
   };
-  
+
 
   // 覆盖 tun 配置
   config["tun"] = {
-        "enable": true,
-        "stack": "mixed",
-        "auto-route": true,
-        "auto-detect-interface": true,
-        "dns-hijack": [
-            "any:53",
-            "tcp://any:53"
-        ],
-        "device": "utun0",
-        "mtu": 1500,
-        "strict-route": true,
-        "gso": true,
-        "gso-max-size": 65536,
-        "udp-timeout": 300,
-        "endpoint-independent-nat": false
+    "enable": true,
+    "stack": "mixed",
+    "auto-route": true,
+    "auto-detect-interface": true,
+    "dns-hijack": [
+      "any:53",
+      "tcp://any:53"
+    ],
+    "device": "utun0",
+    "mtu": 1500,
+    "strict-route": true,
+    "gso": true,
+    "gso-max-size": 65536,
+    "udp-timeout": 300,
+    "endpoint-independent-nat": false
   };
 
   // 覆盖策略组
@@ -158,9 +145,16 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
+      "name": "Github",
+      "type": "select",
+      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"
+    },
+    {
+      ...groupBaseOption,
       "name": "YouTube",
       "type": "select",
-      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "Macau","AllServer"],
+      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "Macau", "AllServer"],
       "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/YouTube.png"
     },
     {
@@ -201,6 +195,14 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
+      "name": "google",
+      "type": "select",
+      "include-all": true,
+      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"
+    },
+    {
+      ...groupBaseOption,
       "name": "国内媒体",
       "type": "select",
       "proxies": ["DIRECT", "Proxy"],
@@ -227,14 +229,6 @@ const main = (config) => {
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
       "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Telegram.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "Twitter",
-      "type": "select",
-      "include-all": true,
-      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Twitter.png"
     },
     {
       ...groupBaseOption,
@@ -564,7 +558,7 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
-    
+
     //影音娱乐
     "youtube-domain": {
       ...ruleProviderCommon,
@@ -629,25 +623,7 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
-    "twitter-domain": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs",
-      "path": "./rules/twitter-domain.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
-    "twitter-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs",
-      "path": "./rules/twitter-ip.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
-    
+
     //游戏平台
     "steam-domain": {
       ...ruleProviderCommon,
@@ -748,8 +724,8 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
-    
-    
+
+
     //聊天通讯
     "talkatone-domain": {
       ...ruleProviderCommon,
@@ -787,7 +763,7 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
-    
+
     //工具类
     "FCM-domain": {
       ...ruleProviderCommon,
@@ -807,7 +783,34 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
-    
+    "google-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google.mrs",
+      "path": "./rules/google-domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
+    "google-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/google.mrs",
+      "path": "./rules/google-ip.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
+    "github-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/github.mrs",
+      "path": "./rules/github-domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
+
     //杂项
     "stun-domain": {
       ...ruleProviderCommon,
@@ -993,39 +996,39 @@ const main = (config) => {
     "DOMAIN,board.zash.run.place,DIRECT",
     "RULE-SET,Advertising-domain,REJECT",
     "RULE-SET,category-ads-all-domain,REJECT",
-// 中国联通
+    // 中国联通
     "DOMAIN-SUFFIX,ad.10010.com,REJECT",
-// 小蚕惠生活
+    // 小蚕惠生活
     "DOMAIN,sdk.1rtb.net,REJECT",
-// 阿里巴巴
+    // 阿里巴巴
     "DOMAIN-SUFFIX,ut.taobao.com,REJECT",
     "DOMAIN,ems.youku.com,REJECT",
     "DOMAIN,hudong.alicdn.com,REJECT",
     "DOMAIN,ossgw.alicdn.com,REJECT",
-// 阿里云盘
+    // 阿里云盘
     "IP-CIDR,203.107.1.1/24,REJECT,no-resolve",
-// 爱奇艺
+    // 爱奇艺
     "DOMAIN,api.iqiyi.com,REJECT",
-// 百度
+    // 百度
     "DOMAIN,mobads.baidu.com,REJECT",
-// 百度地图
+    // 百度地图
     "DOMAIN,afd.baidu.com,REJECT",
     "DOMAIN,afdconf.baidu.com,REJECT",
-// 昌原云充
+    // 昌原云充
     "DOMAIN,m.adyounger.com,REJECT",
-// Clue 智库
+    // Clue 智库
     "DOMAIN,api.helloclue.com,REJECT",
     "DOMAIN,brahe.apptimize.com,REJECT",
     "DOMAIN,collector.clue.run,REJECT",
     "DOMAIN,images.ctfassets.net,REJECT",
     "DOMAIN,mapi.apptimize.com,REJECT",
     "DOMAIN,md-i-s.apptimize.com,REJECT",
-// 放松双眼
+    // 放松双眼
     "DOMAIN,adservice.sigmob.cn,REJECT",
-// 工商银行
+    // 工商银行
     "DOMAIN-SUFFIX,mall.icbc.com.cn,REJECT",
     "DOMAIN,pageviewp.icbc.com.cn,REJECT",
-//什么值得买
+    //什么值得买
     "DOMAIN,aaid.uyunad.com,REJECT",
     "DOMAIN,acs4baichuan.m.taobao.com,REJECT",
     "DOMAIN,adashxgc.ut.taobao.com,REJECT",
@@ -1037,7 +1040,7 @@ const main = (config) => {
     "DOMAIN,ulogs.umeng.com,REJECT",
     "DOMAIN,ynuf.aliapp.org,REJECT",
     "DOMAIN,api.zuihuimai.com,REJECT",
-// 广告联盟
+    // 广告联盟
     "DOMAIN-KEYWORD,asiad.byteactivity,REJECT",
     "DOMAIN-KEYWORD,pangolin-sdk-toutiao,REJECT",
     "DOMAIN-KEYWORD,pangolin.snssdk.com,REJECT",
@@ -1065,26 +1068,26 @@ const main = (config) => {
     "DOMAIN,mon.toutiaocloud.com,REJECT",
     "DOMAIN,tangram.e.qq.com,REJECT",
     "DOMAIN,ws.tapjoyads.com,REJECT",
-// 海尔智家
+    // 海尔智家
     "DOMAIN-SUFFIX,ehaier.com,REJECT",
-// 建设银行
+    // 建设银行
     "DOMAIN-KEYWORD,adv.ccb.com,REJECT",
-// 京东
+    // 京东
     "DOMAIN,dns.jd.com,REJECT",
     "IP-CIDR,101.124.19.122/32,REJECT,no-resolve",
     "IP-CIDR6,2402:DB40:5100:1011::5/128,REJECT,no-resolve",
-// 酷狗音乐
+    // 酷狗音乐
     "DOMAIN,adserviceretry.kglink.cn,REJECT",
     "DOMAIN,ads.service.kugou.com,REJECT",
     "DOMAIN,adserviceretry.kugou.com,REJECT",
-// 酷我音乐
+    // 酷我音乐
     "DOMAIN,ad.tencentmusic.com,REJECT",
     "DOMAIN,g.koowo.com,REJECT",
     "DOMAIN,mobilead.kuwo.cn,REJECT",
     "DOMAIN,rich.kuwo.cn,REJECT",
-// 蓝奏云
+    // 蓝奏云
     "DOMAIN,statics.woozooo.com,REJECT",
-// 芒果TV
+    // 芒果TV
     "DOMAIN-SUFFIX,da.mgtv.com,REJECT",
     "DOMAIN,credits.bz.mgtv.com,REJECT",
     "DOMAIN,credits2.bz.mgtv.com,REJECT",
@@ -1098,41 +1101,41 @@ const main = (config) => {
     "DOMAIN,rprain.bz.mgtv.com,REJECT",
     "DOMAIN,rprain.log.mgtv.com,REJECT",
     "DOMAIN,vip.bz.mgtv.com,REJECT",
-// 美团
+    // 美团
     "DOMAIN,maplocatesdksnapshot.d.meituan.net,REJECT",
     "DOMAIN,metrics-picture.d.meituan.net,REJECT",
     "IP-CIDR,103.37.155.60/32,REJECT,no-resolve",
-// 美颜相机
+    // 美颜相机
     "DOMAIN,aaid.uyunad.com,REJECT",
     "DOMAIN,adui.tg.meitu.com,REJECT",
-// Outlook
+    // Outlook
     "DOMAIN,acdn.adnxs.com,REJECT",
     "DOMAIN,mediation.adnxs.com,REJECT",
     "DOMAIN,sin3-ib.adnxs.com,REJECT",
-// 其他
+    // 其他
     "DOMAIN,affcpatrk.com,REJECT",
-// 数字联盟
+    // 数字联盟
     "DOMAIN-SUFFIX,shuzilm.cn,REJECT",
-// Speedtest
+    // Speedtest
     "DOMAIN-KEYWORD,-adsystem.com,REJECT",
     "DOMAIN,ads.pubmatic.com,REJECT",
     "DOMAIN,id.hadron.ad.gt,REJECT",
-// 太平洋保险
+    // 太平洋保险
     "DOMAIN,a.cpic.com.cn,REJECT",
-// 微信
+    // 微信
     "DOMAIN,badjs.weixinbridge.com,REJECT",
-// 小米
+    // 小米
     "DOMAIN,sdkconfig.ad.xiaomi.com,REJECT",
-// 迅雷 解除版权限制
+    // 迅雷 解除版权限制
     "DOMAIN,hub5btmain.v6.shub.sandai.net,REJECT",
     "DOMAIN,hub5emu.v6.shub.sandai.net,REJECT",
     "DOMAIN,hub5idx.v6.shub.sandai.net,REJECT",
-// 云闪付 开屏广告
+    // 云闪付 开屏广告
     "DOMAIN,ads.95516.com,REJECT",
     "DOMAIN,switch.cup.com.cn,REJECT",
-// Yandex
+    // Yandex
     "DOMAIN,yandexmetrica.com,REJECT",
-// Talkatone
+    // Talkatone
     "DOMAIN-SUFFIX,ads.inmobi.com,REJECT",
     "DOMAIN-SUFFIX,tappx.com,REJECT",
     "DOMAIN-SUFFIX,criteo.com,REJECT",
@@ -1154,6 +1157,7 @@ const main = (config) => {
     "RULE-SET,bilibili-domain,哔哩哔哩",
     "RULE-SET,tiktok-domain,TikTok",
     "RULE-SET,youtube-domain,YouTube",
+    "RULE-SET,github-domain,Github",
     "RULE-SET,telegram-domain,Telegram",
     "RULE-SET,telegram-ip,Telegram,no-resolve",
     "RULE-SET,Claude-domain,AI",
@@ -1172,13 +1176,13 @@ const main = (config) => {
     "RULE-SET,Sony-domain,游戏平台",
     "RULE-SET,FCM-domain,FCM",
     "RULE-SET,FCM-ip,FCM,no-resolve",
+    "RULE-SET,google-domain,google",
+    "RULE-SET,google-ip,google,no-resolve",
     "RULE-SET,Gemini-domain,AI",
     "RULE-SET,emby-domain,Emby",
     "RULE-SET,emby-ip,Emby,no-resolve",
     "RULE-SET,talkatone-domain,Talkatone",
     "RULE-SET,talkatone-ip,Talkatone,no-resolve",
-    "RULE-SET,twitter-domain,Twitter",
-    "RULE-SET,twitter-ip,Twitter,no-resolve",
     "RULE-SET,GlobalMedia-domain,国际媒体",
     "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
     "RULE-SET,netflix-domain,NETFLIX",

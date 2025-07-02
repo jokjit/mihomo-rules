@@ -30,56 +30,42 @@ const main = (config) => {
   config["find-process-mode"] = "strict";
   config["global-client-fingerprint"] = "chrome";
 
-  //覆盖hosts配置
-  config["hosts"] = {
-    "dns.alidns.com": ["223.5.5.5", "223.6.6.6", "2400:3200::1", "2400:3200:baba::1"],
-    "doh.pub": ["1.12.12.12", "1.12.12.21", "120.53.53.53"],
-    "ntp.ntsc.ac.cn": ["114.118.7.161", "114.118.7.163"]
-  };
-
-  config["ntp"] = {
-    "enable": false,
-    "write-to-system": false,
-    "server": "ntp.ntsc.ac.cn",
-    "port": 123,
-    "interval": 30
-  };
-
+  // 国内DNS服务器
+  const domesticNameservers = [
+     "https://dns.alidns.com/dns-query", // 阿里DoH
+    "https://doh.pub/dns-query" // 腾讯DoH，
+  ];
+  // 国外DNS服务器
+  const foreignNameservers = [
+    "https://cloudflare-dns.com/dns-query", // CloudflareDNS
+    "https://8.8.4.4/dns-query#ecs=1.1.1.1/24&ecs-override=true", // GoogleDNS
+    "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true", // OpenDNS
+  ];
   // 覆盖 dns 配置
   config["dns"] = {
     "enable": true,
     "listen": "0.0.0.0:1053",
-    "use-hosts": true,
-    "cache-algorithm": "arc",
-    "use-system-hosts": true,
     "respect-rules": true,
     "prefer-h3": false,
     "ipv6": true,
+    "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
-    "fake-ip-filter": ["geosite:private",
+    "fake-ip-filter": [
+      "+.lan",
+      "+.local",
+      "+.msftconnecttest.com",
+      "+.msftncsi.com",
+      "geosite:private",
       "RULE-SET:fakeip-filter",
       "RULE-SET:cn-domain"],
-    "default-nameserver": ["223.5.5.5", "119.29.29.29"],
-    "nameserver": ["https://dns.google/dns-query#h3=true", "quic://unfiltered.adguard-dns.com", "https://doh.opendns.com/dns-query"],
-    "proxy-server-nameserver": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"],
-    "direct-nameserver": ["quic://223.5.5.5", "quic://223.6.6.6"],
-    "direct-nameserver-follow-policy": true,
+    "default-nameserver": ["223.5.5.5", "1.2.4.8"],
+    "nameserver": [...foreignNameservers],
+    "proxy-server-nameserver": [...domesticNameservers],
+    "direct-nameserver": [...domesticNameservers],
+    "direct-nameserver-follow-policy": false,
     "nameserver-policy": {
-      "+.jp": [
-        "https://public.dns.iij.jp/dns-query#h3=true"
-      ],
-      "+.hk": [
-        "quic://dns.nextdns.io"
-      ],
-      "+.eu": [
-        "quic://dns0.eu"
-      ],
-      "RULE-SET:private-domain,direct": [
-        "quic://dns.18bit.cn",
-        "quic://2025.dns1.top",
-        "quic://dns.alidns.com"
-      ]
+      "geosite:cn": domesticNameservers
     }
   };
 

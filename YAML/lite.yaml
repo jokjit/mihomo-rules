@@ -102,9 +102,14 @@ experimental:
     dialer-ip4p-convert: false
     
 hosts:
-  dns.alidns.com: [223.5.5.5, 223.6.6.6, 2400:3200::1, 2400:3200:baba::1]
-  doh.pub: [1.12.12.12, 1.12.12.21, 120.53.53.53]
-  ntp.ntsc.ac.cn: [114.118.7.161, 114.118.7.163]
+    ntp.ntsc.ac.cn:
+    - 114.118.7.161
+    - 114.118.7.163
+    dns.alidns.com:
+    - 223.5.5.5
+    - 223.6.6.6
+    - 2400:3200:baba::1
+    - 2400:3200::1
     
 profile:
     store-selected: true
@@ -158,7 +163,7 @@ dns:
     cache-algorithm: arc
     prefer-h3: false
     use-hosts: true
-    use-system-hosts: true
+    use-system-hosts: false
     respect-rules: true
     listen: 0.0.0.0:1053
     ipv6: true
@@ -168,30 +173,21 @@ dns:
     fake-ip-filter:
       - RULE-SET:Fakeip-Filter,Private,CN
     nameserver-policy:
-    "+.jp":
-      - "https://public.dns.iij.jp/dns-query#h3=true" # IIJ （日本） DNS over H3
-    "+.hk":
-      - "quic://dns.nextdns.io" # NextDNS（香港） DNS over DOQ
-    "+.eu":
-      - "quic://dns0.eu" # 公共（欧洲） DNS over DOQ
-    "RULE-SET:Private,direct":
-      - "quic://dns.18bit.cn" # 18bit DNS over DOQ
-      - "quic://2025.dns1.top" # 关圣 DNS over DOQ
-      - "quic://dns.alidns.com" # 阿里 DNS over DOQ
+      RULE-SET:CN,Private:
+      - quic://223.5.5.5 
+      - quic://223.6.6.6
     default-nameserver:
       - quic://223.5.5.5 
       - quic://223.6.6.6
       - 119.29.29.29
     nameserver:
+      - https://cloudflare-dns.com/dns-query#h3=true
       - https://dns.google/dns-query#h3=true
       - quic://unfiltered.adguard-dns.com
-      - https://doh.opendns.com/dns-query
     proxy-server-nameserver:
-      - https://dns.alidns.com/dns-query 
-      - https://doh.pub/dns-query
+      - quic://223.5.5.5 
     direct-nameserver:
       - quic://223.5.5.5 
-      - quic://223.6.6.6
     direct-nameserver-follow-policy: true
       
 proxies:
@@ -220,6 +216,7 @@ proxy-groups:
 - { name: Emby, <<: *Pr, icon: https://cdn.jsdmirror.cn/jokjit/mihomo-rules@main/icon/Emby.png }
 - { name: FCM, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/FCM.png }
 - { name: GitHub, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/GitHub.png }
+- { name: Google, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Google.png }
 - { name: 中国媒体, <<: *D, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/CN_Media.png }
 - { name: 国际媒体, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png }
 # 手动选择分组（select 类型）
@@ -260,8 +257,11 @@ rules:
   - RULE-SET,BlockHttpDNScidr,🚫泄漏拦截,no-resolve
   - RULE-SET,Category-httpdns-cn,🚫泄漏拦截
   - RULE-SET,STUN,🚫泄漏拦截
-  - DOMAIN,stun.cloudflare.com,🚫泄漏拦截
-  - RULE-SET,STUNcidr,🚫泄漏拦截
+  - AND,(NETWORK,TCP),(DST-PORT,5349),🚫泄漏拦截
+  - AND,(NETWORK,UDP),(DST-PORT,5350),🚫泄漏拦截
+  - AND,(NETWORK,UDP),(DST-PORT,5351),🚫泄漏拦截
+  - AND,(NETWORK,UDP),(DST-PORT,19302),🚫泄漏拦截
+  - DOMAIN-KEYWORD,stun,🚫泄漏拦截
   # 中国联通
   - DOMAIN-SUFFIX,ad.10010.com,🚫广告拦截
 # 小蚕惠生活
@@ -415,6 +415,7 @@ rules:
   - RULE-SET,Private,🎯全球直连
   - RULE-SET,Privatecidr,🎯全球直连,no-resolve
   - RULE-SET,Fakeip-Filter,🎯全球直连
+  - RULE-SET,SteamCN,🎯直连
   - SUB-RULE,(NETWORK,UDP),SUB-DIRECT
   - RULE-SET,YouTube,YouTube
   - RULE-SET,Telegram,Telegram
@@ -435,6 +436,8 @@ rules:
   - RULE-SET,Talkatonecidr,Talkatone,no-resolve
   - RULE-SET,Twitter,Twitter
   - RULE-SET,Twittercidr,Twitter,no-resolve
+  - RULE-SET,Google,Google
+  - RULE-SET,Googlecidr,Google,no-resolve
   - RULE-SET,GlobalMedia,国际媒体
   - RULE-SET,GlobalMediacidr,国际媒体,no-resolve
   - RULE-SET,Netflix,Netflix
@@ -443,8 +446,6 @@ rules:
   - RULE-SET,Geolocation-!cn,🚀节点选择
   - RULE-SET,Proxy,🚀节点选择
   - RULE-SET,Gfw,🚀节点选择
-  - RULE-SET,US,🚀节点选择
-  - RULE-SET,direct,🎯直连
   - RULE-SET,ChinaMedia,🎯直连
   - RULE-SET,ChinaMediacidr,🎯直连,no-resolve
   - RULE-SET,CN,🎯直连
@@ -462,6 +463,8 @@ rule-providers:
   BlockHttpDNScidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs" }
   ChinaMedia: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_Domain.mrs" }
   ChinaMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_IP.mrs" }
+  Google: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_Domain.mrs" }
+  Googlecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_IP.mrs" }
   Twitter: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs" }
   Twittercidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs" }
   Telegram: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Telegram/Telegram_OCD_Domain.mrs" }
@@ -493,13 +496,11 @@ rule-providers:
   Mediacidr: { <<: *ip,  url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/mediaip.mrs" }
   YouTube: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
   Advertising: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
-  US: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/US/US_Domain.mrs" }
   Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }
   Talkatonecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs" }
-  STUN: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_Domain.mrs" }
-  STUNcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_IP.mrs" }
+  STUN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs" }
+  SteamCN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs" }
   emby_domain: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs" }
   emby_ip: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs" }
   GlobalMedia: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_Domain.mrs" }
   GlobalMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_IP.mrs" }
-  direct: {<<: *domain, url: "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/direct.mrs"}

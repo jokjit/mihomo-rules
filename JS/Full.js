@@ -1351,6 +1351,15 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "us-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/us.mrs",
+      "path": "./rules/us-ip.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
     "proxy-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -1606,6 +1615,7 @@ const main = (config) => {
     "RULE-SET,geolocation-!cn-domain,Proxy",
     "RULE-SET,proxy-domain,Proxy",
     "RULE-SET,gfw-domain,Proxy",
+    "RULE-SET,us-ip,Proxy",    
     "RULE-SET,Tracker-domain,BT追踪器",
     "RULE-SET,Tracker-ip,BT追踪器,no-resolve",
     "RULE-SET,direct,DIRECT",

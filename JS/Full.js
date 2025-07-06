@@ -32,7 +32,7 @@ const main = (config) => {
 
   // 国内DNS服务器
   const domesticNameservers = [
-     "https://dns.alidns.com/dns-query", // 阿里DoH
+    "https://dns.alidns.com/dns-query", // 阿里DoH
     "https://doh.pub/dns-query" // 腾讯DoH，
   ];
   // 国外DNS服务器
@@ -769,7 +769,7 @@ const main = (config) => {
     "tiktok-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/TikTok/TikTok_Domain.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tiktok.mrs",
       "path": "./rules/tiktok-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -1192,17 +1192,8 @@ const main = (config) => {
     "stun-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_Domain.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs",
       "path": "./rules/stun-domain.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
-    "stun-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/STUN/STUN_IP.mrs",
-      "path": "./rules/stun-ip.mrs",
       "type": "http",
       "format": "mrs",
       "interval": 86400
@@ -1266,15 +1257,6 @@ const main = (config) => {
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs",
       "path": "./rules/Advertising-domain.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
-    "us-domain": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/US/US_Domain.mrs",
-      "path": "./rules/us-domain.mrs",
       "type": "http",
       "format": "mrs",
       "interval": 86400
@@ -1554,8 +1536,6 @@ const main = (config) => {
     "RULE-SET,BlockHttpDNS-ip,REJECT,no-resolve",
     "RULE-SET,category-httpdns-cn-domain,REJECT",
     "RULE-SET,stun-domain,REJECT",
-    "DOMAIN,stun.cloudflare.com,REJECT",
-    "RULE-SET,stun-ip,REJECT",
     "RULE-SET,private-domain,DIRECT",
     "RULE-SET,private-ip,DIRECT,no-resolve",
     "RULE-SET,fakeip-filter,DIRECT",
@@ -1621,7 +1601,6 @@ const main = (config) => {
     "RULE-SET,geolocation-!cn-domain,Proxy",
     "RULE-SET,proxy-domain,Proxy",
     "RULE-SET,gfw-domain,Proxy",
-    "RULE-SET,us-domain,Proxy",
     "RULE-SET,Tracker-domain,BT追踪器",
     "RULE-SET,Tracker-ip,BT追踪器,no-resolve",
     "RULE-SET,direct,DIRECT",

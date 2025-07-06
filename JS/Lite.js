@@ -947,6 +947,15 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "us-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/us.mrs",
+      "path": "./rules/us-ip.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
     "proxy-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -1176,6 +1185,7 @@ const main = (config) => {
     "RULE-SET,Supercell-ip,游戏平台",
     "RULE-SET,proxy-domain,Proxy",
     "RULE-SET,gfw-domain,Proxy",
+    "RULE-SET,us-ip,Proxy",    
     "RULE-SET,direct,DIRECT",
     "RULE-SET,ChinaMedia-domain,DIRECT",
     "RULE-SET,ChinaMedia-ip,DIRECT,no-resolve",

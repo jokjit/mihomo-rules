@@ -1185,7 +1185,7 @@ const main = (config) => {
     "RULE-SET,Supercell-ip,游戏平台",
     "RULE-SET,proxy-domain,Proxy",
     "RULE-SET,gfw-domain,Proxy",
-    "RULE-SET,us-ip,Proxy",    
+    "RULE-SET,us-ip,Proxy,no-resolve",    
     "RULE-SET,direct,DIRECT",
     "RULE-SET,ChinaMedia-domain,DIRECT",
     "RULE-SET,ChinaMedia-ip,DIRECT,no-resolve",

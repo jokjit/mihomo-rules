@@ -539,6 +539,7 @@ rules:
   - RULE-SET,Geolocation-!cn,🚀节点选择
   - RULE-SET,Proxy,🚀节点选择
   - RULE-SET,Gfw,🚀节点选择
+  - RULE-SET,UScidr,🚀节点选择,no-resolve
   - RULE-SET,Tracker,BT追踪器
   - RULE-SET,Trackercidr,BT追踪器,no-resolve
   - RULE-SET,ChinaMedia,🎯直连
@@ -626,6 +627,7 @@ rule-providers:
   Proxy: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/proxy.mrs" }
   CN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs" }
   CNcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cnip.mrs" }
+  UScidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/us.mrs" }
   Netflix: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflix.mrs" }
   Netflixcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflixip.mrs" }
   Disney: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/disney.mrs" }

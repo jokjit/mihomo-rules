@@ -32,31 +32,14 @@ P: &P {type: http, interval: 86400, health-check: {enable: true, url: 'https://e
 # 前缀用来给节点添加备注
 proxy-providers:
   名称1:
-    url: "订阅链接"
+    url: "https://mmf83.no-mad-world.club/link/aU5yKGlch2r3oof7?clash=3"
     <<: *P
     proxy: "🎯直连"
     override:
-      additional-prefix: '[前缀] '
+      additional-prefix: '[ikuuu] '
       skip-cert-verify: true
       udp: true
       
-  名称2:
-    url: "订阅链接"
-    <<: *P
-    proxy: "🎯直连"
-    override:
-      additional-prefix: '[前缀] '
-      skip-cert-verify: true
-      udp: true
- 
-  名称3:
-    url: "订阅链接"
-    <<: *P
-    proxy: "🎯直连"
-    override:
-      additional-prefix: '[前缀] '
-      skip-cert-verify: true
-      udp: true
 
 mixed-port: 7890
 allow-lan: true
@@ -210,6 +193,7 @@ proxy-groups:
 - { name: Twitter, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Twitter.png }
 - { name: Talkatone, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Talkatone.png }
 - { name: Instagram, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Instagram.png }
+- { name: Speedtest, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Speedtest.png }
 - { name: Netflix, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Netflix.png }
 - { name: AI, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/OpenAI.png }
 - { name: YouTube, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/YouTube.png }
@@ -430,6 +414,7 @@ rules:
   - RULE-SET,GoogleFCM,FCM
   - RULE-SET,GoogleFCMcidr,FCM,no-resolve
   - RULE-SET,Gemini,AI
+  - RULE-SET,Speedtest,Speedtest
   - RULE-SET,emby_domain,Emby
   - RULE-SET,emby_ip,Emby,no-resolve
   - RULE-SET,Talkatone,Talkatone
@@ -497,6 +482,7 @@ rule-providers:
   Media: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/media.mrs" }
   Mediacidr: { <<: *ip,  url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/mediaip.mrs" }
   YouTube: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
+  Speedtest: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs" }
   Advertising: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
   Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }
   Talkatonecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs" }

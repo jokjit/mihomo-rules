@@ -278,6 +278,14 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
+      "name": "Speedtest",
+      "type": "select",
+      "include-all": true,
+      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
+      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"
+    },
+    {
+      ...groupBaseOption,
       "name": "PayPal",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
@@ -874,24 +882,6 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
-    "google-domain": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_Domain.mrs",
-      "path": "./rules/google-domain.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
-    "google-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_IP.mrs",
-      "path": "./rules/google-ip.mrs",
-      "type": "http",
-      "format": "mrs",
-      "interval": 86400
-    },
     "microsoft-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -1169,6 +1159,24 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "google-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_Domain.mrs",
+      "path": "./rules/google-domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
+    "google-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_IP.mrs",
+      "path": "./rules/google-ip.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
     "FCM-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -1183,6 +1191,15 @@ const main = (config) => {
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_IP.mrs",
       "path": "./rules/FCM-ip.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
+    "Speedtest-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs",
+      "path": "./rules/Speedtest-domain.mrs",
       "type": "http",
       "format": "mrs",
       "interval": 86400
@@ -1594,6 +1611,7 @@ const main = (config) => {
     "RULE-SET,FCM-ip,FCM,no-resolve",
     "RULE-SET,Gemini-domain,AI",
     "RULE-SET,HBO-domain,HBO",
+    "RULE-SET,Speedtest,Speedtest-domain",
     "RULE-SET,signal-domain,Signal",
     "RULE-SET,Wise-domain,Wise",
     "RULE-SET,emby-domain,Emby",

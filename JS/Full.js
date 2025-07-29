@@ -1611,7 +1611,7 @@ const main = (config) => {
     "RULE-SET,FCM-ip,FCM,no-resolve",
     "RULE-SET,Gemini-domain,AI",
     "RULE-SET,HBO-domain,HBO",
-    "RULE-SET,Speedtest,Speedtest-domain",
+    "RULE-SET,Speedtest-domain,Speedtest",
     "RULE-SET,signal-domain,Signal",
     "RULE-SET,Wise-domain,Wise",
     "RULE-SET,emby-domain,Emby",

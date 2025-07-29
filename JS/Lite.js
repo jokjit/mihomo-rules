@@ -180,6 +180,14 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
+      "name": "Speedtest",
+      "type": "select",
+      "include-all": true,
+      "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
+      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"
+    },
+    {
+      ...groupBaseOption,
       "name": "哔哩哔哩",
       "type": "select",
       "proxies": ["DIRECT", "HongKong", "TaiWan", "Macau"],
@@ -810,6 +818,15 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "Speedtest-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs",
+      "path": "./rules/Speedtest-domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
 
     //杂项
     "stun-domain": {
@@ -1169,6 +1186,7 @@ const main = (config) => {
     "RULE-SET,ea-domain,游戏平台",
     "RULE-SET,Sony-domain,游戏平台",
     "RULE-SET,FCM-domain,FCM",
+    "RULE-SET,Speedtest,Speedtest-domain",
     "RULE-SET,FCM-ip,FCM,no-resolve",
     "RULE-SET,google-domain,google",
     "RULE-SET,google-ip,google,no-resolve",

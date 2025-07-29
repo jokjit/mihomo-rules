@@ -1186,7 +1186,7 @@ const main = (config) => {
     "RULE-SET,ea-domain,游戏平台",
     "RULE-SET,Sony-domain,游戏平台",
     "RULE-SET,FCM-domain,FCM",
-    "RULE-SET,Speedtest,Speedtest-domain",
+    "RULE-SET,Speedtest-domain,Speedtest",
     "RULE-SET,FCM-ip,FCM,no-resolve",
     "RULE-SET,google-domain,google",
     "RULE-SET,google-ip,google,no-resolve",

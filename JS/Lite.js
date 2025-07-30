@@ -32,15 +32,20 @@ const main = (config) => {
 
   // 国内DNS服务器
   const domesticNameservers = [
-    "https://dns.alidns.com/dns-query", // 阿里DoH
+    "quic://dns.18bit.cn#ecs=114.114.114.114/24&ecs-override=true",
+    "quic://dns.ipv4dns.com#ecs=114.114.114.114/24&ecs-override=true",
+    "quic://2025.dns1.top#ecs=114.114.114.114/24&ecs-override=true",
+    "quic://dns.alidns.com#ecs=114.114.114.114/24&ecs-override=true",
     "https://doh.pub/dns-query" // 腾讯DoH，
   ];
   // 国外DNS服务器
   const foreignNameservers = [
-    "https://cloudflare-dns.com/dns-query", // CloudflareDNS
-    "https://8.8.4.4/dns-query#ecs=1.1.1.1/24&ecs-override=true", // GoogleDNS
-    "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true", // OpenDNS
+    "quic://dns.adguard-dns.com#ecs=1.1.1.1/24&ecs-override=true",
+    "https://cloudflare-dns.com/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true",
+    "https://dns.google/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true",
+    "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true" // OpenDNS
   ];
+  
   // 覆盖 dns 配置
   config["dns"] = {
     "enable": true,
@@ -52,20 +57,23 @@ const main = (config) => {
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
     "fake-ip-filter": [
-      "+.lan",
-      "+.local",
-      "+.msftconnecttest.com",
-      "+.msftncsi.com",
-      "geosite:private",
+      "dns.alidns.com",
+      "cloudflare-dns.com",
+      "dns.google",
+      "dns.adguard-dns.com",
+      "dns.18bit.cn",
+      "2025.dns1.top",
+      "dns.ipv4dns.com",
       "RULE-SET:fakeip-filter",
-      "RULE-SET:cn-domain"],
+      "RULE-SET:cn-domain",
+      "RULE-SET:private-domain"],
     "default-nameserver": ["223.5.5.5", "1.2.4.8"],
     "nameserver": [...foreignNameservers],
     "proxy-server-nameserver": [...domesticNameservers],
     "direct-nameserver": [...domesticNameservers],
     "direct-nameserver-follow-policy": false,
     "nameserver-policy": {
-      "geosite:cn": domesticNameservers
+      "geosite:cn": [...domesticNameservers]
     }
   };
 
@@ -598,7 +606,7 @@ const main = (config) => {
     "emby-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdelivr.net/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs",
       "path": "./rules/emby-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -607,7 +615,7 @@ const main = (config) => {
     "emby-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
-      "url": "https://cdn.jsdelivr.net/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs",
       "path": "./rules/emby-ip.mrs",
       "type": "http",
       "format": "mrs",
@@ -913,7 +921,7 @@ const main = (config) => {
     "private-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/private.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs",
       "path": "./rules/private-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -922,7 +930,7 @@ const main = (config) => {
     "private-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/privateip.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs",
       "path": "./rules/private-ip.mrs",
       "type": "http",
       "format": "mrs",

@@ -2,6 +2,22 @@
 PR: &Pr {type: select, proxies: [ 🚀节点选择, ♻️自动选择, 🟢手动选择, 🔯故障转移, ⚡️负载均衡, 🇭🇰香港, 🇹🇼台湾, 🇯🇵日本, 🇺🇸美国, 🇸🇬新加坡, 🌐全部节点, 🎯全球直连]}
 # 直连
 PE: &Pe {type: select, proxies: [🎯全球直连, 🚀节点选择]}
+
+#DNS配置锚点
+# 定义国内和国外 DoH 服务器列表（锚点）
+foreign_nameservers: &foreign_nameservers
+  - "quic://dns.adguard-dns.com#ecs=1.1.1.1/24&ecs-override=true"
+  - "https://cloudflare-dns.com/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true"
+  - "https://dns.google/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true"
+  - "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true"
+
+domestic_nameservers: &domestic_nameservers
+  - "quic://dns.18bit.cn#ecs=114.114.114.114/24&ecs-override=true"
+  - "quic://dns.ipv4dns.com#ecs=114.114.114.114/24&ecs-override=true"
+  - "quic://2025.dns1.top#ecs=114.114.114.114/24&ecs-override=true"
+  - "quic://dns.alidns.com#ecs=114.114.114.114/24&ecs-override=true"
+  - "https://doh.pub/dns-query"
+  
 # 自动选择组锚点
 UrlTest: &U {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, timeout: 5000, max-failed-times: 5, lazy: true, proxies: [香港自动, 新加坡自动, 日本自动, 台湾自动, 美国自动]}
 # 自动选择节点配置锚点
@@ -30,13 +46,14 @@ P: &P {type: http, interval: 86400, health-check: {enable: true, url: 'https://e
 # 机场名称不能重复,
 # 订阅链接用来写订阅链接
 # 前缀用来给节点添加备注
+# 有多少订阅就复制对应数量的，然后进行修改
 proxy-providers:
   名称1:
-    url: "https://mmf83.no-mad-world.club/link/aU5yKGlch2r3oof7?clash=3"
+    url: "订阅链接"
     <<: *P
     proxy: "🎯直连"
     override:
-      additional-prefix: '[ikuuu] '
+      additional-prefix: '[前缀] '
       skip-cert-verify: true
       udp: true
       
@@ -49,10 +66,10 @@ mode: rule
 geodata-mode: false
 geodata-loader: standard
 geox-url:
-    geoip: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
-    geosite: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
-    mmdb: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
-    asn: https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb
+    geoip: https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+    geosite: https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+    mmdb: https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
+    asn: https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb
 geo-auto-update: true
 geo-update-interval: 24
 geosite-matcher: succinct
@@ -156,21 +173,15 @@ dns:
     fake-ip-filter:
       - RULE-SET:Fakeip-Filter,Private,CN
     nameserver-policy:
-      RULE-SET:CN,Private:
-      - quic://223.5.5.5 
-      - quic://223.6.6.6
+      RULE-SET:CN,Private: *domestic_nameservers
     default-nameserver:
       - quic://223.5.5.5 
-      - quic://223.6.6.6
+      - 223.6.6.6
       - 119.29.29.29
-    nameserver:
-      - https://cloudflare-dns.com/dns-query#h3=true
-      - https://dns.google/dns-query#h3=true
-      - quic://unfiltered.adguard-dns.com
-    proxy-server-nameserver:
-      - quic://223.5.5.5 
-    direct-nameserver:
-      - quic://223.5.5.5 
+      - 1.2.4.8
+    nameserver: *foreign_nameservers
+    proxy-server-nameserver: *domestic_nameservers
+    direct-nameserver: *domestic_nameservers
     direct-nameserver-follow-policy: true
       
 proxies:
@@ -189,20 +200,20 @@ proxy-groups:
 - { name: ⚡️负载均衡, <<: *L}  
 - { name: 🔯故障转移, <<: *F}
 - { name: 🌐全部节点, type: select, include-all-providers: true}
-- { name: Telegram, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Telegram.png }
-- { name: Twitter, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Twitter.png }
-- { name: Talkatone, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Talkatone.png }
-- { name: Instagram, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Instagram.png }
-- { name: Speedtest, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Speedtest.png }
-- { name: Netflix, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Netflix.png }
-- { name: AI, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/OpenAI.png }
-- { name: YouTube, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/YouTube.png }
-- { name: Emby, <<: *Pr, icon: https://cdn.jsdmirror.cn/jokjit/mihomo-rules@main/icon/Emby.png }
-- { name: FCM, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/FCM.png }
-- { name: GitHub, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/GitHub.png }
-- { name: Google, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Google.png }
-- { name: 中国媒体, <<: *D, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/CN_Media.png }
-- { name: 国际媒体, <<: *Pr, icon: https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png }
+- { name: Telegram, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png }
+- { name: Twitter, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png }
+- { name: Talkatone, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png }
+- { name: Instagram, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png }
+- { name: Speedtest, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png }
+- { name: Netflix, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png }
+- { name: AI, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png }
+- { name: YouTube, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png }
+- { name: Emby, <<: *Pr, icon: https://cdn.jsdmirror.com/jokjit/mihomo-rules@main/icon/Emby.png }
+- { name: FCM, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png }
+- { name: GitHub, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png }
+- { name: Google, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png }
+- { name: 中国媒体, <<: *D, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/CN_Media.png }
+- { name: 国际媒体, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png }
 # 手动选择分组（select 类型）
 - { name: 🇭🇰香港, type: select, include-all: true, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong" }
 - { name: 🇹🇼台湾, type: select, include-all: true, filter: "(?i)🇹🇼|\\bTW\\b|台湾|Taiwan|Tai wan" }
@@ -444,51 +455,51 @@ sub-rules:
     - RULE-SET,CNcidr,🎯全球直连
     
 rule-providers:
-  Applecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Apple/Apple_OCD_IP.mrs" }
-  BlockHttpDNS: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_Domain.mrs" }
-  BlockHttpDNScidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs" }
-  ChinaMedia: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_Domain.mrs" }
-  ChinaMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_IP.mrs" }
-  Google: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_Domain.mrs" }
-  Googlecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_IP.mrs" }
-  Twitter: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs" }
-  Twittercidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs" }
-  Telegram: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Telegram/Telegram_OCD_Domain.mrs" }
-  Telegramcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Telegram/Telegram_OCD_IP.mrs" }
-  OpenAI: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_Domain.mrs" }
-  OpenAIcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_IP.mrs" }
-  GitHub:  { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GitHub/GitHub_OCD_Domain.mrs" }
-  Claude: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Claude/Claude_OCD_Domain.mrs" }
-  Copilot: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_Domain.mrs" }
-  Copilotcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_IP.mrs" }
-  Gemini: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Gemini/Gemini_OCD_Domain.mrs" }
-  GoogleFCM: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_Domain.mrs" }
-  GoogleFCMcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_IP.mrs" }
-  Instagram: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Instagram/Instagram_OCD_Domain.mrs" }
-  Category-httpdns-cn: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-httpdns-cn.mrs" }
-  Category-anticensorship: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-anticensorship.mrs" }
-  Geolocation-!cn: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs" }
-  Category-ads-all: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs" }
+  Applecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Apple/Apple_OCD_IP.mrs" }
+  BlockHttpDNS: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_Domain.mrs" }
+  BlockHttpDNScidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs" }
+  ChinaMedia: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_Domain.mrs" }
+  ChinaMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_IP.mrs" }
+  Google: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_Domain.mrs" }
+  Googlecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Google/Google_OCD_IP.mrs" }
+  Twitter: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs" }
+  Twittercidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs" }
+  Telegram: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Telegram/Telegram_OCD_Domain.mrs" }
+  Telegramcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Telegram/Telegram_OCD_IP.mrs" }
+  OpenAI: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_Domain.mrs" }
+  OpenAIcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_IP.mrs" }
+  GitHub:  { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GitHub/GitHub_OCD_Domain.mrs" }
+  Claude: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Claude/Claude_OCD_Domain.mrs" }
+  Copilot: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_Domain.mrs" }
+  Copilotcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_IP.mrs" }
+  Gemini: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Gemini/Gemini_OCD_Domain.mrs" }
+  GoogleFCM: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_Domain.mrs" }
+  GoogleFCMcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_IP.mrs" }
+  Instagram: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Instagram/Instagram_OCD_Domain.mrs" }
+  Category-httpdns-cn: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-httpdns-cn.mrs" }
+  Category-anticensorship: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-anticensorship.mrs" }
+  Geolocation-!cn: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs" }
+  Category-ads-all: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs" }
   Gfw: { <<: *domain, url: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/gfw.mrs" }
-  Private: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/private.mrs" }
-  Privatecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/privateip.mrs" }
-  Fakeip-Filter: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs" }
-  Proxy: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/proxy.mrs" }
-  CN: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs" }
-  CNcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cnip.mrs" }
+  Private: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs" }
+  Privatecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs" }
+  Fakeip-Filter: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs" }
+  Proxy: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/proxy.mrs" }
+  CN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs" }
+  CNcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cnip.mrs" }
   UScidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/us.mrs" }
-  Netflix: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflix.mrs" }
-  Netflixcidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflixip.mrs" }
-  Media: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/media.mrs" }
-  Mediacidr: { <<: *ip,  url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/mediaip.mrs" }
-  YouTube: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
+  Netflix: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflix.mrs" }
+  Netflixcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflixip.mrs" }
+  Media: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/media.mrs" }
+  Mediacidr: { <<: *ip,  url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/mediaip.mrs" }
+  YouTube: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
   Speedtest: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs" }
-  Advertising: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
-  Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }
-  Talkatonecidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs" }
+  Advertising: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
+  Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }
+  Talkatonecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs" }
   STUN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs" }
   SteamCN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs" }
-  emby_domain: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs" }
-  emby_ip: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs" }
-  GlobalMedia: { <<: *domain, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_Domain.mrs" }
-  GlobalMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_IP.mrs" }
+  emby_domain: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs" }
+  emby_ip: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs" }
+  GlobalMedia: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_Domain.mrs" }
+  GlobalMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_IP.mrs" }

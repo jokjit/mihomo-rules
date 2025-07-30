@@ -32,15 +32,20 @@ const main = (config) => {
 
   // 国内DNS服务器
   const domesticNameservers = [
-    "https://dns.alidns.com/dns-query", // 阿里DoH
+    "quic://dns.18bit.cn#ecs=114.114.114.114/24&ecs-override=true",
+    "quic://dns.ipv4dns.com#ecs=114.114.114.114/24&ecs-override=true",
+    "quic://2025.dns1.top#ecs=114.114.114.114/24&ecs-override=true",
+    "quic://dns.alidns.com#ecs=114.114.114.114/24&ecs-override=true",
     "https://doh.pub/dns-query" // 腾讯DoH，
   ];
   // 国外DNS服务器
   const foreignNameservers = [
-    "https://cloudflare-dns.com/dns-query", // CloudflareDNS
-    "https://8.8.4.4/dns-query#ecs=1.1.1.1/24&ecs-override=true", // GoogleDNS
-    "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true", // OpenDNS
+    "quic://dns.adguard-dns.com#ecs=1.1.1.1/24&ecs-override=true",
+    "https://cloudflare-dns.com/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true",
+    "https://dns.google/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true",
+    "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true" // OpenDNS
   ];
+  
   // 覆盖 dns 配置
   config["dns"] = {
     "enable": true,
@@ -52,20 +57,23 @@ const main = (config) => {
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
     "fake-ip-filter": [
-      "+.lan",
-      "+.local",
-      "+.msftconnecttest.com",
-      "+.msftncsi.com",
-      "geosite:private",
+      "dns.alidns.com",
+      "cloudflare-dns.com",
+      "dns.google",
+      "dns.adguard-dns.com",
+      "dns.18bit.cn",
+      "2025.dns1.top",
+      "dns.ipv4dns.com",
       "RULE-SET:fakeip-filter",
-      "RULE-SET:cn-domain"],
+      "RULE-SET:cn-domain",
+      "RULE-SET:private-domain"],
     "default-nameserver": ["223.5.5.5", "1.2.4.8"],
     "nameserver": [...foreignNameservers],
     "proxy-server-nameserver": [...domesticNameservers],
     "direct-nameserver": [...domesticNameservers],
     "direct-nameserver-follow-policy": false,
     "nameserver-policy": {
-      "geosite:cn": domesticNameservers
+      "geosite:cn": [...domesticNameservers]
     }
   };
 
@@ -141,28 +149,28 @@ const main = (config) => {
       "name": "AI",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"
     },
     {
       ...groupBaseOption,
       "name": "YouTube",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "Macau", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/YouTube.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"
     },
     {
       ...groupBaseOption,
       "name": "NETFLIX",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Netflix.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"
     },
     {
       ...groupBaseOption,
       "name": "Disney+",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Disney+.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Disney+.png"
     },
     {
       ...groupBaseOption,
@@ -170,7 +178,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/AppleTV.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AppleTV.png"
     },
     {
       ...groupBaseOption,
@@ -178,7 +186,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/AmazonPrimeVideo.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AmazonPrimeVideo.png"
     },
     {
       ...groupBaseOption,
@@ -186,7 +194,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/HBO.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/HBO.png"
     },
     {
       ...groupBaseOption,
@@ -194,7 +202,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Hulu.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Hulu.png"
     },
     {
       ...groupBaseOption,
@@ -208,21 +216,21 @@ const main = (config) => {
       "name": "TikTok",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/TikTok.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"
     },
     {
       ...groupBaseOption,
       "name": "哔哩哔哩",
       "type": "select",
       "proxies": ["DIRECT", "HongKong", "TaiWan", "Macau"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/BiliBili.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/BiliBili.png"
     },
     {
       ...groupBaseOption,
       "name": "哔哩东南亚",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Biliintl.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Biliintl.png"
     },
     {
       ...groupBaseOption,
@@ -230,7 +238,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/FCM.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"
     },
     {
       ...groupBaseOption,
@@ -238,35 +246,35 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Discord.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Discord.png"
     },
     {
       ...groupBaseOption,
       "name": "国内媒体",
       "type": "select",
       "proxies": ["DIRECT", "Proxy"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/CN_Media.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/CN_Media.png"
     },
     {
       ...groupBaseOption,
       "name": "巴哈姆特",
       "type": "select",
       "proxies": ["Proxy", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Bahamut.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Bahamut.png"
     },
     {
       ...groupBaseOption,
       "name": "国际媒体",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"
     },
     {
       ...groupBaseOption,
       "name": "Spotify",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Spotify.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Spotify.png"
     },
     {
       ...groupBaseOption,
@@ -274,7 +282,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/GitHub.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"
     },
     {
       ...groupBaseOption,
@@ -282,28 +290,28 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"
     },
     {
       ...groupBaseOption,
       "name": "PayPal",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/PayPal.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/PayPal.png"
     },
     {
       ...groupBaseOption,
       "name": "PikPak",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/PikPak.webp"
+      "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/PikPak.webp"
     },
     {
       ...groupBaseOption,
       "name": "Talkatone",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"
     },
     {
       ...groupBaseOption,
@@ -311,7 +319,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/GoogleVoice.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GoogleVoice.png"
     },
     {
       ...groupBaseOption,
@@ -319,7 +327,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Telegram.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"
     },
     {
       ...groupBaseOption,
@@ -327,7 +335,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Twitter.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"
     },
     {
       ...groupBaseOption,
@@ -335,7 +343,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Instagram.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"
     },
     {
       ...groupBaseOption,
@@ -343,7 +351,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Line.webp"
+      "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Line.webp"
     },
     {
       ...groupBaseOption,
@@ -351,7 +359,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer"],
-      "icon": "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Signal.webp"
+      "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Signal.webp"
     },
     {
       ...groupBaseOption,
@@ -359,7 +367,7 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Wise.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Wise.png"
     },
     {
       ...groupBaseOption,
@@ -367,35 +375,35 @@ const main = (config) => {
       "type": "select",
       "include-all": true,
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/BitTorrent.webp"
+      "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/BitTorrent.webp"
     },
     {
       ...groupBaseOption,
       "name": "Apple",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Apple.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"
     },
     {
       ...groupBaseOption,
       "name": "Google",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Google.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"
     },
     {
       ...groupBaseOption,
       "name": "Microsoft",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"
     },
     {
       ...groupBaseOption,
       "name": "游戏平台",
       "type": "select",
       "proxies": ["Proxy", "HongKong", "TaiWan", "Japan", "Singapore", "America", "AllServer", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.cn/gh/jokjit/mihomo-rules@main/icon/Steam.png"
+      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"
     },
     // 地区分组
     {
@@ -759,7 +767,7 @@ const main = (config) => {
     "emby-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdelivr.net/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Lanlan13-14/Rules/rules/Domain/emby.mrs",
       "path": "./rules/emby-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -768,7 +776,7 @@ const main = (config) => {
     "emby-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
-      "url": "https://cdn.jsdelivr.net/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs",
       "path": "./rules/emby-ip.mrs",
       "type": "http",
       "format": "mrs",
@@ -1097,7 +1105,7 @@ const main = (config) => {
     "signal-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/signal.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/signal.mrs",
       "path": "./rules/signal-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -1117,7 +1125,7 @@ const main = (config) => {
     "pikpak-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/pikpak.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/pikpak.mrs",
       "path": "./rules/pikpak-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -1135,7 +1143,7 @@ const main = (config) => {
     "Tracker-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/Tracker/Tracker_Domain.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/Tracker/Tracker_Domain.mrs",
       "path": "./rules/Tracker-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -1144,7 +1152,7 @@ const main = (config) => {
     "Tracker-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/rules/mihomo/Tracker/Tracker_IP.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/Tracker/Tracker_IP.mrs",
       "path": "./rules/Tracker-ip.mrs",
       "type": "http",
       "format": "mrs",
@@ -1290,7 +1298,7 @@ const main = (config) => {
     "private-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/private.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs",
       "path": "./rules/private-domain.mrs",
       "type": "http",
       "format": "mrs",
@@ -1299,7 +1307,7 @@ const main = (config) => {
     "private-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/privateip.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs",
       "path": "./rules/private-ip.mrs",
       "type": "http",
       "format": "mrs",

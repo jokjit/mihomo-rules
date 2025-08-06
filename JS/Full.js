@@ -148,28 +148,28 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "AI",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"
     },
     {
       ...groupBaseOption,
       "name": "YouTube",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"
     },
     {
       ...groupBaseOption,
       "name": "NETFLIX",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"
     },
     {
       ...groupBaseOption,
       "name": "Disney+",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Disney+.png"
     },
     {
@@ -177,7 +177,7 @@ const main = (config) => {
       "name": "AppleTV",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AppleTV.png"
     },
     {
@@ -185,7 +185,7 @@ const main = (config) => {
       "name": "亚马逊TV",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AmazonPrimeVideo.png"
     },
     {
@@ -193,7 +193,7 @@ const main = (config) => {
       "name": "HBO",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/HBO.png"
     },
     {
@@ -201,21 +201,21 @@ const main = (config) => {
       "name": "Hulu",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Hulu.png"
     },
     {
       ...groupBaseOption,
       "name": "Emby",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"
     },
     {
       ...groupBaseOption,
       "name": "TikTok",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"
     },
     {
@@ -229,7 +229,7 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "哔哩东南亚",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Biliintl.png"
     },
     {
@@ -237,7 +237,7 @@ const main = (config) => {
       "name": "FCM",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"
     },
     {
@@ -245,7 +245,7 @@ const main = (config) => {
       "name": "Discord",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Discord.png"
     },
     {
@@ -259,21 +259,21 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "巴哈姆特",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Bahamut.png"
     },
     {
       ...groupBaseOption,
       "name": "国际媒体",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"
     },
     {
       ...groupBaseOption,
       "name": "Spotify",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Spotify.png"
     },
     {
@@ -281,7 +281,7 @@ const main = (config) => {
       "name": "GitHub",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"
     },
     {
@@ -289,28 +289,28 @@ const main = (config) => {
       "name": "Speedtest",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"
     },
     {
       ...groupBaseOption,
       "name": "PayPal",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/PayPal.png"
     },
     {
       ...groupBaseOption,
       "name": "PikPak",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/PikPak.webp"
     },
     {
       ...groupBaseOption,
       "name": "Talkatone",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"
     },
     {
@@ -318,7 +318,7 @@ const main = (config) => {
       "name": "GoogleVoice",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GoogleVoice.png"
     },
     {
@@ -326,7 +326,7 @@ const main = (config) => {
       "name": "Telegram",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"
     },
     {
@@ -334,7 +334,7 @@ const main = (config) => {
       "name": "Twitter",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"
     },
     {
@@ -342,7 +342,7 @@ const main = (config) => {
       "name": "Instagram",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"
     },
     {
@@ -350,7 +350,7 @@ const main = (config) => {
       "name": "LINE",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Line.webp"
     },
     {
@@ -358,7 +358,7 @@ const main = (config) => {
       "name": "Signal",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Signal.webp"
     },
     {
@@ -366,7 +366,7 @@ const main = (config) => {
       "name": "Wise",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Wise.png"
     },
     {
@@ -374,35 +374,35 @@ const main = (config) => {
       "name": "BT追踪器",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/BitTorrent.webp"
     },
     {
       ...groupBaseOption,
       "name": "Apple",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"
     },
     {
       ...groupBaseOption,
       "name": "Google",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"
     },
     {
       ...groupBaseOption,
       "name": "Microsoft",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"
     },
     {
       ...groupBaseOption,
       "name": "游戏平台",
       "type": "select",
-      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"
     },
     // 地区分组

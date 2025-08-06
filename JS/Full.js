@@ -141,35 +141,35 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "节点选择",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
     },
     {
       ...groupBaseOption,
       "name": "AI",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"
     },
     {
       ...groupBaseOption,
       "name": "YouTube",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"
     },
     {
       ...groupBaseOption,
       "name": "NETFLIX",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"
     },
     {
       ...groupBaseOption,
       "name": "Disney+",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Disney+.png"
     },
     {
@@ -177,7 +177,7 @@ const main = (config) => {
       "name": "AppleTV",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AppleTV.png"
     },
     {
@@ -185,7 +185,7 @@ const main = (config) => {
       "name": "亚马逊TV",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AmazonPrimeVideo.png"
     },
     {
@@ -193,7 +193,7 @@ const main = (config) => {
       "name": "HBO",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/HBO.png"
     },
     {
@@ -201,35 +201,35 @@ const main = (config) => {
       "name": "Hulu",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Hulu.png"
     },
     {
       ...groupBaseOption,
       "name": "Emby",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"
     },
     {
       ...groupBaseOption,
       "name": "TikTok",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"
     },
     {
       ...groupBaseOption,
       "name": "哔哩哔哩",
       "type": "select",
-      "proxies": ["DIRECT", "香港", "台湾", "澳门"],
+      "proxies": ["DIRECT", "香港节点", "台湾节点", "澳门节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/BiliBili.png"
     },
     {
       ...groupBaseOption,
       "name": "哔哩东南亚",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Biliintl.png"
     },
     {
@@ -237,7 +237,7 @@ const main = (config) => {
       "name": "FCM",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"
     },
     {
@@ -245,7 +245,7 @@ const main = (config) => {
       "name": "Discord",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Discord.png"
     },
     {
@@ -259,21 +259,21 @@ const main = (config) => {
       ...groupBaseOption,
       "name": "巴哈姆特",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Bahamut.png"
     },
     {
       ...groupBaseOption,
       "name": "国际媒体",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"
     },
     {
       ...groupBaseOption,
       "name": "Spotify",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Spotify.png"
     },
     {
@@ -281,7 +281,7 @@ const main = (config) => {
       "name": "GitHub",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"
     },
     {
@@ -289,28 +289,28 @@ const main = (config) => {
       "name": "Speedtest",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"
     },
     {
       ...groupBaseOption,
       "name": "PayPal",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/PayPal.png"
     },
     {
       ...groupBaseOption,
       "name": "PikPak",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/PikPak.webp"
     },
     {
       ...groupBaseOption,
       "name": "Talkatone",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"
     },
     {
@@ -318,7 +318,7 @@ const main = (config) => {
       "name": "GoogleVoice",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GoogleVoice.png"
     },
     {
@@ -326,7 +326,7 @@ const main = (config) => {
       "name": "Telegram",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"
     },
     {
@@ -334,7 +334,7 @@ const main = (config) => {
       "name": "Twitter",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"
     },
     {
@@ -342,7 +342,7 @@ const main = (config) => {
       "name": "Instagram",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"
     },
     {
@@ -350,7 +350,7 @@ const main = (config) => {
       "name": "LINE",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Line.webp"
     },
     {
@@ -358,7 +358,7 @@ const main = (config) => {
       "name": "Signal",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Signal.webp"
     },
     {
@@ -366,7 +366,7 @@ const main = (config) => {
       "name": "Wise",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Wise.png"
     },
     {
@@ -374,62 +374,52 @@ const main = (config) => {
       "name": "BT追踪器",
       "type": "select",
       "include-all": true,
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/BitTorrent.webp"
     },
     {
       ...groupBaseOption,
       "name": "Apple",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"
     },
     {
       ...groupBaseOption,
       "name": "Google",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"
     },
     {
       ...groupBaseOption,
       "name": "Microsoft",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"
     },
     {
       ...groupBaseOption,
       "name": "游戏平台",
       "type": "select",
-      "proxies": ["香港", "台湾", "日本", "新加坡", "美国", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚", "马来西亚", "英国", "德国"],
+      "proxies": ["香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"
     },
     // 地区分组
     {
       ...groupBaseOption,
-      "name": "香港",
+      "name": "香港节点",
       "type": "select",
-      "proxies": ["香港-自动选择", "香港-自动回退", "香港-负载均衡"],
+      "proxies": ["香港节点-自动选择", "香港节点-自动回退", "香港节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇭🇰|香港|(\b(HK|Hong|HongKong)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
     },
     {
       ...groupBaseOption,
-      "name": "香港-自动选择",
+      "name": "香港节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?i)🇭🇰|香港|(\b(HK|Hong|HongKong)\b)",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "香港-自动回退",
-      "type": "fallback",
       "lazy": true,
       "include-all": true,
       "hidden": true,
@@ -438,7 +428,17 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "香港-负载均衡",
+      "name": "香港节点-自动回退",
+      "type": "fallback",
+      "lazy": true,
+      "include-all": true,
+      "hidden": true,
+      "filter": "(?i)🇭🇰|香港|(\b(HK|Hong|HongKong)\b)",
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
+    },
+    {
+      ...groupBaseOption,
+      "name": "香港节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -448,28 +448,18 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "澳门",
+      "name": "澳门节点",
       "type": "select",
-      "proxies": ["澳门-自动选择", "澳门-自动回退", "澳门-负载均衡"],
+      "proxies": ["澳门节点-自动选择", "澳门节点-自动回退", "澳门节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b",
       "icon": "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000"
     },
     {
       ...groupBaseOption,
-      "name": "澳门-自动选择",
+      "name": "澳门节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b",
-      "icon": "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000"
-    },
-    {
-      ...groupBaseOption,
-      "name": "澳门-自动回退",
-      "type": "fallback",
       "lazy": true,
       "include-all": true,
       "hidden": true,
@@ -478,7 +468,17 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "澳门-负载均衡",
+      "name": "澳门节点-自动回退",
+      "type": "fallback",
+      "lazy": true,
+      "include-all": true,
+      "hidden": true,
+      "filter": "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b",
+      "icon": "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000"
+    },
+    {
+      ...groupBaseOption,
+      "name": "澳门节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -488,28 +488,18 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "台湾",
+      "name": "台湾节点",
       "type": "select",
-      "proxies": ["台湾-自动选择", "台湾-自动回退", "台湾-负载均衡"],
+      "proxies": ["台湾节点-自动选择", "台湾节点-自动回退", "台湾节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png"
     },
     {
       ...groupBaseOption,
-      "name": "台湾-自动选择",
+      "name": "台湾节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "台湾-自动回退",
-      "type": "fallback",
       "lazy": true,
       "include-all": true,
       "hidden": true,
@@ -518,7 +508,17 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "台湾-负载均衡",
+      "name": "台湾节点-自动回退",
+      "type": "fallback",
+      "lazy": true,
+      "include-all": true,
+      "hidden": true,
+      "filter": "(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)",
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png"
+    },
+    {
+      ...groupBaseOption,
+      "name": "台湾节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -528,28 +528,18 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "日本",
+      "name": "日本节点",
       "type": "select",
-      "proxies": ["日本-自动选择", "日本-自动回退", "日本-负载均衡"],
+      "proxies": ["日本节点-自动选择", "日本节点-自动回退", "日本节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇯🇵|日本|东京|(\b(JP|Japan)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
     },
     {
       ...groupBaseOption,
-      "name": "日本-自动选择",
+      "name": "日本节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?i)🇯🇵|日本|东京|(\b(JP|Japan)\b)",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "日本-自动回退",
-      "type": "fallback",
       "lazy": true,
       "include-all": true,
       "hidden": true,
@@ -558,7 +548,17 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "日本-负载均衡",
+      "name": "日本节点-自动回退",
+      "type": "fallback",
+      "lazy": true,
+      "include-all": true,
+      "hidden": true,
+      "filter": "(?i)🇯🇵|日本|东京|(\b(JP|Japan)\b)",
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
+    },
+    {
+      ...groupBaseOption,
+      "name": "日本节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -568,28 +568,18 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "新加坡",
+      "name": "新加坡节点",
       "type": "select",
-      "proxies": ["新加坡-自动选择", "新加坡-自动回退", "新加坡-负载均衡"],
+      "proxies": ["新加坡节点-自动选择", "新加坡节点-自动回退", "新加坡节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
     },
     {
       ...groupBaseOption,
-      "name": "新加坡-自动选择",
+      "name": "新加坡节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "新加坡-自动回退",
-      "type": "fallback",
       "lazy": true,
       "include-all": true,
       "hidden": true,
@@ -598,7 +588,17 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "新加坡-负载均衡",
+      "name": "新加坡节点-自动回退",
+      "type": "fallback",
+      "lazy": true,
+      "include-all": true,
+      "hidden": true,
+      "filter": "(?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)",
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
+    },
+    {
+      ...groupBaseOption,
+      "name": "新加坡节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -608,16 +608,16 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "美国",
+      "name": "美国节点",
       "type": "select",
-      "proxies": ["美国-自动选择", "美国-自动回退", "美国-负载均衡"],
+      "proxies": ["美国节点-自动选择", "美国节点-自动回退", "美国节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇺🇸|美国|洛杉矶|圣何塞|(\b(US|United States|America)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png"
     },
     {
       ...groupBaseOption,
-      "name": "美国-自动选择",
+      "name": "美国节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
       "lazy": true,
@@ -628,7 +628,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "美国-自动回退",
+      "name": "美国节点-自动回退",
       "type": "fallback",
       "lazy": true,
       "include-all": true,
@@ -638,7 +638,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "美国-负载均衡",
+      "name": "美国节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -648,16 +648,16 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "尼日利亚",
+      "name": "尼日利亚节点",
       "type": "select",
-      "proxies": ["尼日利亚-自动选择", "尼日利亚-自动回退", "尼日利亚-负载均衡"],
+      "proxies": ["尼日利亚节点-自动选择", "尼日利亚节点-自动回退", "尼日利亚节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇳🇬|尼日利亚|(\b(NG|Nigeria)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Nigeria.png"
     },
     {
       ...groupBaseOption,
-      "name": "尼日利亚-自动选择",
+      "name": "尼日利亚节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
       "lazy": true,
@@ -668,7 +668,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "尼日利亚-自动回退",
+      "name": "尼日利亚节点-自动回退",
       "type": "fallback",
       "lazy": true,
       "include-all": true,
@@ -678,7 +678,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "尼日利亚-负载均衡",
+      "name": "尼日利亚节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -688,16 +688,16 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "马来西亚",
+      "name": "马来西亚节点",
       "type": "select",
-      "proxies": ["马来西亚-自动选择", "马来西亚-自动回退", "马来西亚-负载均衡"],
+      "proxies": ["马来西亚节点-自动选择", "马来西亚节点-自动回退", "马来西亚节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇲🇾|马来西亚|(\b(MY|Malaysia)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png"
     },
     {
       ...groupBaseOption,
-      "name": "马来西亚-自动选择",
+      "name": "马来西亚节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
       "lazy": true,
@@ -708,7 +708,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "马来西亚-自动回退",
+      "name": "马来西亚节点-自动回退",
       "type": "fallback",
       "lazy": true,
       "include-all": true,
@@ -718,7 +718,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "马来西亚-负载均衡",
+      "name": "马来西亚节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -728,16 +728,16 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "英国",
+      "name": "英国节点",
       "type": "select",
-      "proxies": ["英国-自动选择", "英国-自动回退", "英国-负载均衡"],
+      "proxies": ["英国节点-自动选择", "英国节点-自动回退", "英国节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇬🇧|英国|(\b(UK|United Kingdom)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png"
     },
     {
       ...groupBaseOption,
-      "name": "英国-自动选择",
+      "name": "英国节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
       "lazy": true,
@@ -748,7 +748,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "英国-自动回退",
+      "name": "英国节点-自动回退",
       "type": "fallback",
       "lazy": true,
       "include-all": true,
@@ -758,7 +758,7 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "英国-负载均衡",
+      "name": "英国节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,
@@ -768,28 +768,18 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "德国",
+      "name": "德国节点",
       "type": "select",
-      "proxies": ["德国-自动选择", "德国-自动回退", "德国-负载均衡"],
+      "proxies": ["德国节点-自动选择", "德国节点-自动回退", "德国节点-负载均衡"],
       "include-all": true,
       "filter": "(?i)🇩🇪|德国|(\b(DE|Germany)\b)",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png"
     },
     {
       ...groupBaseOption,
-      "name": "德国-自动选择",
+      "name": "德国节点-自动选择",
       "type": "url-test",
       "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?i)🇩🇪|德国|(\b(DE|Germany)\b)",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "德国-自动回退",
-      "type": "fallback",
       "lazy": true,
       "include-all": true,
       "hidden": true,
@@ -798,7 +788,17 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "德国-负载均衡",
+      "name": "德国节点-自动回退",
+      "type": "fallback",
+      "lazy": true,
+      "include-all": true,
+      "hidden": true,
+      "filter": "(?i)🇩🇪|德国|(\b(DE|Germany)\b)",
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png"
+    },
+    {
+      ...groupBaseOption,
+      "name": "德国节点-负载均衡",
       "type": "load-balance",
       "lazy": true,
       "include-all": true,

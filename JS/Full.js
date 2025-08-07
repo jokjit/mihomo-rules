@@ -971,6 +971,24 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "ByteDance-domain": {
+       ...ruleProviderCommon,
+      "type": "http",
+      "interval": 86400,
+      "behavior": "domain",
+      "format": "mrs",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs",
+       "path": "./ruleset/ByteDance_Domain.mrs"
+    },
+    "ByteDance-ip": {
+       ...ruleProviderCommon,
+       "type": "http",
+       "interval": 86400,
+       "behavior": "ipcidr",
+       "format": "mrs",
+       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_IP.mrs",
+        "path": "./ruleset/ByteDance_IP.mrs"
+    },
     "bahamut-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -1755,6 +1773,8 @@ const main = (config) => {
     "AND,(NETWORK,UDP),(DST-PORT,5351),REJECT",
     "AND,(NETWORK,UDP),(DST-PORT,19302),REJECT",
     "DOMAIN-KEYWORD,stun,REJECT",
+    "RULE-SET,ByteDance-domain,DIRECT",  
+    "RULE-SET,ByteDance-ip,DIRECT,no-resolve",
     "RULE-SET,private-domain,DIRECT",
     "RULE-SET,private-ip,DIRECT,no-resolve",
     "RULE-SET,fakeip-filter,DIRECT",

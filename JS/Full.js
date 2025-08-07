@@ -182,6 +182,14 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
+      "name": "Twitch",
+      "type": "select",
+      "include-all": true,
+      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT", "尼日利亚节点", "马来西亚节点", "英国节点", "德国节点"],
+      "icon": "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Twitch.webp"
+    },
+    {
+      ...groupBaseOption,
       "name": "亚马逊TV",
       "type": "select",
       "include-all": true,
@@ -1133,6 +1141,14 @@ const main = (config) => {
       "format": "mrs",
       "interval": 86400
     },
+    "Twitch-domain": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Twitch/Twitch_OCD_Domain.mrs",
+      "type": "http",
+      "format": "mrs",
+      "interval": 86400
+    },
 
     //游戏平台
     "steam-domain": {
@@ -1788,6 +1804,7 @@ const main = (config) => {
     "RULE-SET,disney-domain,Disney+",
     "RULE-SET,bahamut-domain,巴哈姆特",
     "RULE-SET,Hulu-domain,Hulu",
+    "RULE-SET,Twitch-domain,Twitch",
     "RULE-SET,spotify-domain,Spotify",
     "RULE-SET,pikpak-domain,PikPak",
     "RULE-SET,AmazonPrimeVideo-domain,亚马逊TV",

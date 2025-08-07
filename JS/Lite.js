@@ -805,11 +805,29 @@ const main = (config) => {
     "tiktok-domain": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tiktok.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/TikTok/TikTok_Domain.mrs",
       "path": "./rules/tiktok-domain.mrs",
       "type": "http",
       "format": "mrs",
       "interval": 86400
+    },
+    "ByteDance-domain": {
+       ...ruleProviderCommon,
+      "type": "http",
+      "interval": 86400,
+      "behavior": "domain",
+      "format": "mrs",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs",
+       "path": "./ruleset/ByteDance_Domain.mrs"
+    },
+    "ByteDance-ip": {
+       ...ruleProviderCommon,
+       "type": "http",
+       "interval": 86400,
+       "behavior": "ipcidr",
+       "format": "mrs",
+       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_IP.mrs",
+        "path": "./ruleset/ByteDance_IP.mrs"
     },
     "bilibili-domain": {
       ...ruleProviderCommon,
@@ -1354,6 +1372,8 @@ const main = (config) => {
     "RULE-SET,private-domain,DIRECT",
     "RULE-SET,private-ip,DIRECT,no-resolve",
     "RULE-SET,fakeip-filter,DIRECT",
+    "RULE-SET,ByteDance-domain,DIRECT",  
+    "RULE-SET,ByteDance-ip,DIRECT,no-resolve",
     "RULE-SET,bilibili-domain,哔哩哔哩",
     "RULE-SET,tiktok-domain,TikTok",
     "RULE-SET,youtube-domain,YouTube",

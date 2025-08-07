@@ -410,6 +410,8 @@ rules:
   - RULE-SET,Private,🎯全球直连
   - RULE-SET,Privatecidr,🎯全球直连,no-resolve
   - RULE-SET,Fakeip-Filter,🎯全球直连
+  - RULE-SET,ByteDance,🎯直连
+  - RULE-SET,ByteDancecidr,🎯直连,no-resolve
   - RULE-SET,SteamCN,🎯直连
   - SUB-RULE,(NETWORK,UDP),SUB-DIRECT
   - RULE-SET,YouTube,YouTube
@@ -417,6 +419,7 @@ rules:
   - RULE-SET,Telegramcidr,Telegram,no-resolve
   - RULE-SET,Claude,AI
   - RULE-SET,GitHub,GitHub
+  - DOMAIN,line.xmsl.org,新加坡
   - RULE-SET,Instagram,Instagram
   - RULE-SET,Copilot,AI
   - RULE-SET,Copilotcidr,AI,no-resolve
@@ -503,3 +506,5 @@ rule-providers:
   emby_ip: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/Lanlan13-14/Rules/rules/IP/emby-ip.mrs" }
   GlobalMedia: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_Domain.mrs" }
   GlobalMediacidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_IP.mrs" }
+  ByteDance: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs"},
+  ByteDancecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_IP.mrs" }

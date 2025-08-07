@@ -450,6 +450,8 @@ rules:
   - RULE-SET,Private,🎯全球直连
   - RULE-SET,Privatecidr,🎯全球直连,no-resolve
   - RULE-SET,Fakeip-Filter,🎯全球直连
+  - RULE-SET,ByteDance,🎯直连
+  - RULE-SET,ByteDancecidr,🎯直连,no-resolve
   - SUB-RULE,(NETWORK,UDP),SUB-DIRECT
   - RULE-SET,AppleTV,AppleTV
   - RULE-SET,AppleMedia,AppleTV
@@ -657,3 +659,5 @@ rule-providers:
   Sony: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Sony/Sony_OCD_Domain.mrs" }
   Blizzard: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Blizzard/Blizzard_OCD_Domain.mrs" }
   Blizzardcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Blizzard/Blizzard_OCD_IP.mrs" }
+  ByteDance: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs"},
+  ByteDancecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_IP.mrs" }

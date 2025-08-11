@@ -1461,16 +1461,6 @@ const main = (config) => {
             "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/HuluUSA/HuluUSA_OCD_Domain.mrs",
             "path": "./ruleset/HuluUSA_Domain.mrs"
         },
-        "Hupu": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Hupu/Hupu_OCD_Domain.mrs",
-            "path": "./ruleset/Hupu_Domain.mrs"
-        },
         "iCloud": {
             ...ruleProviderCommon,
             "type": "http",

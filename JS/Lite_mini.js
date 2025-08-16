@@ -157,13 +157,6 @@ const main = (config) => {
     },
     {
       ...groupBaseOption,
-      "name": "Netflix",
-      "type": "select",
-      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"
-    },
-    {
-      ...groupBaseOption,
       "name": "Emby",
       "type": "select",
       "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT"],
@@ -203,27 +196,6 @@ const main = (config) => {
       "type": "select",
       "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT"],
       "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "Google",
-      "type": "select",
-      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "微软",
-      "type": "select",
-      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "游戏平台",
-      "type": "select",
-      "proxies": ["节点选择","香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT"],
-      "icon": "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"
     },
     // 地区分组
     {
@@ -591,16 +563,6 @@ const main = (config) => {
             "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Baidu/Baidu_OCD_Domain.mrs",
             "path": "./ruleset/Baidu_Domain.mrs"
         },
-        "Bing": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Bing/Bing_OCD_Domain.mrs",
-            "path": "./ruleset/Bing_Domain.mrs"
-        },
         "ByteDance": {
             ...ruleProviderCommon,
             "type": "http",
@@ -690,56 +652,6 @@ const main = (config) => {
             "proxy": "DIRECT",
             "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Gemini/Gemini_OCD_Domain.mrs",
             "path": "./ruleset/Gemini_Domain.mrs"
-        },
-        "Microsoft": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Microsoft/Microsoft_OCD_Domain.mrs",
-            "path": "./ruleset/Microsoft_Domain.mrs"
-        },
-        "MicrosoftEdge": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/MicrosoftEdge/MicrosoftEdge_OCD_Domain.mrs",
-            "path": "./ruleset/MicrosoftEdge_Domain.mrs"
-        },
-        "Steam": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Steam/Steam_OCD_Domain.mrs",
-            "path": "./ruleset/Steam_Domain.mrs"
-        },
-        "SteamCN": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs",
-            "path": "./ruleset/SteamCN_Domain.mrs"
-        },
-        "Teams": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Teams/Teams_OCD_Domain.mrs",
-            "path": "./ruleset/Teams_Domain.mrs"
         },
         "Tencent": {
             ...ruleProviderCommon,
@@ -881,46 +793,6 @@ const main = (config) => {
             "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs",
             "path": "./ruleset/Telegram_IP.mrs"
         },
-        "Netflix": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/netflix.mrs",
-            "path": "./ruleset/Netflix_Domain.mrs"
-        },
-        "Netflix-ip": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "ipcidr",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/netflix.mrs",
-            "path": "./ruleset/Netflix_IP.mrs"
-        },
-        "Google": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google.mrs",
-            "path": "./ruleset/Google_Domain.mrs"
-        },
-        "Google-ip": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "ipcidr",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/google.mrs",
-            "path": "./ruleset/Google_IP.mrs"
-        },
         "Advertising-ads": {
             ...ruleProviderCommon,
             "type": "http",
@@ -1003,7 +875,6 @@ const main = (config) => {
             "DOMAIN,ghfast.top,DIRECT",
             "RULE-SET,Baidu,DIRECT",
             "RULE-SET,DingTalk,DIRECT",
-            "RULE-SET,SteamCN,DIRECT",
             "OR,((RULE-SET,115),(DOMAIN-SUFFIX,115vod.com)),DIRECT",
             "RULE-SET,WeChat,DIRECT",
             "RULE-SET,NetEase,DIRECT",
@@ -1017,14 +888,9 @@ const main = (config) => {
             "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram)),Telegram",
             "OR,((RULE-SET,GitHub),(DOMAIN-KEYWORD,github)),GitHub",
             "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
-            "OR,((RULE-SET,Steam),(DOMAIN-KEYWORD,steambroadcast),(DOMAIN-KEYWORD,steamstore),(DOMAIN-KEYWORD,steamuserimages)),游戏平台",
-            "RULE-SET,Epic,游戏平台",
             "OR,((RULE-SET,Emby,Emby),(DOMAIN-KEYWORD,emby)),Emby",
-            "RULE-SET,Netflix,Netflix",
-            "RULE-SET,Google,Google",
             "RULE-SET,GlobalMedia,国际媒体",
             "RULE-SET,Cloudflare,节点选择",
-            "OR,((RULE-SET,Bing),(RULE-SET,Teams),(RULE-SET,MicrosoftEdge),(RULE-SET,Microsoft),(DOMAIN-KEYWORD,microsoft),(DOMAIN-KEYWORD,skydrive)),微软",
             "RULE-SET,ChinaMedia,国内媒体",
         ],
         "SUB-IP": [
@@ -1033,8 +899,6 @@ const main = (config) => {
             "RULE-SET,Telegram-ip,Telegram,no-resolve",
             "RULE-SET,Copilot-ip,AI,no-resolve",
             "RULE-SET,OpenAI-ip,AI,no-resolve",
-            "RULE-SET,Netflix-ip,Netflix,no-resolve",
-            "RULE-SET,Google-ip,Google,no-resolve",
             "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
             "RULE-SET,Cloudflare-ip,节点选择,no-resolve"
         ]

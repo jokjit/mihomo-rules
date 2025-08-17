@@ -219,7 +219,7 @@ proxy-groups:
 - { name: Cloudflare, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Cloudflare.webp }
 - { name: Discord, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Discord.png }
 - { name: Disney, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Disney+.png }
-- { name: Emby, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Emby.png }
+- { name: Emby, <<: *Pr, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png }
 - { name: FCM, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png }
 - { name: Facebook, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Facebook.png }
 - { name: GitHub, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png }

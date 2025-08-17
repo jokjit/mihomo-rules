@@ -208,7 +208,7 @@ proxy-groups:
 - { name: Netflix, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png }
 - { name: AI, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png }
 - { name: YouTube, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png }
-- { name: Emby, <<: *Pr, icon: https://cdn.jsdmirror.com/jokjit/mihomo-rules@main/icon/Emby.png }
+- { name: Emby, <<: *Pr, icon: https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png }
 - { name: FCM, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png }
 - { name: GitHub, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png }
 - { name: Google, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png }

@@ -1,5 +1,5 @@
 # 代理
-PR: &Pr {type: select, proxies: [ 🚀节点选择, ♻️自动选择, 🟢手动选择, 🔯故障转移, ⚡️负载均衡, 🇭🇰香港, 🇹🇼台湾, 🇯🇵日本, 🇺🇸美国, 🇸🇬新加坡, 🌐全部节点, 🎯全球直连]}
+PR: &Pr {type: select, proxies: [ 🚀节点选择, ♻️自动选择, 🟢手动选择, 🔯自动回退, ⚡️负载均衡, 🇭🇰香港, 🇹🇼台湾, 🇯🇵日本, 🇺🇸美国, 🇸🇬新加坡, 🌐全部节点, 🎯全球直连]}
 # 直连
 PE: &Pe {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 # 自动选择组锚点
@@ -7,7 +7,7 @@ UrlTest: &U {type: select, url: 'https://www.gstatic.com/generate_204', interval
 # 自动选择节点配置锚点
 urltest: &u {type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, timeout: 5000, max-failed-times: 5, lazy: true, hidden: true}
 # 故障转移组锚点
-Fallback: &F {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5, proxies: [香港故转, 新加坡故转, 日本故转, 台湾故转, 美国故转]}
+Fallback: &F {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5, proxies: [香港回退, 新加坡回退, 日本回退, 台湾回退, 美国回退]}
 # 故障转移节点配置锚点
 fallback: &f {type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5}
 # 负载均衡组锚点
@@ -198,14 +198,14 @@ proxies:
     type: reject
     
 proxy-groups:
-- { name: 🚀节点选择, type: select, proxies: [♻️自动选择, 🟢手动选择, ⚡️负载均衡, 🔯故障转移, 🎯直连, 🇭🇰香港, 🇹🇼台湾, 🇯🇵日本, 🇺🇸美国, 🇸🇬新加坡, 🌐全部节点]} 
+- { name: 🚀节点选择, type: select, proxies: [♻️自动选择, 🟢手动选择, ⚡️负载均衡, 🔯自动回退, 🎯直连, 🇭🇰香港, 🇹🇼台湾, 🇯🇵日本, 🇺🇸美国, 🇸🇬新加坡, 🌐全部节点]} 
 - { name: 🟢手动选择, type: select, tolerance: 20, strategy: consistent-hashing, url: "https://www.gstatic.com/generate_204",interval: 300, lazy: true, timeout: 5000, max-failed-times: 5, include-all-providers: true}
 - { name: 🚫广告拦截, type: select, hidden: true, include-all-providers: true, proxies: [🚫拒绝, 🎯直连] }  
 - {name: 🚫泄漏拦截, hidden: true, type: select, include-all-providers: true, proxies: [🚫拒绝, 🎯直连]}  
 - { name: 🎯全球直连, type: select, hidden: true, proxies: [🎯直连]} 
 - { name: ♻️自动选择, <<: *U}
 - { name: ⚡️负载均衡, <<: *L}  
-- { name: 🔯故障转移, <<: *F}
+- { name: 🔯自动回退, <<: *F}
 - { name: 🌐全部节点, type: select, include-all-providers: true}
 - { name: AbemaTV, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Abema.png }
 - { name: 亚马逊, <<: *Pr, icon: https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AmazonShopping.png }
@@ -269,11 +269,11 @@ proxy-groups:
 - { name: 美国自动, <<: *u, filter: "(?i)🇺🇸|\\bUS\\b|美国|United States", exclude-filter: "(?i)(The_US_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|russia|austria|plus|traffic|Australia|rus|aus)" }
 
 # 故障转移分组
-- { name: 香港故转, <<: *f, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong", exclude-filter: "(?i)(The_HK_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
-- { name: 新加坡故转, <<: *f, filter: "(?i)🇸🇬|\\bSG\\b|新加坡|Singapore", exclude-filter: "(?i)(The_SG_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
-- { name: 日本故转, <<: *f, filter: "(?i)🇯🇵|\\bJP\\b|日本|Japan", exclude-filter: "(?i)(The_JP_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
-- { name: 台湾故转, <<: *f, filter: "(?i)🇹🇼|\\bTW\\b|台湾|Taiwan|Tai wan", exclude-filter: "(?i)(The_TW_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
-- { name: 美国故转, <<: *f, filter: "(?i)🇺🇸|\\bUS\\b|美国|United States", exclude-filter: "(?i)(The_US_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|russia|austria|plus|traffic|Australia|rus|aus)" }
+- { name: 香港回退, <<: *f, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong", exclude-filter: "(?i)(The_HK_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 新加坡回退, <<: *f, filter: "(?i)🇸🇬|\\bSG\\b|新加坡|Singapore", exclude-filter: "(?i)(The_SG_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 日本回退, <<: *f, filter: "(?i)🇯🇵|\\bJP\\b|日本|Japan", exclude-filter: "(?i)(The_JP_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 台湾回退, <<: *f, filter: "(?i)🇹🇼|\\bTW\\b|台湾|Taiwan|Tai wan", exclude-filter: "(?i)(The_TW_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|traffic|plus)" }
+- { name: 美国回退, <<: *f, filter: "(?i)🇺🇸|\\bUS\\b|美国|United States", exclude-filter: "(?i)(The_US_automation|wcloud|\\b[0-3](?:\\.\\d)?[xX]\\b|russia|austria|plus|traffic|Australia|rus|aus)" }
 
 # 均衡分组
 - { name: 香港均衡, <<: *l, filter: "(?i)🇭🇰|\\bHK\\b|香港|Hong Kong" }
@@ -659,5 +659,5 @@ rule-providers:
   Sony: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Sony/Sony_OCD_Domain.mrs" }
   Blizzard: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Blizzard/Blizzard_OCD_Domain.mrs" }
   Blizzardcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Blizzard/Blizzard_OCD_IP.mrs" }
-  ByteDance: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs"},
+  ByteDance: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs"}
   ByteDancecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_IP.mrs" }

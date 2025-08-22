@@ -246,7 +246,6 @@ proxy-groups:
 - { name: 🐟漏网之鱼, <<: *Pr }
  
 rules:
-  - RULE-SET,Advertising,🚫广告拦截
   - RULE-SET,Category-ads-all,🚫广告拦截
   - RULE-SET,BlockHttpDNS,🚫泄漏拦截
   - RULE-SET,BlockHttpDNScidr,🚫泄漏拦截,no-resolve
@@ -496,7 +495,6 @@ rule-providers:
   Mediacidr: { <<: *ip,  url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/mediaip.mrs" }
   YouTube: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
   Speedtest: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs" }
-  Advertising: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
   Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }
   Talkatonecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs" }
   STUN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs" }

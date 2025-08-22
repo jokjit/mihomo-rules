@@ -793,16 +793,6 @@ const main = (config) => {
             "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs",
             "path": "./ruleset/Telegram_IP.mrs"
         },
-        "Advertising-ads": {
-            ...ruleProviderCommon,
-            "type": "http",
-            "interval": 86400,
-            "behavior": "domain",
-            "format": "mrs",
-            "proxy": "DIRECT",
-            "url": "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs",
-            "path": "./ruleset/Ads_Domain.mrs"
-        },
         "CN-ip": {
             ...ruleProviderCommon,
             "type": "http",
@@ -848,7 +838,6 @@ const main = (config) => {
         ];
   config["sub-rules"] = {
         "SUB-REJECT": [
-            "RULE-SET,Advertising-ads,REJECT-DROP",
             "RULE-SET,BlockHttpDNS,REJECT-DROP",
             "RULE-SET,BlockHttpDNS-ip,REJECT-DROP,no-resolve",
             "DOMAIN-KEYWORD,httpdns,REJECT-DROP",

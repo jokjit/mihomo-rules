@@ -286,7 +286,6 @@ proxy-groups:
 - { name: 🐟漏网之鱼, <<: *Pr }
  
 rules:
-  - RULE-SET,Advertising,🚫广告拦截
   - RULE-SET,Category-ads-all,🚫广告拦截
 # 中国联通
   - DOMAIN-SUFFIX,ad.10010.com,🚫广告拦截
@@ -634,7 +633,6 @@ rule-providers:
   Disney: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/disney.mrs" }
   Spotify: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/spotify.mrs" }
   YouTube: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
-  Advertising: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
   Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }
   Talkatonecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs" }
   Cloudflare: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cloudflare.mrs" }

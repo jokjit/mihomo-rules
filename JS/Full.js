@@ -1268,7 +1268,6 @@ config["proxy-groups"] = [
       "RULE-SET,CN,DIRECT",
       "RULE-SET,gaode,DIRECT",
       "RULE-SET,DouYin,DIRECT",
-      "DOMAIN,ghfast.top,DIRECT",
       "RULE-SET,Baidu,DIRECT",
       "RULE-SET,DingTalk,DIRECT",
       "RULE-SET,SteamCN,DIRECT",

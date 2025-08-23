@@ -289,7 +289,6 @@ function createRegionGroups({ name, icon, filter }) {
 const socialGroups = createGroups([
   ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
   ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
-  ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
   ["Twitter", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"],
   ["Instagram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"],
   ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
@@ -298,6 +297,7 @@ const socialGroups = createGroups([
   ["TikTok", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"],
   ["FCM", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"],
   ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
+  ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
   ["Speedtest", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"],
   ["Talkatone", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"],
   ["Cloudflare", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Cloudflare.webp"],
@@ -473,12 +473,6 @@ config["proxy-groups"] = [
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_IP.mrs",
       "path": "./ruleset/NetEase_IP.mrs"
     },
-    "Discord": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Discord/Discord_OCD_Domain.mrs",
-      "path": "./ruleset/Discord_Domain.mrs"
-    },
     "OpenAI": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -509,18 +503,6 @@ config["proxy-groups"] = [
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GaoDe/GaoDe_OCD_Domain.mrs",
       "path": "./ruleset/GaoDe_Domain.mrs"
-    },
-    "Amazon": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Amazon/Amazon_OCD_Domain.mrs",
-      "path": "./ruleset/Amazon_Domain.mrs"
-    },
-    "Amazon-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Amazon/Amazon_OCD_IP.mrs",
-      "path": "./ruleset/Amazon_IP.mrs"
     },
     "AppleDev": {
       ...ruleProviderCommon,
@@ -714,12 +696,6 @@ config["proxy-groups"] = [
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Tencent/Tencent_OCD_IP.mrs",
       "path": "./ruleset/Tencent_IP.mrs"
     },
-    "Wikipedia": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Wikipedia/Wikipedia_OCD_Domain.mrs",
-      "path": "./ruleset/Wikipedia_Domain.mrs"
-    },
     "Emby": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -737,12 +713,6 @@ config["proxy-groups"] = [
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BiliBili/BiliBili_OCD_IP.mrs",
       "path": "./ruleset/BiliBili_IP.mrs"
-    },
-    "Disney": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Disney/Disney_OCD_Domain.mrs",
-      "path": "./ruleset/Disney_Domain.mrs"
     },
     "YouTube": {
       ...ruleProviderCommon,

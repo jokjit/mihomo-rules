@@ -300,7 +300,6 @@ const socialGroups = createGroups([
   ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
   ["Speedtest", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"],
   ["Talkatone", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"],
-  ["Cloudflare", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Cloudflare.webp"],
   ["Apple", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"],
   ["Google", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"],
   ["微软", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"],
@@ -756,18 +755,6 @@ config["proxy-groups"] = [
       "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs",
       "path": "./ruleset/Private_IP.mrs"
     },
-    "Cloudflare": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cloudflare.mrs",
-      "path": "./ruleset/Cloudflare_Domain.mrs"
-    },
-    "Cloudflare-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cloudflare.mrs",
-      "path": "./ruleset/Cloudflare_IP.mrs"
-    },
     "Telegram": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -923,7 +910,6 @@ config["proxy-groups"] = [
       "RULE-SET,Netflix,Netflix",
       "RULE-SET,Google,Google",
       "RULE-SET,GlobalMedia,国际媒体",
-      "RULE-SET,Cloudflare,Cloudflare",
       "OR,((RULE-SET,Siri),(RULE-SET,SystemOTA),(RULE-SET,AppleID),(RULE-SET,AppleDev),(RULE-SET,AppleFirmware),(RULE-SET,AppleHardware),(RULE-SET,Apple)),AppleCN",
       "OR,((RULE-SET,Bing),(RULE-SET,Teams),(RULE-SET,MicrosoftEdge),(RULE-SET,Microsoft),(DOMAIN-KEYWORD,microsoft),(DOMAIN-KEYWORD,skydrive)),微软",
       "RULE-SET,ChinaMedia,国内媒体",
@@ -942,7 +928,6 @@ config["proxy-groups"] = [
       "RULE-SET,Google-ip,Google,no-resolve",
       "RULE-SET,YouTube-ip,YouTube,no-resolve",
       "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
-      "RULE-SET,Cloudflare-ip,Cloudflare,no-resolve"
     ]
   };
 

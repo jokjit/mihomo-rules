@@ -247,6 +247,7 @@ proxy-groups:
  
 rules:
   - RULE-SET,Category-ads-all,🚫广告拦截
+  - RULE-SET,awavenue,🚫广告拦截
   - RULE-SET,BlockHttpDNS,🚫泄漏拦截
   - RULE-SET,BlockHttpDNScidr,🚫泄漏拦截,no-resolve
   - RULE-SET,Category-httpdns-cn,🚫泄漏拦截
@@ -457,6 +458,7 @@ sub-rules:
     
 rule-providers:
   Applecidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Apple/Apple_OCD_IP.mrs" }
+  awavenue: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
   BlockHttpDNS: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_Domain.mrs" }
   BlockHttpDNScidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs" }
   ChinaMedia: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_Domain.mrs" }

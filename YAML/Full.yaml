@@ -287,6 +287,7 @@ proxy-groups:
  
 rules:
   - RULE-SET,Category-ads-all,🚫广告拦截
+  - RULE-SET,awavenue,🚫广告拦截
 # 中国联通
   - DOMAIN-SUFFIX,ad.10010.com,🚫广告拦截
 # 小蚕惠生活
@@ -628,6 +629,7 @@ rule-providers:
   CN: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs" }
   CNcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cnip.mrs" }
   UScidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/us.mrs" }
+  awavenue: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs" }
   Netflix: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflix.mrs" }
   Netflixcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflixip.mrs" }
   Disney: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/disney.mrs" }

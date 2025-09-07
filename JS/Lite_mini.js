@@ -467,9 +467,8 @@ config["proxy-groups"] = [
     "awavenue": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "format": "yaml",
-      "url": "https://github.boki.moe/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml",
-      "path": "./ruleset/awavenue.yaml"
+      "url": "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs",
+      "path": "./ruleset/awavenue.mrs"
     },
     "gaode": {
       ...ruleProviderCommon,

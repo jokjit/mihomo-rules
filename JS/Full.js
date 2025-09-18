@@ -38,20 +38,21 @@ const main = (config) => {
   config["find-process-mode"] = "strict";
   config["global-client-fingerprint"] = "chrome";
 
+
   // 国内DNS服务器
   const domesticNameservers = [
-    "quic://dns.18bit.cn#ecs=114.114.114.114/24&ecs-override=true",
-    "quic://dns.ipv4dns.com#ecs=114.114.114.114/24&ecs-override=true",
-    "quic://2025.dns1.top#ecs=114.114.114.114/24&ecs-override=true",
-    "quic://dns.alidns.com#ecs=114.114.114.114/24&ecs-override=true",
+    "quic://dns.18bit.cn",
+    "quic://dns.ipv4dns.com",
+    "quic://2025.dns1.top",
+    "quic://dns.alidns.com",
     "https://doh.pub/dns-query" // 腾讯DoH，
   ];
   // 国外DNS服务器
   const foreignNameservers = [
-    "quic://dns.adguard-dns.com#ecs=1.1.1.1/24&ecs-override=true",
-    "https://cloudflare-dns.com/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true",
-    "https://dns.google/dns-query#h3=true&ecs=1.1.1.1/24&ecs-override=true",
-    "https://208.67.222.222/dns-query#ecs=1.1.1.1/24&ecs-override=true" // OpenDNS
+    "quic://dns.adguard-dns.com",
+    "https://cloudflare-dns.com/dns-query",
+    "https://dns.google/dns-query",
+    "https://208.67.222.222/dns-query" // OpenDNS
   ];
 
   // 覆盖 dns 配置

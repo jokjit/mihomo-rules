@@ -170,6 +170,12 @@ dns:
     fake-ip-filter-mode: blacklist
     fake-ip-filter:
       - RULE-SET:Fakeip-Filter,Private,CN
+      - dns.alidns.com
+      - cloudflare-dns.com
+      - dns.google
+      - dns.adguard-dns.com
+      - dns.18bit.cn
+      - dns.ipv4dns.com
     nameserver-policy:
       RULE-SET:CN,Private: *domestic_nameservers
     default-nameserver:

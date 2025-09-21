@@ -42,7 +42,6 @@ const main = (config) => {
   // 国内DNS服务器
   const domesticNameservers = [
     "quic://dns.18bit.cn",
-    "quic://dns.ipv4dns.com",
     "quic://dns.alidns.com",
     "https://doh.pub/dns-query" // 腾讯DoH，
   ];
@@ -68,7 +67,6 @@ const main = (config) => {
       "dns.google",
       "dns.adguard-dns.com",
       "dns.18bit.cn",
-      "dns.ipv4dns.com",
       "RULE-SET:Fakeip_Filter",
       "RULE-SET:CN",
       "RULE-SET:Private"],

@@ -172,7 +172,6 @@ dns:
     fake-ip-filter:
       - RULE-SET:Fakeip-Filter,Private,CN
       - dns.alidns.com
-      - cloudflare-dns.com
       - dns.google
       - dns.adguard-dns.com
       - dns.18bit.cn

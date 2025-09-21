@@ -7,14 +7,12 @@ PE: &Pe {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 # 定义国内和国外 DoH 服务器列表（锚点）
 foreign_nameservers: &foreign_nameservers
   - "quic://dns.adguard-dns.com"
-  - "https://cloudflare-dns.com/dns-query"
   - "https://dns.google/dns-query"
   - "https://208.67.222.222/dns-query"
 
 domestic_nameservers: &domestic_nameservers
   - "quic://dns.18bit.cn"
   - "quic://dns.ipv4dns.com"
-  - "quic://2025.dns1.top"
   - "quic://dns.alidns.com"
   - "https://doh.pub/dns-query"
   

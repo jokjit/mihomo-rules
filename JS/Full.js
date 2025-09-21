@@ -48,7 +48,7 @@ const main = (config) => {
   ];
   // 国外DNS服务器
   const foreignNameservers = [
-    "quic://dns.adguard-dns.com"
+    "quic://dns.adguard-dns.com",
     "https://dns.google/dns-query",
     "https://208.67.222.222/dns-query" // OpenDNS
   ];

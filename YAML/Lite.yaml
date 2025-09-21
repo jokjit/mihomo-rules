@@ -12,7 +12,6 @@ foreign_nameservers: &foreign_nameservers
 
 domestic_nameservers: &domestic_nameservers
   - "quic://dns.18bit.cn"
-  - "quic://dns.ipv4dns.com"
   - "quic://dns.alidns.com"
   - "https://doh.pub/dns-query"
   
@@ -174,7 +173,6 @@ dns:
       - dns.google
       - dns.adguard-dns.com
       - dns.18bit.cn
-      - dns.ipv4dns.com
     nameserver-policy:
       RULE-SET:CN,Private: *domestic_nameservers
     default-nameserver:

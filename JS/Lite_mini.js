@@ -65,7 +65,6 @@ const main = (config) => {
     "fake-ip-range": "198.18.0.1/16",
     "fake-ip-filter": [
       "dns.alidns.com",
-      "cloudflare-dns.com",
       "dns.google",
       "dns.adguard-dns.com",
       "dns.18bit.cn",

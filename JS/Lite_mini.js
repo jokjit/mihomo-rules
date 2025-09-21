@@ -43,14 +43,12 @@ const main = (config) => {
   const domesticNameservers = [
     "quic://dns.18bit.cn",
     "quic://dns.ipv4dns.com",
-    "quic://2025.dns1.top",
     "quic://dns.alidns.com",
     "https://doh.pub/dns-query" // 腾讯DoH，
   ];
   // 国外DNS服务器
   const foreignNameservers = [
     "quic://dns.adguard-dns.com",
-    "https://cloudflare-dns.com/dns-query",
     "https://dns.google/dns-query",
     "https://208.67.222.222/dns-query" // OpenDNS
   ];
@@ -71,7 +69,6 @@ const main = (config) => {
       "dns.google",
       "dns.adguard-dns.com",
       "dns.18bit.cn",
-      "2025.dns1.top",
       "dns.ipv4dns.com",
       "RULE-SET:Fakeip_Filter",
       "RULE-SET:CN",

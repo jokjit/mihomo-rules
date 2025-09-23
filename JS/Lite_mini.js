@@ -285,6 +285,7 @@ const socialGroups = createGroups([
   ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
   ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
   ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
+  ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
   ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
   ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
 ]);
@@ -440,6 +441,18 @@ config["proxy-groups"] = [
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_IP.mrs",
       "path": "./ruleset/NetEase_IP.mrs"
+    },
+    "YouTube": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/YouTube/YouTube_OCD_Domain.mrs",
+      "path": "./ruleset/YouTube_Domain.mrs"
+    },
+    "YouTube-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/YouTube/YouTube_OCD_IP.mrs",
+      "path": "./ruleset/YouTube_IP.mrs"
     },
     "OpenAI": {
       ...ruleProviderCommon,
@@ -656,6 +669,7 @@ config["proxy-groups"] = [
     "SUB-DOMAIN": [
       "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram)),Telegram",
       "OR,((RULE-SET,GitHub),(DOMAIN-KEYWORD,github)),GitHub",
+      "OR,((RULE-SET,YouTube),(DOMAIN-KEYWORD,youtube)),YouTube",
       "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
       "OR,((RULE-SET,Emby,Emby),(DOMAIN-KEYWORD,emby)),Emby",
       "RULE-SET,GlobalMedia,国际媒体",
@@ -666,6 +680,7 @@ config["proxy-groups"] = [
       "RULE-SET,Telegram-ip,Telegram,no-resolve",
       "RULE-SET,Copilot-ip,AI,no-resolve",
       "RULE-SET,OpenAI-ip,AI,no-resolve",
+      "RULE-SET,YouTube-ip,YouTube,no-resolve",
       "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
     ]
   };

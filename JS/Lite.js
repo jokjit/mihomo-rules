@@ -347,33 +347,32 @@ const main = (config) => {
   //  ]
   // 
   // 1️⃣ 社交/国际分组
-const socialGroups = createGroups([
-  ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
-  ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
-  ["Twitter", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"],
-  ["Instagram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"],
-  ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
-  ["Netflix", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"],
-  ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
-  ["TikTok", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"],
-  ["FCM", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"],
-  ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
-  ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
-  ["Speedtest", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"],
-  ["Talkatone", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"],
-  ["Apple", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"],
-  ["Google", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"],
-  ["微软", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"],
-  ["游戏平台", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"],
-]);
+  const socialGroups = createGroups([
+    ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
+    ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
+    ["Twitter", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"],
+    ["Instagram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"],
+    ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
+    ["Netflix", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"],
+    ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
+    ["TikTok", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"],
+    ["FCM", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"],
+    ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
+    ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
+    ["Speedtest", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"],
+    ["Talkatone", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"],
+    ["Apple", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"],
+    ["Google", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"],
+    ["微软", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"],
+    ["游戏平台", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"],
+  ]);
 
-// 2️⃣ 中国大陆 APP 分组
-const cnAppGroups = createGroups([
-  ["哔哩哔哩", "https://img.icons8.com/?size=100&id=l87yXVtzuGWB&format=png&color=000000", true],
-  ["国内媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/CN_Media.png", true],
-  ["AppleCN", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AppleCN.webp", true]
-]);
-
+  // 2️⃣ 中国大陆 APP 分组
+  const cnAppGroups = createGroups([
+    ["哔哩哔哩", "https://img.icons8.com/?size=100&id=l87yXVtzuGWB&format=png&color=000000", true],
+    ["国内媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/CN_Media.png", true],
+    ["AppleCN", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AppleCN.webp", true]
+  ]);
   // 3️⃣ 地区分组
   const regionGroups = [
     ...createRegionGroups({

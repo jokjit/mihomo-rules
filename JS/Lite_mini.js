@@ -190,28 +190,22 @@ const baseProxiesCN = [
  * - proxiesOrExtra: 可以是 proxies 数组, 可以是布尔值 (true 代表 baseProxiesCN), 也可以是包含 filter 等信息的对象
  * - extra: 额外的补充字段
  */
+// ========== 工厂函数：生成社交/国际/大陆分组 ==========
 function createGroups(groups) {
   return groups.map(groupArgs => {
-    // 先进行一次参数“挪位”修正
+    // 保持参数修正逻辑不变
     let [name, icon, type, proxiesOrExtra, extra] = groupArgs;
 
-    // ==================== 新增的判断逻辑 ====================
-    // 如果 type 参数不是字符串 (比如用户传入了 true 或一个对象),
-    // 说明用户省略了 type, 我们需要手动修正参数位置。
     if (typeof type !== 'string') {
-      extra = proxiesOrExtra;      // 原来的第4个参数挪给第5个
-      proxiesOrExtra = type;       // 原来的第3个参数挪给第4个
-      type = 'select';             // 第3个参数手动设为默认值 'select'
+      extra = proxiesOrExtra;
+      proxiesOrExtra = type;
+      type = 'select';
     }
-    // =======================================================
-
-    // 如果修正后 type 仍然为空，确保它有默认值
     if (!type) {
       type = 'select';
     }
     
-    // 后面的逻辑与之前版本类似，但现在参数位置绝对正确
-    let proxies; 
+    let proxies;
     let extraOptions = extra || {};
 
     if (Array.isArray(proxiesOrExtra)) {
@@ -224,7 +218,8 @@ function createGroups(groups) {
       delete extraOptions.proxies;
     }
 
-    return {
+    // ⭐ 关键修改：先创建配置对象，再进行修改 ⭐
+    const groupConfig = {
       ...groupBaseOption,
       name,
       type,
@@ -232,10 +227,17 @@ function createGroups(groups) {
       proxies: proxies || baseProxies,
       ...extraOptions,
     };
-    // ⭐ 关键：如果不是 select 组，且没有显式设置 exclude-filter，则应用 EX_ALL ⭐
-    if (type !== 'select' && !groupConfig["exclude-filter"]) {
-        groupConfig["exclude-filter"] = EX_ALL;
+    
+    // 注入 EX_ALL 逻辑：只对动态分组（url-test, fallback, load-balance）生效
+    if (groupConfig.type !== 'select' && groupConfig.type !== 'policy-path') {
+        // 如果分组类型不是 select 或 policy-path，就注入 EX_ALL
+        // 确保不覆盖用户在 extraOptions 中自定义的 exclude-filter
+        if (!groupConfig["exclude-filter"]) {
+            groupConfig["exclude-filter"] = EX_ALL;
+        }
     }
+
+    // 最终返回完整的配置对象
     return groupConfig;
   });
 }

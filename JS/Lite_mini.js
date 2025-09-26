@@ -44,7 +44,7 @@ const groupBaseOption = {
   // ⭐ 关键修改：移除默认的 exclude-filter ⭐
   // "exclude-filter": EX_INFO, // 移除这行！
   
-  "filter": ""  // 确保 filter 为空
+  "filter": ""  // 确保 filter 为空
 };
 // 程序入口
 
@@ -426,7 +426,7 @@ const regionGroups = [
       "exclude-filter": EX_INFO,
     
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-    }，
+    },
     // 自动选择组
     {
       ...groupBaseOption,

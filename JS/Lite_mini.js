@@ -191,11 +191,13 @@ const baseProxiesCN = [
  * - extra: 额外的补充字段
  */
 // ========== 工厂函数：生成社交/国际/大陆分组 ==========
+// ========== 工厂函数：生成社交/国际/大陆分组 (修正版) ==========
 function createGroups(groups) {
   return groups.map(groupArgs => {
-    // 保持参数修正逻辑不变
+    // 先进行一次参数“挪位”修正
     let [name, icon, type, proxiesOrExtra, extra] = groupArgs;
 
+    // 参数修正逻辑
     if (typeof type !== 'string') {
       extra = proxiesOrExtra;
       proxiesOrExtra = type;
@@ -205,12 +207,13 @@ function createGroups(groups) {
       type = 'select';
     }
     
-    let proxies;
+    let proxies; 
     let extraOptions = extra || {};
 
     if (Array.isArray(proxiesOrExtra)) {
       proxies = proxiesOrExtra;
     } else if (typeof proxiesOrExtra === 'boolean') {
+      // cnAppGroups 使用此逻辑
       proxies = proxiesOrExtra ? baseProxiesCN : baseProxies;
     } else if (proxiesOrExtra && typeof proxiesOrExtra === 'object') {
       proxies = proxiesOrExtra.proxies; 
@@ -218,7 +221,7 @@ function createGroups(groups) {
       delete extraOptions.proxies;
     }
 
-    // ⭐ 关键修改：先创建配置对象，再进行修改 ⭐
+    // 1. 构造初始配置对象
     const groupConfig = {
       ...groupBaseOption,
       name,
@@ -227,17 +230,23 @@ function createGroups(groups) {
       proxies: proxies || baseProxies,
       ...extraOptions,
     };
+
+    // 2. ⭐ 关键修正：在返回前注入 exclude-filter ⭐
+    // 对于 select 组（如 AI, YouTube），我们通常希望保留所有节点。
+    // 但对于 cnAppGroups 中的 "国内媒体" 组 (type 仍为 select)，我们希望它能排除杂项。
+    // 在这里，我们只对非 select 组添加 EX_ALL (高倍率+杂项)，因为你的手动组已经处理了自动选择/回退/均衡。
+    // 但是，社交组（AI, YouTube等）默认是 select 组，如果想让他们排除杂项，需要在这里处理。
     
-    // 注入 EX_ALL 逻辑：只对动态分组（url-test, fallback, load-balance）生效
-    if (groupConfig.type !== 'select' && groupConfig.type !== 'policy-path') {
-        // 如果分组类型不是 select 或 policy-path，就注入 EX_ALL
-        // 确保不覆盖用户在 extraOptions 中自定义的 exclude-filter
-        if (!groupConfig["exclude-filter"]) {
-            groupConfig["exclude-filter"] = EX_ALL;
-        }
+    // 对于通过 createGroups 创建的【所有】分组，如果它们没有自定义 exclude-filter，则至少排除 EX_INFO（杂项/管理信息）。
+    if (!groupConfig["exclude-filter"]) {
+        // 国际分组的 select 组（AI, Telegram, YouTube）排除杂项
+        // 国内分组的 select 组（国内媒体）排除杂项
+        groupConfig["exclude-filter"] = EX_INFO;
     }
 
-    // 最终返回完整的配置对象
+    // 地区分组和手动组已在外层处理，无需额外修改。
+    
+    // 最终返回修改后的配置对象
     return groupConfig;
   });
 }

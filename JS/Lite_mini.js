@@ -232,6 +232,11 @@ function createGroups(groups) {
       proxies: proxies || baseProxies,
       ...extraOptions,
     };
+    // ⭐ 关键：如果不是 select 组，且没有显式设置 exclude-filter，则应用 EX_ALL ⭐
+    if (type !== 'select' && !groupConfig["exclude-filter"]) {
+        groupConfig["exclude-filter"] = EX_ALL;
+    }
+    return groupConfig;
   });
 }
 
@@ -411,27 +416,26 @@ const regionGroups = [
     
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     }，
-   // 自动选择组
-{
-    ...groupBaseOption,
-    "name": "自动选择",
-    "type": "url-test",
-    "tolerance": 50,
-    "lazy": true,
-    "include-all": true,
-    "hidden": true,
+    // 自动选择组
+    {
+      ...groupBaseOption,
+      "name": "自动选择",
+      "type": "url-test",
+      "tolerance": 50,
+      "lazy": true,
+      "include-all": true,
+      "hidden": true,
     
-    // 1. 清空不稳定的 filter
-    "filter": "", 
+      // 1. 清空不稳定的 filter
+      "filter": "", 
     
-    // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
-    "exclude-filter": EX_ALL,
+      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
+      "exclude-filter": EX_ALL,
     
-    "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-},
-
-// 自动回退组
-{
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
+  },
+  // 自动回退组
+  {
     ...groupBaseOption,
     "name": "自动回退",
     "type": "fallback",

@@ -280,12 +280,13 @@ function createRegionGroups({ name, icon, filter }) {
 //    }
 //  ]
 // 
-// 1️⃣ 社交/国际分组
+// 1️⃣ 国际分组
 const socialGroups = createGroups([
   ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
   ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
   ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
   ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
+  ["Steam", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"],
   ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
   ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
 ]);
@@ -441,6 +442,18 @@ config["proxy-groups"] = [
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_IP.mrs",
       "path": "./ruleset/NetEase_IP.mrs"
+    },
+    "Steam": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Steam/Steam_OCD_Domain.mrs",
+      "path": "./ruleset/Steam_Domain.mrs"
+    },
+    "SteamCN": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs",
+      "path": "./ruleset/SteamCN_Domain.mrs"
     },
     "YouTube": {
       ...ruleProviderCommon,
@@ -657,6 +670,7 @@ config["proxy-groups"] = [
       "RULE-SET,DouYin,DIRECT",
       "RULE-SET,Baidu,DIRECT",
       "RULE-SET,DingTalk,DIRECT",
+      "RULE-SET,SteamCN,DIRECT",
       "OR,((RULE-SET,115),(DOMAIN-SUFFIX,115vod.com)),DIRECT",
       "RULE-SET,WeChat,DIRECT",
       "RULE-SET,NetEase,DIRECT",
@@ -672,6 +686,7 @@ config["proxy-groups"] = [
       "OR,((RULE-SET,YouTube),(DOMAIN-KEYWORD,youtube)),YouTube",
       "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
       "OR,((RULE-SET,Emby,Emby),(DOMAIN-KEYWORD,emby)),Emby",
+      "OR,((RULE-SET,Steam),(DOMAIN-KEYWORD,steambroadcast),(DOMAIN-KEYWORD,steamstore),(DOMAIN-KEYWORD,steamuserimages)),Steam",
       "RULE-SET,GlobalMedia,国际媒体",
       "RULE-SET,ChinaMedia,国内媒体",
     ],

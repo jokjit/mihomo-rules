@@ -6,15 +6,31 @@ const ruleProviderCommon = {
   "format": "mrs",
 };
 
-// ⭐ 定义所有需要排除的关键词和模式（高倍率、流量、管理信息等）
-const EXCLUDE_KEYWORDS = [
-  "(?i)群|邀请|返利|循环|官网|客服|网站|网址|建议|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入",
-  "可用|剩余|(\\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\\b|\\d{4}-\\d{2}-\\d{2}|\\d+G)",
-  "高倍|高倍率|倍率[2-9]|x[2-9]\\.?\\d*|\\([xX][2-9]\\.?\\d*\\)|\\[[xX][2-9]\\.?\\d*\\]|\\{[xX][2-9]\\.?\\d*\\}|（[xX][2-9]\\.?\\d*）|【[xX][2-9]\\.?\\d*】|【[2-9]x】|【\\d+[xX]】"
+// 1. 排除所有杂项/管理/通知信息（例如：官网、到期、流量剩余）
+const EX_INFO = [
+  // 中文杂项/管理信息
+  "(?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入",
+  // 英文/格式化信息（流量、日期等）
+  "可用|剩余|(\\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\\b|\\d{4}-\\d{2}-\\d{2}|\\d+G)"
 ].join('|');
 
-// 这是最终用于 exclude-filter 字段的字符串
-const EXCLUDE_FILTER_STRING = EXCLUDE_KEYWORDS;
+// 2. 排除所有高倍率标识
+const EX_RATE = [
+  "高倍|高倍率|倍率[2-9]",
+  // 各种括号或无括号的倍率格式
+  "x[2-9]\\.?\\d*",
+  "\\([xX][2-9]\\.?\\d*\\)",
+  "\\[[xX][2-9]\\.?\\d*\\]",
+  "\\{[xX][2-9]\\.?\\d*\\}",
+  "（[xX][2-9]\\.?\\d*）",
+  "【[xX][2-9]\\.?\\d*】",
+  "【[2-9]x】",
+  "【\\d+[xX]】"
+].join('|');
+
+// 3. 组合最终的排除字符串
+const EX_ALL = `${EX_INFO}|${EX_RATE}`;
+
 // 策略组通用配置 (注入 exclude-filter)
 const groupBaseOption = {
   "interval": 300,
@@ -24,6 +40,8 @@ const groupBaseOption = {
   "timeout": 5000,
   "max-failed-times": 5,
   "include-all": true,
+  // ⭐ 关键修改：默认排除所有杂项/管理信息 ⭐
+  "exclude-filter": EX_INFO, 
   // 确保 filter 不存在（除非被 createRegionGroups 覆盖）
   "filter": "" 
 };
@@ -230,63 +248,62 @@ function createGroups(groups) {
 
 // ========== 工厂函数：生成地区分组（四种类型） ==========
 function createRegionGroups({ name, icon, filter }) {
-  const subNames = ["自动", "回退", "均衡"];
-  
-  const proxies = subNames.map(s => `${name}${s}`);
-  
-  // 地区过滤和通用排除逻辑的组合
-  // 使用 & 符号结合 filter 和 exclude-filter 
-  const regionFilter = filter; // 地区过滤 (例如: (?i)香港|HK)
-  const finalExcludeFilter = EXCLUDE_FILTER_STRING; 
+    const subNames = ["自动", "回退", "均衡"];
+    
+    const proxies = subNames.map(s => `${name}${s}`);
+    
+    // 地区过滤（例如: (?i)香港|HK）
+    const regionFilter = filter; 
+    
+    // ⭐ 关键修改：使用 EX_ALL 组合常量，排除所有杂项和高倍率 ⭐
+    // 假设 EX_ALL = `${EX_INFO}|${EX_RATE}`
+    const finalExcludeFilter = EX_ALL; 
 
-  return [
-    // 1. SELECT 组 (手动选择) - 必须包含所有节点
-    {
-      ...groupBaseOption,
-      name: `${name}节点`,
-      type: "select",
-      proxies,
-      filter: regionFilter, // 只需要地区过滤
-      icon
-    },
-    
-    // 2. URL-TEST 组 (自动选择) - 排除杂项和高倍率
-    {
-      ...groupBaseOption,
-      name: `${name}自动`,
-      type: "url-test",
-      hidden: true,
-      filter: regionFilter, // 先用地区 filter 过滤出地区节点
-      // ⭐ 关键：在这里应用排除逻辑，排除高倍率/杂项节点 ⭐
-      "exclude-filter": finalExcludeFilter, 
-      icon
-    },
-    
-    // 3. FALLBACK 组 (自动回退) - 排除杂项和高倍率
-    {
-      ...groupBaseOption,
-      name: `${name}回退`,
-      type: "fallback",
-      hidden: true,
-      filter: regionFilter,
-      // ⭐ 关键：在这里应用排除逻辑，排除高倍率/杂项节点 ⭐
-      "exclude-filter": finalExcludeFilter, 
-      icon
-    },
-    
-    // 4. LOAD-BALANCE 组 (负载均衡) - 排除杂项和高倍率
-    {
-      ...groupBaseOption,
-      name: `${name}均衡`,
-      type: "load-balance",
-      hidden: true,
-      strategy: "consistent-hashing",
-      filter: regionFilter,
-      // ⭐ 关键：在这里应用排除逻辑，排除高倍率/杂项节点 ⭐
-      "exclude-filter": finalExcludeFilter,
-      icon
-    }
-  ];
+    return [
+        // 1. SELECT 组 (手动选择) - 只做地区过滤，不排除任何节点
+        {
+            ...groupBaseOption,
+            name: `${name}节点`,
+            type: "select",
+            proxies,
+            filter: regionFilter, 
+            icon
+        },
+        
+        // 2. URL-TEST 组 (自动选择) - 排除所有
+        {
+            ...groupBaseOption,
+            name: `${name}自动`,
+            type: "url-test",
+            hidden: true,
+            filter: regionFilter, // 地区过滤
+            "exclude-filter": finalExcludeFilter, // ⭐ 排除所有杂项和高倍率 ⭐
+            icon
+        },
+        
+        // 3. FALLBACK 组 (自动回退) - 排除所有
+        {
+            ...groupBaseOption,
+            name: `${name}回退`,
+            type: "fallback",
+            hidden: true,
+            filter: regionFilter,
+            "exclude-filter": finalExcludeFilter, // ⭐ 排除所有杂项和高倍率 ⭐
+            icon
+        },
+        
+        // 4. LOAD-BALANCE 组 (负载均衡) - 排除所有
+        {
+            ...groupBaseOption,
+            name: `${name}均衡`,
+            type: "load-balance",
+            hidden: true,
+            strategy: "consistent-hashing",
+            filter: regionFilter,
+            "exclude-filter": finalExcludeFilter, // ⭐ 排除所有杂项和高倍率 ⭐
+            icon
+        }
+    ];
 }
 
 // ========== 定义所有分组 ==========
@@ -377,46 +394,75 @@ const regionGroups = [
       "proxies": ["自动选择", "自动回退","全部节点", "负载均衡", "DIRECT", "香港节点", "香港自动", "香港回退", "香港均衡","台湾节点","台湾自动", "台湾回退", "台湾均衡", "日本节点","日本自动", "日本回退", "日本均衡", "新加坡节点","新加坡自动", "新加坡回退", "新加坡均衡", "美国节点", "美国自动","美国回退","美国均衡"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
     },
-     {
+    {
       ...groupBaseOption,
       "name": "全部节点",
-      "proxies": ["自动选择", "负载均衡",  "自动回退", "DIRECT"],
+      "proxies": ["自动选择", "负载均衡", "自动回退", "DIRECT"],
       "type": "select",
       "include-all": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
+    
+      // ❗ 移除复杂的 filter ❗ 
+      // "filter": "(?=.*(.))(?!.*((?i)群|邀请|...)...).*$", 
+      "filter": "", // 清空 filter
+    
+      // ⭐ 关键：使用 EX_INFO 排除所有杂项/管理/通知信息 ⭐
+      "exclude-filter": EX_INFO,
+    
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "自动选择",
-      "type": "url-test",
-      "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "自动回退",
-      "type": "fallback",
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-    },
-    {
-      ...groupBaseOption,
-      "name": "负载均衡",
-      "type": "load-balance",
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-    }
+    }，
+   // 自动选择组
+{
+    ...groupBaseOption,
+    "name": "自动选择",
+    "type": "url-test",
+    "tolerance": 50,
+    "lazy": true,
+    "include-all": true,
+    "hidden": true,
+    
+    // 1. 清空不稳定的 filter
+    "filter": "", 
+    
+    // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
+    "exclude-filter": EX_ALL,
+    
+    "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
+},
+
+// 自动回退组
+{
+    ...groupBaseOption,
+    "name": "自动回退",
+    "type": "fallback",
+    "lazy": true,
+    "include-all": true,
+    "hidden": true,
+    
+    // 1. 清空不稳定的 filter
+    "filter": "", 
+    
+    // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
+    "exclude-filter": EX_ALL,
+    
+    "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
+},
+// 负载均衡组
+{
+    ...groupBaseOption,
+    "name": "负载均衡",
+    "type": "load-balance",
+    "lazy": true,
+    "include-all": true,
+    "hidden": true,
+ 
+    // 1. 清空不稳定的 filter
+    "filter": "", 
+    
+    // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
+    "exclude-filter": EX_ALL,
+    
+    "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
+}
   ];
 // ========== 覆写 config["proxy-groups"] ==========
 config["proxy-groups"] = [

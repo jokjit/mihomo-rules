@@ -6,7 +6,16 @@ const ruleProviderCommon = {
   "format": "mrs",
 };
 
-// 策略组通用配置
+// ⭐ 定义所有需要排除的关键词和模式（高倍率、流量、管理信息等）
+const EXCLUDE_KEYWORDS = [
+  "(?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入",
+  "可用|剩余|(\\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\\b|\\d{4}-\\d{2}-\\d{2}|\\d+G)",
+  "高倍|高倍率|倍率[2-9]|x[2-9]\\.?\\d*|\\([xX][2-9]\\.?\\d*\\)|\\[[xX][2-9]\\.?\\d*\\]|\\{[xX][2-9]\\.?\\d*\\}|（[xX][2-9]\\.?\\d*）|【[xX][2-9]\\.?\\d*】|【[2-9]x】|【\\d+[xX]】"
+].join('|');
+
+// 这是最终用于 exclude-filter 字段的字符串
+const EXCLUDE_FILTER_STRING = EXCLUDE_KEYWORDS;
+// 策略组通用配置 (注入 exclude-filter)
 const groupBaseOption = {
   "interval": 300,
   "url": "https://www.gstatic.com/generate_204",
@@ -15,8 +24,13 @@ const groupBaseOption = {
   "timeout": 5000,
   "max-failed-times": 5,
   "include-all": true,
+  
+  // ⭐ 默认排除所有不需要的节点 ⭐
+  "exclude-filter": EXCLUDE_FILTER_STRING,
+  
+  // 确保 filter 不存在（除非被 createRegionGroups 覆盖）
+  "filter": "" 
 };
-
 // 程序入口
 
 const main = (config) => {

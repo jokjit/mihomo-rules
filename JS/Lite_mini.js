@@ -24,10 +24,6 @@ const groupBaseOption = {
   "timeout": 5000,
   "max-failed-times": 5,
   "include-all": true,
-  
-  // ⭐ 默认排除所有不需要的节点 ⭐
-  "exclude-filter": EXCLUDE_FILTER_STRING,
-  
   // 确保 filter 不存在（除非被 createRegionGroups 覆盖）
   "filter": "" 
 };
@@ -228,44 +224,66 @@ function createGroups(groups) {
  * @param {Array<string>} proxies - select 分组的子节点（可选）
  * @param {string} filter - 正则匹配节点的 filter
  */
+// ⭐ 确保 EXCLUDE_FILTER_STRING 已经定义，用于排除杂项和高倍率节点 ⭐
+
+// ... [EXCLUDE_FILTER_STRING 的定义保持不变] ...
+
+// ========== 工厂函数：生成地区分组（四种类型） ==========
 function createRegionGroups({ name, icon, filter }) {
   const subNames = ["自动", "回退", "均衡"];
   
-  // 自动生成 select 分组的 proxies
   const proxies = subNames.map(s => `${name}${s}`);
+  
+  // 地区过滤和通用排除逻辑的组合
+  // 使用 & 符号结合 filter 和 exclude-filter 
+  const regionFilter = filter; // 地区过滤 (例如: (?i)香港|HK)
+  const finalExcludeFilter = EXCLUDE_FILTER_STRING; 
 
   return [
+    // 1. SELECT 组 (手动选择) - 必须包含所有节点
     {
       ...groupBaseOption,
       name: `${name}节点`,
       type: "select",
-      proxies,  // 自动生成
-      filter,
+      proxies,
+      filter: regionFilter, // 只需要地区过滤
       icon
     },
+    
+    // 2. URL-TEST 组 (自动选择) - 排除杂项和高倍率
     {
       ...groupBaseOption,
       name: `${name}自动`,
       type: "url-test",
       hidden: true,
-      filter,
+      filter: regionFilter, // 先用地区 filter 过滤出地区节点
+      // ⭐ 关键：在这里应用排除逻辑，排除高倍率/杂项节点 ⭐
+      "exclude-filter": finalExcludeFilter, 
       icon
     },
+    
+    // 3. FALLBACK 组 (自动回退) - 排除杂项和高倍率
     {
       ...groupBaseOption,
       name: `${name}回退`,
       type: "fallback",
       hidden: true,
-      filter,
+      filter: regionFilter,
+      // ⭐ 关键：在这里应用排除逻辑，排除高倍率/杂项节点 ⭐
+      "exclude-filter": finalExcludeFilter, 
       icon
     },
+    
+    // 4. LOAD-BALANCE 组 (负载均衡) - 排除杂项和高倍率
     {
       ...groupBaseOption,
       name: `${name}均衡`,
       type: "load-balance",
       hidden: true,
       strategy: "consistent-hashing",
-      filter,
+      filter: regionFilter,
+      // ⭐ 关键：在这里应用排除逻辑，排除高倍率/杂项节点 ⭐
+      "exclude-filter": finalExcludeFilter,
       icon
     }
   ];

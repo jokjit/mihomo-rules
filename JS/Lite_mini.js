@@ -31,7 +31,7 @@ const EX_RATE = [
 // 3. 组合最终的排除字符串
 const EX_ALL = `${EX_INFO}|${EX_RATE}`;
 
-// 策略组通用配置 (注入 exclude-filter)
+// 策略组通用配置 (移除所有默认过滤，让工厂函数负责)
 const groupBaseOption = {
   "interval": 300,
   "url": "https://www.gstatic.com/generate_204",
@@ -40,10 +40,11 @@ const groupBaseOption = {
   "timeout": 5000,
   "max-failed-times": 5,
   "include-all": true,
-  // ⭐ 关键修改：默认排除所有杂项/管理信息 ⭐
-  "exclude-filter": EX_INFO, 
-  // 确保 filter 不存在（除非被 createRegionGroups 覆盖）
-  "filter": "" 
+  
+  // ⭐ 关键修改：移除默认的 exclude-filter ⭐
+  // "exclude-filter": EX_INFO, // 移除这行！
+  
+  "filter": ""  // 确保 filter 为空
 };
 // 程序入口
 

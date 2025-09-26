@@ -408,6 +408,7 @@ const main = (config) => {
     ["国内媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/CN_Media.png", true],
     ["AppleCN", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AppleCN.webp", true]
   ]);
+
   // 3️⃣ 地区分组
   const regionGroups = [
     ...createRegionGroups({
@@ -595,6 +596,24 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_IP.mrs",
       "path": "./ruleset/NetEase_IP.mrs"
     },
+    "PikPak": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/PikPak/PikPak_OCD_Domain.mrs",
+      "path": "./ruleset/PikPak_Domain.mrs"
+    },
+    "YouTubeMusic": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/YouTubeMusic/YouTubeMusic_OCD_Domain.mrs",
+      "path": "./ruleset/YouTubeMusic_Domain.mrs"
+    },
+    "Discord": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Discord/Discord_OCD_Domain.mrs",
+      "path": "./ruleset/Discord_Domain.mrs"
+    },
     "OpenAI": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -613,6 +632,42 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GitHub/GitHub_OCD_Domain.mrs",
       "path": "./ruleset/GitHub_Domain.mrs"
     },
+    "Bahamut": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Bahamut/Bahamut_OCD_Domain.mrs",
+      "path": "./ruleset/Bahamut_Domain.mrs"
+    },
+    "Hulu": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Hulu/Hulu_OCD_Domain.mrs",
+      "path": "./ruleset/Hulu_Domain.mrs"
+    },
+    "TVB": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/TVB/TVB_OCD_Domain.mrs",
+      "path": "./ruleset/TVB_Domain.mrs"
+    },
+    "Niconico": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Niconico/Niconico_OCD_Domain.mrs",
+      "path": "./ruleset/Niconico_Domain.mrs"
+    },
+    "AbemaTV": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AbemaTV/AbemaTV_OCD_Domain.mrs",
+      "path": "./ruleset/AbemaTV_Domain.mrs"
+    },
+    "Adobe": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Adobe/Adobe_OCD_Domain.mrs",
+      "path": "./ruleset/Adobe_Domain.mrs"
+    },
     "awavenue": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -624,6 +679,24 @@ const main = (config) => {
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GaoDe/GaoDe_OCD_Domain.mrs",
       "path": "./ruleset/GaoDe_Domain.mrs"
+    },
+    "Amazon": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Amazon/Amazon_OCD_Domain.mrs",
+      "path": "./ruleset/Amazon_Domain.mrs"
+    },
+    "Amazon-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Amazon/Amazon_OCD_IP.mrs",
+      "path": "./ruleset/Amazon_IP.mrs"
+    },
+    "AmazonPrimeVideo": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AmazonPrimeVideo/AmazonPrimeVideo_OCD_Domain.mrs",
+      "path": "./ruleset/AmazonPrimeVideo_Domain.mrs"
     },
     "AppleDev": {
       ...ruleProviderCommon,
@@ -649,6 +722,12 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleID/AppleID_OCD_Domain.mrs",
       "path": "./ruleset/AppleID_Domain.mrs"
     },
+    "AppleMedia": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleMedia/AppleMedia_OCD_Domain.mrs",
+      "path": "./ruleset/AppleMedia_Domain.mrs"
+    },
     "AppleMusic": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -661,6 +740,12 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleProxy/AppleProxy_OCD_Domain.mrs",
       "path": "./ruleset/AppleProxy_Domain.mrs"
     },
+    "AppleTV": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleTV/AppleTV_OCD_Domain.mrs",
+      "path": "./ruleset/AppleTV_Domain.mrs"
+    },
     "Baidu": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -672,6 +757,18 @@ const main = (config) => {
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Bing/Bing_OCD_Domain.mrs",
       "path": "./ruleset/Bing_Domain.mrs"
+    },
+    "Blizzard": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Blizzard/Blizzard_OCD_Domain.mrs",
+      "path": "./ruleset/Blizzard_Domain.mrs"
+    },
+    "Blizzard-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Blizzard/Blizzard_OCD_IP.mrs",
+      "path": "./ruleset/Blizzard_IP.mrs"
     },
     "ByteDance": {
       ...ruleProviderCommon,
@@ -709,6 +806,12 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/DingTalk/DingTalk_OCD_Domain.mrs",
       "path": "./ruleset/DingTalk_Domain.mrs"
     },
+    "Docker": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Docker/Docker_OCD_Domain.mrs",
+      "path": "./ruleset/Docker_Domain.mrs"
+    },
     "DouYin": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -739,6 +842,12 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleDrive/GoogleDrive_OCD_Domain.mrs",
       "path": "./ruleset/GoogleDrive_Domain.mrs"
     },
+    "GoogleEarth": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleEarth/GoogleEarth_OCD_Domain.mrs",
+      "path": "./ruleset/GoogleEarth_Domain.mrs"
+    },
     "GoogleFCM": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -750,6 +859,36 @@ const main = (config) => {
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_IP.mrs",
       "path": "./ruleset/GoogleFCM_IP.mrs"
+    },
+    "GoogleVoice": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleVoice/GoogleVoice_OCD_Domain.mrs",
+      "path": "./ruleset/GoogleVoice_Domain.mrs"
+    },
+    "HuluJP": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/HuluJP/HuluJP_OCD_Domain.mrs",
+      "path": "./ruleset/HuluJP_Domain.mrs"
+    },
+    "HuluUSA": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/HuluUSA/HuluUSA_OCD_Domain.mrs",
+      "path": "./ruleset/HuluUSA_Domain.mrs"
+    },
+    "iCloud": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/iCloud/iCloud_OCD_Domain.mrs",
+      "path": "./ruleset/iCloud_Domain.mrs"
+    },
+    "IMDB": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/IMDB/IMDB_OCD_Domain.mrs",
+      "path": "./ruleset/IMDB_Domain.mrs"
     },
     "Instagram": {
       ...ruleProviderCommon,
@@ -769,11 +908,54 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/MicrosoftEdge/MicrosoftEdge_OCD_Domain.mrs",
       "path": "./ruleset/MicrosoftEdge_Domain.mrs"
     },
+    "NGA": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NGA/NGA_OCD_Domain.mrs",
+      "path": "./ruleset/NGA_Domain.mrs"
+    },
+    "OneDrive": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OneDrive/OneDrive_OCD_Domain.mrs",
+      "path": "./ruleset/OneDrive_Domain.mrs"
+    },
+    "PayPal": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/PayPal/PayPal_OCD_Domain.mrs",
+      "path": "./ruleset/PayPal_Domain.mrs"
+    },
+    "PlayStation": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/PlayStation/PlayStation_OCD_Domain.mrs",
+      "path": "./ruleset/PlayStation_Domain.mrs"
+    },
+    "Rockstar": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Rockstar/Rockstar_OCD_Domain.mrs",
+      "path": "./ruleset/Rockstar_Domain.mrs"
+    },
+    "Scholar": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Scholar/Scholar_OCD_Domain.mrs",
+      "path": "./ruleset/Scholar_Domain.mrs"
+    },
     "Siri": {
       ...ruleProviderCommon,
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Siri/Siri_OCD_Domain.mrs",
       "path": "./ruleset/Siri_Domain.mrs"
+    },
+    "Sony": {
+      ...ruleProviderCommon,
+
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Sony/Sony_OCD_Domain.mrs",
+      "path": "./ruleset/Sony_Domain.mrs"
     },
     "Speedtest": {
       ...ruleProviderCommon,
@@ -792,6 +974,18 @@ const main = (config) => {
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs",
       "path": "./ruleset/SteamCN_Domain.mrs"
+    },
+    "Supercell": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Supercell/Supercell_OCD_Domain.mrs",
+      "path": "./ruleset/Supercell_Domain.mrs"
+    },
+    "Supercell-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Supercell/Supercell_OCD_IP.mrs",
+      "path": "./ruleset/Supercell_IP.mrs"
     },
     "SystemOTA": {
       ...ruleProviderCommon,
@@ -817,6 +1011,48 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Tencent/Tencent_OCD_IP.mrs",
       "path": "./ruleset/Tencent_IP.mrs"
     },
+    "Pixiv": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Pixiv/Pixiv_OCD_Domain.mrs",
+      "path": "./ruleset/Pixiv_Domain.mrs"
+    },
+    "Wikipedia": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Wikipedia/Wikipedia_OCD_Domain.mrs",
+      "path": "./ruleset/Wikipedia_Domain.mrs"
+    },
+    "Twitch": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Twitch/Twitch_OCD_Domain.mrs",
+      "path": "./ruleset/Twitch_Domain.mrs"
+    },
+    "Twitch-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Twitch/Twitch_OCD_IP.mrs",
+      "path": "./ruleset/Twitch_IP.mrs"
+    },
+    "HBO": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/HBO/HBO_OCD_Domain.mrs",
+      "path": "./ruleset/HBO_Domain.mrs"
+    },
+    "Line": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Line/Line_OCD_Domain.mrs",
+      "path": "./ruleset/Line_Domain.mrs"
+    },
+    "Line-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Line/Line_OCD_IP.mrs",
+      "path": "./ruleset/Line_IP.mrs"
+    },
     "Emby": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -834,6 +1070,24 @@ const main = (config) => {
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BiliBili/BiliBili_OCD_IP.mrs",
       "path": "./ruleset/BiliBili_IP.mrs"
+    },
+    "Disney": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Disney/Disney_OCD_Domain.mrs",
+      "path": "./ruleset/Disney_Domain.mrs"
+    },
+    "Spotify": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Spotify/Spotify_OCD_Domain.mrs",
+      "path": "./ruleset/Spotify_Domain.mrs"
+    },
+    "Spotify-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Spotify/Spotify_OCD_IP.mrs",
+      "path": "./ruleset/Spotify_IP.mrs"
     },
     "YouTube": {
       ...ruleProviderCommon,
@@ -871,11 +1125,65 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs",
       "path": "./ruleset/Category_httpdns_IP.mrs"
     },
+    "Biliintl": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/biliintl.mrs",
+      "path": "./ruleset/biliintl_Domain.mrs"
+    },
+    "18comic": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/18comic.mrs",
+      "path": "./ruleset/18comic_Domain.mrs"
+    },
+    "Wise": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/wise.mrs",
+      "path": "./ruleset/Wise_Domain.mrs"
+    },
+    "Signal": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/signal.mrs",
+      "path": "./ruleset/Signal_Domain.mrs"
+    },
+    "Picacg": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/picacg.mrs",
+      "path": "./ruleset/Picacg_Domain.mrs"
+    },
+    "Hoyoverse": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/hoyoverse.mrs",
+      "path": "./ruleset/Hoyoverse_Domain.mrs"
+    },
+    "Mihoyo": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/mihoyo.mrs",
+      "path": "./ruleset/Mihoyo_Domain.mrs"
+    },
     "Private-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs",
       "path": "./ruleset/Private_IP.mrs"
+    },
+    "Cloudflare": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cloudflare.mrs",
+      "path": "./ruleset/Cloudflare_Domain.mrs"
+    },
+    "Cloudflare-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cloudflare.mrs",
+      "path": "./ruleset/Cloudflare_IP.mrs"
     },
     "Telegram": {
       ...ruleProviderCommon,
@@ -888,6 +1196,18 @@ const main = (config) => {
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs",
       "path": "./ruleset/Telegram_IP.mrs"
+    },
+    "Facebook": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/facebook.mrs",
+      "path": "./ruleset/Facebook_Domain.mrs"
+    },
+    "Facebook-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/facebook.mrs",
+      "path": "./ruleset/Facebook_IP.mrs"
     },
     "Twitter": {
       ...ruleProviderCommon,
@@ -955,6 +1275,18 @@ const main = (config) => {
       "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/TikTok/TikTok_Domain.mrs",
       "path": "./ruleset/TikTok_Domain.mrs"
     },
+    "Tracker": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/Tracker/Tracker_Domain.mrs",
+      "path": "./ruleset/Tracker_Domain.mrs"
+    },
+    "Tracker-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/Tracker/Tracker_IP.mrs",
+      "path": "./ruleset/Tracker_IP.mrs"
+    },
     "STUN": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -1013,26 +1345,74 @@ const main = (config) => {
       "RULE-SET,Fakeip_Filter,DIRECT"
     ],
     "SUB-DOMAIN": [
+      "RULE-SET,AppleMusic,Apple音乐",
+      "RULE-SET,AppleTV,AppleTV",
+      "RULE-SET,AppleMedia,AppleTV",
       "OR,((RULE-SET,AppleProxy),(DOMAIN-KEYWORD,smp-device),(DOMAIN-KEYWORD,testflight)),Apple",
+      "RULE-SET,Biliintl,哔哩东南亚",
       "OR,((RULE-SET,TikTok),(DOMAIN-KEYWORD,tiktok)),TikTok",
       "OR,((RULE-SET,YouTube),(DOMAIN-KEYWORD,youtube)),YouTube",
+      "RULE-SET,YouTubeMusic,YouTubeMusic",
+      "RULE-SET,Disney,Disney+",
+      "RULE-SET,Bahamut,巴哈姆特",
+      "RULE-SET,HuluJP,Hulu",
+      "RULE-SET,HuluUSA,Hulu",
+      "RULE-SET,Hulu,Hulu",
+      "RULE-SET,TVB,TVB",
+      "RULE-SET,Niconico,ニコニコ",
+      "RULE-SET,AbemaTV,AbemaTV",
+      "OR,((RULE-SET,AmazonPrimeVideo),(DOMAIN-KEYWORD,avoddashs)),亚马逊TV",
+      "RULE-SET,IMDB,IMDB",
+      "RULE-SET,Spotify,Spotify",
+      "OR,((RULE-SET,Spotify),(DOMAIN-KEYWORD,spotify)),Spotify",
+      "OR,((RULE-SET,Twitch),(DOMAIN-KEYWORD,ttvnw)),Twitch",
+      "OR,((RULE-SET,PikPak),(DOMAIN-KEYWORD,pikpak)),PikPak",
+      "RULE-SET,Discord,Discord",
       "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram)),Telegram",
       "OR,((RULE-SET,GitHub),(DOMAIN-KEYWORD,github)),GitHub",
+      "OR,((RULE-SET,Amazon),(DOMAIN-KEYWORD,avoddashs)),亚马逊电商",
+      "OR,((RULE-SET,Adobe),(DOMAIN-KEYWORD,adobe)),Adobe",
+      "RULE-SET,Docker,Docker",
       "OR,((RULE-SET,Instagram),(DOMAIN-KEYWORD,instagram)),Instagram",
+      "RULE-SET,PayPal,PayPal",
       "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
       "OR,((RULE-SET,Speedtest),(DOMAIN-KEYWORD,speedtest)),Speedtest",
+      "RULE-SET,Pixiv,Pixiv",
+      "RULE-SET,Wikipedia,维基百科",
+      "RULE-SET,Blizzard,游戏平台",
       "OR,((RULE-SET,Steam),(DOMAIN-KEYWORD,steambroadcast),(DOMAIN-KEYWORD,steamstore),(DOMAIN-KEYWORD,steamuserimages)),游戏平台",
+      "RULE-SET,Rockstar,游戏平台",
+      "RULE-SET,PlayStation,游戏平台",
       "RULE-SET,Epic,游戏平台",
+      "RULE-SET,Supercell,游戏平台",
       "RULE-SET,EA,游戏平台",
+      "RULE-SET,NGA,游戏平台",
+      "RULE-SET,Sony,游戏平台",
+      "RULE-SET,Hoyoverse,游戏平台",
+      "RULE-SET,18comic,禁漫天堂",
       "RULE-SET,GoogleDrive,Google",
+      "RULE-SET,GoogleEarth,Google",
       "RULE-SET,GoogleFCM,FCM",
+      "RULE-SET,GoogleVoice,GoogleVoice",
+      "RULE-SET,Scholar,Google学术",
+      "RULE-SET,HBO,HBO",
+      "RULE-SET,Line,LINE",
+      "RULE-SET,Wise,Wise",
+      "RULE-SET,Signal,Signal",
+      "RULE-SET,Picacg,哔咔哔咔",
       "OR,((RULE-SET,Emby,Emby),(DOMAIN-KEYWORD,emby)),Emby",
       "RULE-SET,Talkatone,Talkatone",
+      "OR,((RULE-SET,Facebook),(DOMAIN-KEYWORD,facebook),(DOMAIN-KEYWORD,fbcdn)),Facebook",
       "OR,((RULE-SET,Twitter),(DOMAIN-KEYWORD,twitter)),Twitter",
       "RULE-SET,Netflix,Netflix",
       "RULE-SET,Google,Google",
       "RULE-SET,GlobalMedia,国际媒体",
+      "RULE-SET,Cloudflare,Cloudflare",
+      "RULE-SET,iCloud,iCloud",
       "OR,((RULE-SET,Siri),(RULE-SET,SystemOTA),(RULE-SET,AppleID),(RULE-SET,AppleDev),(RULE-SET,AppleFirmware),(RULE-SET,AppleHardware),(RULE-SET,Apple)),AppleCN",
+      "OR,((RULE-SET,Tracker),(DOMAIN-KEYWORD,announce),(DOMAIN-KEYWORD,chdbits),(DOMAIN-KEYWORD,m-team),(DOMAIN-KEYWORD,torrent)),BT追踪器",
+      "RULE-SET,Mihoyo,游戏平台",
+      "OR,((RULE-SET,OneDrive),(DOMAIN-KEYWORD,1drv),(DOMAIN-KEYWORD,onedrive),(DOMAIN-KEYWORD,skydrive)),OneDrive",
       "OR,((RULE-SET,Bing),(RULE-SET,Teams),(RULE-SET,MicrosoftEdge),(RULE-SET,Microsoft),(DOMAIN-KEYWORD,microsoft),(DOMAIN-KEYWORD,skydrive)),微软",
       "RULE-SET,ChinaMedia,国内媒体",
     ],
@@ -1040,16 +1420,25 @@ const main = (config) => {
       "RULE-SET,BiliBili-ip,哔哩哔哩,no-resolve",
       "RULE-SET,ChinaMedia-ip,国内媒体,no-resolve",
       "RULE-SET,Apple-ip,Apple,no-resolve",
+      "RULE-SET,Spotify-ip,Spotify,no-resolve",
+      "RULE-SET,Twitch-ip,Twitch,no-resolve",
       "RULE-SET,Telegram-ip,Telegram,no-resolve",
+      "RULE-SET,Amazon-ip,亚马逊电商,no-resolve",
       "RULE-SET,Copilot-ip,AI,no-resolve",
       "RULE-SET,OpenAI-ip,AI,no-resolve",
+      "RULE-SET,Blizzard-ip,游戏平台,no-resolve",
+      "RULE-SET,Supercell-ip,游戏平台,no-resolve",
       "RULE-SET,GoogleFCM-ip,FCM,no-resolve",
+      "RULE-SET,Line-ip,LINE,no-resolve",
       "RULE-SET,Talkatone-ip,Talkatone,no-resolve",
+      "RULE-SET,Facebook-ip,Facebook,no-resolve",
       "RULE-SET,Twitter-ip,Twitter,no-resolve",
       "RULE-SET,Netflix-ip,Netflix,no-resolve",
       "RULE-SET,Google-ip,Google,no-resolve",
+      "RULE-SET,Tracker-ip,BT追踪器,no-resolve",
       "RULE-SET,YouTube-ip,YouTube,no-resolve",
       "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
+      "RULE-SET,Cloudflare-ip,Cloudflare,no-resolve"
     ]
   };
 

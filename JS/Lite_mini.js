@@ -264,20 +264,26 @@ const main = (config) => {
   // ... [EXCLUDE_FILTER_STRING 的定义保持不变] ...
 
   // ========== 工厂函数：生成地区分组（四种类型） ==========
-  function createRegionGroups({ name, icon, filter }) {
+ // 假设 EX_INFO, EX_RATE, EX_ALL, groupBaseOption 都已定义
+// EX_ALL 是杂项和高倍率的组合：const EX_ALL = `${EX_INFO}|${EX_RATE}`;
+// EX_INFO 仅是杂项过滤：const EX_INFO = "...";
+
+function createRegionGroups({ name, icon, filter }) {
+    // 包含 "均衡"
     const subNames = ["自动", "回退", "均衡"];
 
-    const proxies = subNames.map(s => `${name}${s}`);
+    const proxies = subNames.map(s => `${name}${s}`); // 例如: "香港自动", "香港回退", "香港均衡"
 
-    // 地区过滤（例如: (?i)香港|HK）
     const regionFilter = filter;
-
-    // ⭐ 关键修改：使用 EX_ALL 组合常量，排除所有杂项和高倍率 ⭐
-    // 假设 EX_ALL = `${EX_INFO}|${EX_RATE}`
-    const finalExcludeFilter = EX_ALL;
+    
+    // 自动选择/负载均衡 排除所有 (EX_INFO | EX_RATE)
+    const excludeForAutoGroups = EX_ALL; 
+    
+    // 自动回退 仅排除杂项 (EX_INFO)
+    const excludeForFallback = EX_INFO; 
 
     return [
-      // 1. SELECT 组 (手动选择) - 只做地区过滤，不排除任何节点
+      // 1. SELECT 组 (手动选择) - 只做地区过滤
       {
         ...groupBaseOption,
         name: `${name}节点`,
@@ -287,41 +293,40 @@ const main = (config) => {
         icon
       },
 
-      // 2. URL-TEST 组 (自动选择) - 排除所有
+      // 2. URL-TEST 组 (自动选择) - 排除所有 (EX_ALL)
       {
         ...groupBaseOption,
         name: `${name}自动`,
         type: "url-test",
         hidden: true,
-        filter: regionFilter, // 地区过滤
-        "exclude-filter": finalExcludeFilter, // ⭐ 排除所有杂项和高倍率 ⭐
+        filter: regionFilter, 
+        "exclude-filter": excludeForAutoGroups, // EX_ALL (排除杂项和高倍率)
         icon
       },
 
-      // 3. FALLBACK 组 (自动回退) - 排除所有
+      // 3. FALLBACK 组 (自动回退) - 仅排除杂项 (EX_INFO)
       {
         ...groupBaseOption,
         name: `${name}回退`,
         type: "fallback",
         hidden: true,
         filter: regionFilter,
-        "exclude-filter": finalExcludeFilter, // ⭐ 排除所有杂项和高倍率 ⭐
+        "exclude-filter": excludeForFallback, // EX_INFO (只排除杂项)
         icon
       },
-
-      // 4. LOAD-BALANCE 组 (负载均衡) - 排除所有
+      
+      // 4. LOAD-BALANCE 组 (负载均衡) - 排除所有 (EX_ALL)
       {
         ...groupBaseOption,
         name: `${name}均衡`,
-        type: "load-balance",
+        type: "load-balance", // ⭐ 新增的负载均衡类型
         hidden: true,
-        strategy: "consistent-hashing",
         filter: regionFilter,
-        "exclude-filter": finalExcludeFilter, // ⭐ 排除所有杂项和高倍率 ⭐
+        "exclude-filter": excludeForAutoGroups, // EX_ALL (排除杂项和高倍率)
         icon
       }
     ];
-  }
+}
 
   // ========== 定义所有分组 ==========
 

@@ -505,7 +505,7 @@ const main = (config) => {
       "filter": "",
 
       // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
-      "exclude-filter": EX_ALL,
+      "exclude-filter": EX_INFO,
 
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },

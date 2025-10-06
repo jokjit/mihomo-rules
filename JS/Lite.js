@@ -692,6 +692,18 @@ config["proxy-groups"] = [
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Tencent/Tencent_OCD_IP.mrs",
       "path": "./ruleset/Tencent_IP.mrs"
     },
+    "Alibaba": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_Domain.mrs",
+      "path": "./ruleset/alibaba_Domain.mrs"
+    },
+    "Alibaba-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_IP.mrs",
+      "path": "./ruleset/Alibaba_IP.mrs"
+    },
     "Emby": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -873,6 +885,8 @@ config["proxy-groups"] = [
       "RULE-SET,ByteDance,DIRECT",
       "RULE-SET,Tencent,DIRECT",
       "RULE-SET,CN,DIRECT",
+      "RULE-SET,Alibaba,DIRECT",
+      "RULE-SET,Alibaba-ip,DIRECT",
       "RULE-SET,gaode,DIRECT",
       "RULE-SET,DouYin,DIRECT",
       "RULE-SET,Baidu,DIRECT",

@@ -538,6 +538,18 @@ function createRegionGroups({ name, icon, filter }) {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_Domain.mrs",
       "path": "./ruleset/NetEase_Domain.mrs"
     },
+    "Alibaba": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_Domain.mrs",
+      "path": "./ruleset/alibaba_Domain.mrs"
+    },
+    "Alibaba-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_IP.mrs",
+      "path": "./ruleset/Alibaba_IP.mrs"
+    },
     "NetEase-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
@@ -770,6 +782,8 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,gaode,DIRECT",
       "RULE-SET,DouYin,DIRECT",
       "RULE-SET,Baidu,DIRECT",
+      "RULE-SET,Alibaba,DIRECT",
+      "RULE-SET,Alibaba-ip,DIRECT",
       "RULE-SET,DingTalk,DIRECT",
       "RULE-SET,SteamCN,DIRECT",
       "OR,((RULE-SET,115),(DOMAIN-SUFFIX,115vod.com)),DIRECT",

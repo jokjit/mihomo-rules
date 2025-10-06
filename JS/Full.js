@@ -6,32 +6,7 @@ const ruleProviderCommon = {
   "format": "mrs",
 };
 
-// 1. 排除所有杂项/管理/通知信息（例如：官网、到期、流量剩余）
-const EX_INFO = [
-  // 中文杂项/管理信息
-  "(?i)群|邀请|返利|循环|建议|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入",
-  // 英文/格式化信息（流量、日期等）
-  "可用|剩余|(\\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\\b|\\d{4}-\\d{2}-\\d{2}|\\d+G)"
-].join('|');
-
-// 2. 排除所有高倍率标识
-const EX_RATE = [
-  "高倍|高倍率|倍率[2-9]",
-  // 各种括号或无括号的倍率格式
-  "x[2-9]\\.?\\d*",
-  "\\([xX][2-9]\\.?\\d*\\)",
-  "\\[[xX][2-9]\\.?\\d*\\]",
-  "\\{[xX][2-9]\\.?\\d*\\}",
-  "（[xX][2-9]\\.?\\d*）",
-  "【[xX][2-9]\\.?\\d*】",
-  "【[2-9]x】",
-  "【\\d+[xX]】"
-].join('|');
-
-// 3. 组合最终的排除字符串
-const EX_ALL = `${EX_INFO}|${EX_RATE}`;
-
-// 策略组通用配置 (移除所有默认过滤，让工厂函数负责)
+// 策略组通用配置
 const groupBaseOption = {
   "interval": 300,
   "url": "https://www.gstatic.com/generate_204",
@@ -40,12 +15,8 @@ const groupBaseOption = {
   "timeout": 5000,
   "max-failed-times": 5,
   "include-all": true,
-
-  // ⭐ 关键修改：移除默认的 exclude-filter ⭐
-  // "exclude-filter": EX_INFO, // 移除这行！
-
-  "filter": ""  // 确保 filter 为空
 };
+
 // 程序入口
 
 const main = (config) => {
@@ -71,6 +42,7 @@ const main = (config) => {
   // 国内DNS服务器
   const domesticNameservers = [
     "quic://dns.18bit.cn",
+    "quic://dns.ipv4dns.com",
     "quic://dns.alidns.com",
     "https://doh.pub/dns-query" // 腾讯DoH，
   ];
@@ -96,6 +68,7 @@ const main = (config) => {
       "dns.google",
       "dns.adguard-dns.com",
       "dns.18bit.cn",
+      "dns.ipv4dns.com",
       "RULE-SET:Fakeip_Filter",
       "RULE-SET:CN",
       "RULE-SET:Private"],
@@ -160,293 +133,275 @@ const main = (config) => {
     "endpoint-independent-nat": false
   };
 
-  // ========== 公共代理节点列表 ==========
-  // 国际节点
-  const baseProxies = [
-    "节点选择", "香港节点",
-    "台湾节点",
-    "日本节点",
-    "新加坡节点",
-    "美国节点",
-    "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT",
-  ];
+// ========== 公共代理节点列表 ==========
+// 国际节点
+const baseProxies = [
+  "节点选择", "香港节点", "香港自动", "香港回退", "香港均衡",
+  "台湾节点", "台湾自动", "台湾回退", "台湾均衡",
+  "日本节点", "日本自动", "日本回退", "日本均衡",
+  "新加坡节点", "新加坡自动", "新加坡回退", "新加坡均衡",
+  "美国节点", "美国自动", "美国回退", "美国均衡",
+  "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT",
+  "尼日利亚节点", "尼日利亚自动", "尼日利亚回退", "尼日利亚均衡",
+  "马来西亚节点", "马来西亚自动", "马来西亚回退", "马来西亚均衡",
+  "英国节点", "英国自动", "英国回退", "英国均衡",
+  "德国节点", "德国自动", "德国回退", "德国均衡"
+];
 
-  // 中国大陆节点
-  const baseProxiesCN = [
-    "节点选择", "DIRECT",
-    "香港节点",
-    "台湾节点",
-    "澳门节点",
-    "全部节点", "负载均衡", "自动选择", "自动回退"
-  ];
+// 中国大陆节点
+const baseProxiesCN = [
+  "节点选择", "DIRECT",
+  "香港节点", "香港自动", "香港回退", "香港均衡",
+  "台湾节点", "台湾自动", "台湾回退", "台湾均衡",
+  "澳门节点", "澳门自动", "澳门回退", "澳门均衡",  
+  "全部节点", "负载均衡", "自动选择", "自动回退"
+];
 
-  // ========== 工厂函数：生成社交/国际/大陆分组 ==========
-  /**
-   * groups 参数说明：
-   * [name, icon, type, proxiesOrExtra, extra]
-   * - name: 分组名称
-   * - icon: 图标 URL
-   * - type: select / url-test / fallback / load-balance（默认 select）
-   * - proxiesOrExtra: 可以是 proxies 数组, 可以是布尔值 (true 代表 baseProxiesCN), 也可以是包含 filter 等信息的对象
-   * - extra: 额外的补充字段
-   */
-  // ========== 工厂函数：生成社交/国际/大陆分组 ==========
-  // ========== 工厂函数：生成社交/国际/大陆分组 (修正版) ==========
-  function createGroups(groups) {
-    return groups.map(groupArgs => {
-      // 先进行一次参数“挪位”修正
-      let [name, icon, type, proxiesOrExtra, extra] = groupArgs;
+// ========== 工厂函数：生成社交/国际/大陆分组 ==========
+/**
+ * groups 参数说明：
+ * [name, icon, type, proxiesOrExtra, extra]
+ * - name: 分组名称
+ * - icon: 图标 URL
+ * - type: select / url-test / fallback / load-balance（默认 select）
+ * - proxiesOrExtra: 可以是 proxies 数组, 可以是布尔值 (true 代表 baseProxiesCN), 也可以是包含 filter 等信息的对象
+ * - extra: 额外的补充字段
+ */
+function createGroups(groups) {
+  return groups.map(groupArgs => {
+    // 先进行一次参数“挪位”修正
+    let [name, icon, type, proxiesOrExtra, extra] = groupArgs;
 
-      // 参数修正逻辑
-      if (typeof type !== 'string') {
-        extra = proxiesOrExtra;
-        proxiesOrExtra = type;
-        type = 'select';
-      }
-      if (!type) {
-        type = 'select';
-      }
+    // ==================== 新增的判断逻辑 ====================
+    // 如果 type 参数不是字符串 (比如用户传入了 true 或一个对象),
+    // 说明用户省略了 type, 我们需要手动修正参数位置。
+    if (typeof type !== 'string') {
+      extra = proxiesOrExtra;      // 原来的第4个参数挪给第5个
+      proxiesOrExtra = type;       // 原来的第3个参数挪给第4个
+      type = 'select';             // 第3个参数手动设为默认值 'select'
+    }
+    // =======================================================
 
-      let proxies;
-      let extraOptions = extra || {};
-
-      if (Array.isArray(proxiesOrExtra)) {
-        proxies = proxiesOrExtra;
-      } else if (typeof proxiesOrExtra === 'boolean') {
-        // cnAppGroups 使用此逻辑
-        proxies = proxiesOrExtra ? baseProxiesCN : baseProxies;
-      } else if (proxiesOrExtra && typeof proxiesOrExtra === 'object') {
-        proxies = proxiesOrExtra.proxies;
-        extraOptions = { ...proxiesOrExtra, ...extraOptions };
-        delete extraOptions.proxies;
-      }
-
-      // 1. 构造初始配置对象
-      const groupConfig = {
-        ...groupBaseOption,
-        name,
-        type,
-        icon,
-        proxies: proxies || baseProxies,
-        ...extraOptions,
-      };
-
-      // 2. ⭐ 关键修正：在返回前注入 exclude-filter ⭐
-      // 对于 select 组（如 AI, YouTube），我们通常希望保留所有节点。
-      // 但对于 cnAppGroups 中的 "国内媒体" 组 (type 仍为 select)，我们希望它能排除杂项。
-      // 在这里，我们只对非 select 组添加 EX_ALL (高倍率+杂项)，因为你的手动组已经处理了自动选择/回退/均衡。
-      // 但是，社交组（AI, YouTube等）默认是 select 组，如果想让他们排除杂项，需要在这里处理。
-
-      // 对于通过 createGroups 创建的【所有】分组，如果它们没有自定义 exclude-filter，则至少排除 EX_INFO（杂项/管理信息）。
-      if (!groupConfig["exclude-filter"]) {
-        // 国际分组的 select 组（AI, Telegram, YouTube）排除杂项
-        // 国内分组的 select 组（国内媒体）排除杂项
-        groupConfig["exclude-filter"] = EX_INFO;
-      }
-
-      // 地区分组和手动组已在外层处理，无需额外修改。
-
-      // 最终返回修改后的配置对象
-      return groupConfig;
-    });
-  }
-
-  // ========== 工厂函数：生成地区分组（四种类型） ==========
-  /**
-   * createRegionGroups(region) 返回一个地区的 4 个分组
-   * @param {string} name - 地区名称，例如 "香港"
-   * @param {string} icon - 图标 URL
-   * @param {Array<string>} proxies - select 分组的子节点（可选）
-   * @param {string} filter - 正则匹配节点的 filter
-   */
-  // ⭐ 确保 EXCLUDE_FILTER_STRING 已经定义，用于排除杂项和高倍率节点 ⭐
-
-  // ... [EXCLUDE_FILTER_STRING 的定义保持不变] ...
-
-  // ========== 工厂函数：生成地区分组（四种类型） ==========
- // 假设 EX_INFO, EX_RATE, EX_ALL, groupBaseOption 都已定义
-// EX_ALL 是杂项和高倍率的组合：const EX_ALL = `${EX_INFO}|${EX_RATE}`;
-// EX_INFO 仅是杂项过滤：const EX_INFO = "...";
-
-function createRegionGroups({ name, icon, filter }) {
-    // 包含 "均衡"
-    const subNames = ["自动", "回退", "均衡"];
-
-    const proxies = subNames.map(s => `${name}${s}`); // 例如: "香港自动", "香港回退", "香港均衡"
-
-    const regionFilter = filter;
+    // 如果修正后 type 仍然为空，确保它有默认值
+    if (!type) {
+      type = 'select';
+    }
     
-    // 自动选择/负载均衡 排除所有 (EX_INFO | EX_RATE)
-    const excludeForAutoGroups = EX_ALL; 
-    
-    // 自动回退 仅排除杂项 (EX_INFO)
-    const excludeForFallback = EX_INFO; 
+    // 后面的逻辑与之前版本类似，但现在参数位置绝对正确
+    let proxies; 
+    let extraOptions = extra || {};
 
-    return [
-      // 1. SELECT 组 (手动选择) - 只做地区过滤
-      {
-        ...groupBaseOption,
-        name: `${name}节点`,
-        type: "select",
-        proxies,
-        filter: regionFilter,
-        icon
-      },
+    if (Array.isArray(proxiesOrExtra)) {
+      proxies = proxiesOrExtra;
+    } else if (typeof proxiesOrExtra === 'boolean') {
+      proxies = proxiesOrExtra ? baseProxiesCN : baseProxies;
+    } else if (proxiesOrExtra && typeof proxiesOrExtra === 'object') {
+      proxies = proxiesOrExtra.proxies; 
+      extraOptions = { ...proxiesOrExtra, ...extraOptions };
+      delete extraOptions.proxies;
+    }
 
-      // 2. URL-TEST 组 (自动选择) - 排除所有 (EX_ALL)
-      {
-        ...groupBaseOption,
-        name: `${name}自动`,
-        type: "url-test",
-        hidden: true,
-        filter: regionFilter, 
-        "exclude-filter": excludeForAutoGroups, // EX_ALL (排除杂项和高倍率)
-        icon
-      },
-
-      // 3. FALLBACK 组 (自动回退) - 仅排除杂项 (EX_INFO)
-      {
-        ...groupBaseOption,
-        name: `${name}回退`,
-        type: "fallback",
-        hidden: true,
-        filter: regionFilter,
-        "exclude-filter": excludeForFallback, // EX_INFO (只排除杂项)
-        icon
-      },
-      
-      // 4. LOAD-BALANCE 组 (负载均衡) - 排除所有 (EX_ALL)
-      {
-        ...groupBaseOption,
-        name: `${name}均衡`,
-        type: "load-balance", // ⭐ 新增的负载均衡类型
-        hidden: true,
-        filter: regionFilter,
-        "exclude-filter": excludeForAutoGroups, // EX_ALL (排除杂项和高倍率)
-        icon
-      }
-    ];
+    return {
+      ...groupBaseOption,
+      name,
+      type,
+      icon,
+      proxies: proxies || baseProxies,
+      ...extraOptions,
+    };
+  });
 }
 
-  // ========== 定义所有分组 ==========
+// ========== 工厂函数：生成地区分组（四种类型） ==========
+/**
+ * createRegionGroups(region) 返回一个地区的 4 个分组
+ * @param {string} name - 地区名称，例如 "香港"
+ * @param {string} icon - 图标 URL
+ * @param {Array<string>} proxies - select 分组的子节点（可选）
+ * @param {string} filter - 正则匹配节点的 filter
+ */
+function createRegionGroups({ name, icon, filter }) {
+  const subNames = ["自动", "回退", "均衡"];
+  
+  // 自动生成 select 分组的 proxies
+  const proxies = subNames.map(s => `${name}${s}`);
 
-  // 示例灵活字段
-  //  [
-  //    "全部节点",
-  //    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
-  //    "select",
-  //    ["自动选择", "负载均衡", "自动回退", "DIRECT"], // 自定义节点列表
-  //    {
-  //      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址)).*$"
-  //    }
-  //  ],
-  //  [
-  //    "自动选择",
-  //    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
-  //    "url-test",
-  //    null,    // 不传 proxies，使用默认 baseProxies，true使用baseProxiesCN，false使用baseProxies
-  //    {
-  //      hidden: true,
-  //      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环)).*$"
-  //    }
-  //  ]
-  // 
-  // 1️⃣ 社交/国际分组
-  const socialGroups = createGroups([
-    ["亚马逊电商", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AmazonPrimeVideo.webp"],
-    ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
-    ["TVB", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/TVB.webp"],
-    ["AbemaTV", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Abema.webp"],
-    ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
-    ["Twitter", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"],
-    ["Instagram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"],
-    ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
-    ["Netflix", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"],
-    ["Disney+", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Disney+.png"],
-    ["AppleTV", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AppleTV.png"],
-    ["Twitch", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Twitch.webp"],
-    ["亚马逊TV", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AmazonPrimeVideo.png"],
-    ["HBO", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/HBO.png"],
-    ["Hulu", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Hulu.png"],
-    ["ニコニコ", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Niconico.webp"],
-    ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
-    ["IMDB", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/IMDB.webp"],
-    ["TikTok", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"],
-    ["哔哩东南亚", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Biliintl.png"],
-    ["FCM", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"],
-    ["Discord", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Discord.png"],
-    ["巴哈姆特", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Bahamut.png"],
-    ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
-    ["Spotify", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Spotify.png"],
-    ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
-    ["Docker", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Docker.webp"],
-    ["Speedtest", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"],
-    ["PayPal", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/PayPal.png"],
-    ["PikPak", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/PikPak.webp"],
-    ["YouTubeMusic", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/YouTubeMusic.webp"],
-    ["Apple音乐", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AppleMusic.webp"],
-    ["iCloud", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/iCloud.webp"],
-    ["Talkatone", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"],
-    ["GoogleVoice", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GoogleVoice.png"],
-    ["Facebook", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Facebook.webp"],
-    ["LINE", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Line.webp"],
-    ["Signal", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Signal.webp"],
-    ["Wise", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Wise.png"],
-    ["BT追踪器", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/BitTorrent.webp"],
-    ["维基百科", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Wikipedia.webp"],
-    ["Cloudflare", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Cloudflare.webp"],
-    ["Apple", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"],
-    ["Google", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"],
-    ["微软", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"],
-    ["OneDrive", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/OneDrive.webp"],
-    ["Adobe", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Adobe.webp"],
-    ["游戏平台", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"],
-    ["禁漫天堂", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/18comic.webp"],
-    ["哔咔哔咔", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Picacg.webp"],
-    ["Pixiv", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Pixiv.webp"],
-    ["Google学术", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Scholar.webp"]
-  ]);
-
-  // 2️⃣ 中国大陆 APP 分组
-  const cnAppGroups = createGroups([
-    ["哔哩哔哩", "https://img.icons8.com/?size=100&id=l87yXVtzuGWB&format=png&color=000000", true],
-    ["国内媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/CN_Media.png", true],
-    ["AppleCN", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AppleCN.webp", true]
-  ]);
-
-  // 3️⃣ 地区分组
-  const regionGroups = [
-    ...createRegionGroups({
-      name: "香港",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png",
-      filter: "(?i)🇭🇰|香港|(\\b(HK|Hong|HongKong)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "澳门",
-      icon: "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000",
-      filter: "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b"
-    }),
-    ...createRegionGroups({
-      name: "台湾",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png",
-      filter: "(?i)🇨🇳|🇹🇼|台湾|(\\b(TW|Tai|Taiwan)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "日本",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png",
-      filter: "(?i)🇯🇵|日本|东京|(\\b(JP|Japan)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "新加坡",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png",
-      filter: "(?i)🇸🇬|新加坡|狮|(\\b(SG|Singapore)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "美国",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png",
-      filter: "(?i)🇺🇸|美国|洛杉矶|圣何塞|(\\b(US|United States|America)\\b)"
-    }),
+  return [
+    {
+      ...groupBaseOption,
+      name: `${name}节点`,
+      type: "select",
+      proxies,  // 自动生成
+      filter,
+      icon
+    },
+    {
+      ...groupBaseOption,
+      name: `${name}自动`,
+      type: "url-test",
+      hidden: true,
+      filter,
+      icon
+    },
+    {
+      ...groupBaseOption,
+      name: `${name}回退`,
+      type: "fallback",
+      hidden: true,
+      filter,
+      icon
+    },
+    {
+      ...groupBaseOption,
+      name: `${name}均衡`,
+      type: "load-balance",
+      hidden: true,
+      strategy: "consistent-hashing",
+      filter,
+      icon
+    }
   ];
+}
+
+// ========== 定义所有分组 ==========
+
+// 示例灵活字段
+//  [
+//    "全部节点",
+//    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
+//    "select",
+//    ["自动选择", "负载均衡", "自动回退", "DIRECT"], // 自定义节点列表
+//    {
+//      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址)).*$"
+//    }
+//  ],
+//  [
+//    "自动选择",
+//    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
+//    "url-test",
+//    null,    // 不传 proxies，使用默认 baseProxies，true使用baseProxiesCN，false使用baseProxies
+//    {
+//      hidden: true,
+//      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环)).*$"
+//    }
+//  ]
+// 
+// 1️⃣ 社交/国际分组
+const socialGroups = createGroups([
+  ["亚马逊电商", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AmazonPrimeVideo.webp"],
+  ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
+  ["TVB", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/TVB.webp"],
+  ["AbemaTV", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Abema.webp"],
+  ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
+  ["Twitter", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"],
+  ["Instagram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Instagram.png"],
+  ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
+  ["Netflix", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Netflix.png"],
+  ["Disney+", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Disney+.png"],
+  ["AppleTV", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AppleTV.png"],
+  ["Twitch", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Twitch.webp"],
+  ["亚马逊TV", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/AmazonPrimeVideo.png"],
+  ["HBO", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/HBO.png"],
+  ["Hulu", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Hulu.png"],
+  ["ニコニコ", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Niconico.webp"],
+  ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
+  ["IMDB", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/IMDB.webp"],
+  ["TikTok", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/TikTok.png"],
+  ["哔哩东南亚", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Biliintl.png"],
+  ["FCM", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/FCM.png"],
+  ["Discord", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Discord.png"],
+  ["巴哈姆特", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Bahamut.png"],
+  ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
+  ["Spotify", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Spotify.png"],
+  ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
+  ["Docker", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Docker.webp"],
+  ["Speedtest", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Speedtest.png"],
+  ["PayPal", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/PayPal.png"],
+  ["PikPak", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/PikPak.webp"],
+  ["YouTubeMusic", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/YouTubeMusic.webp"],
+  ["Apple音乐", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AppleMusic.webp"],
+  ["iCloud", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/iCloud.webp"],
+  ["Talkatone", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Talkatone.png"],
+  ["GoogleVoice", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GoogleVoice.png"],
+  ["Facebook", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Facebook.webp"],
+  ["LINE", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Line.webp"],
+  ["Signal", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/Signal.webp"],
+  ["Wise", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Wise.png"],
+  ["BT追踪器", "https://cdn.jsdmirror.com/gh/Kwisma/cf-worker-mihomo@main/icon/webp/100/BitTorrent.webp"],
+  ["维基百科", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Wikipedia.webp"],
+  ["Cloudflare", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Cloudflare.webp"],
+  ["Apple", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Apple.png"],
+  ["Google", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Google.png"],
+  ["微软", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Microsoft.png"],
+  ["OneDrive", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/OneDrive.webp"],
+  ["Adobe", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Adobe.webp"],
+  ["游戏平台", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"],
+  ["禁漫天堂", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/18comic.webp"],
+  ["哔咔哔咔", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Picacg.webp"],
+  ["Pixiv", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Pixiv.webp"],
+  ["Google学术", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/Scholar.webp"]
+]);
+
+// 2️⃣ 中国大陆 APP 分组
+const cnAppGroups = createGroups([
+  ["哔哩哔哩", "https://img.icons8.com/?size=100&id=l87yXVtzuGWB&format=png&color=000000", true],
+  ["国内媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/CN_Media.png", true],
+  ["AppleCN", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AppleCN.webp", true]
+]);
+
+// 3️⃣ 地区分组
+const regionGroups = [
+  ...createRegionGroups({
+    name: "香港",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png",
+    filter: "(?i)🇭🇰|香港|(\\b(HK|Hong|HongKong)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "澳门",
+    icon: "https://img.icons8.com/?size=100&id=BguLeqyhWNak&format=png&color=000000",
+    filter: "(?i)🇲🇴|澳门|\\b(MO|Macau)\\b"
+  }),
+  ...createRegionGroups({
+    name: "台湾",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png",
+    filter: "(?i)🇨🇳|🇹🇼|台湾|(\\b(TW|Tai|Taiwan)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "日本",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png",
+    filter: "(?i)🇯🇵|日本|东京|(\\b(JP|Japan)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "新加坡",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png",
+    filter: "(?i)🇸🇬|新加坡|狮|(\\b(SG|Singapore)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "美国",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png",
+    filter: "(?i)🇺🇸|美国|洛杉矶|圣何塞|(\\b(US|United States|America)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "尼日利亚",
+    icon: "https://img.icons8.com/?size=100&id=rodYaViA2Nph&format=png&color=000000",
+    filter: "(?i)🇳🇬|尼日利亚|(\\b(NG|Nigeria)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "马来西亚",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png",
+    filter: "(?i)🇲🇾|马来西亚|(\\b(MY|Malaysia)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "英国",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png",
+    filter: "(?i)🇬🇧|英国|(\\b(UK|United Kingdom)\\b)"
+  }),
+  ...createRegionGroups({
+    name: "德国",
+    icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png",
+    filter: "(?i)🇩🇪|德国|(\\b(DE|Germany)\\b)"
+  })
+];
 
   const manualGroups = [
     {
@@ -460,26 +415,18 @@ function createRegionGroups({ name, icon, filter }) {
       ...groupBaseOption,
       "name": "节点选择",
       "type": "select",
-      "proxies": ["自动选择", "自动回退", "全部节点", "负载均衡", "DIRECT", "香港节点", "香港自动", "香港回退", "香港均衡", "台湾节点", "台湾自动", "台湾回退", "台湾均衡", "日本节点", "日本自动", "日本回退", "日本均衡", "新加坡节点", "新加坡自动", "新加坡回退", "新加坡均衡", "美国节点", "美国自动", "美国回退", "美国均衡"],
+      "proxies": ["自动选择", "自动回退","全部节点", "负载均衡", "DIRECT", "香港节点", "香港自动", "香港回退", "香港均衡","台湾节点","台湾自动", "台湾回退", "台湾均衡", "日本节点","日本自动", "日本回退", "日本均衡", "新加坡节点","新加坡自动", "新加坡回退", "新加坡均衡", "美国节点", "美国自动","美国回退","美国均衡", "尼日利亚节点", "尼日利亚自动", "尼日利亚回退", "尼日利亚均衡","马来西亚节点","马来西亚自动", "马来西亚回退", "马来西亚均衡", "英国节点", "英国自动", "英国回退", "英国均衡","德国节点","德国自动", "德国回退", "德国均衡"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
     },
-    {
+     {
       ...groupBaseOption,
       "name": "全部节点",
-      "proxies": ["自动选择", "负载均衡", "自动回退", "DIRECT"],
+      "proxies": ["自动选择", "负载均衡",  "自动回退", "DIRECT"],
       "type": "select",
       "include-all": true,
-
-      // ❗ 移除复杂的 filter ❗ 
-      // "filter": "(?=.*(.))(?!.*((?i)群|邀请|...)...).*$", 
-      "filter": "", // 清空 filter
-
-      // ⭐ 关键：使用 EX_INFO 排除所有杂项/管理/通知信息 ⭐
-      "exclude-filter": EX_INFO,
-
+      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },
-    // 自动选择组
     {
       ...groupBaseOption,
       "name": "自动选择",
@@ -488,16 +435,9 @@ function createRegionGroups({ name, icon, filter }) {
       "lazy": true,
       "include-all": true,
       "hidden": true,
-
-      // 1. 清空不稳定的 filter
-      "filter": "",
-
-      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
-      "exclude-filter": EX_ALL,
-
+      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },
-    // 自动回退组
     {
       ...groupBaseOption,
       "name": "自动回退",
@@ -505,16 +445,9 @@ function createRegionGroups({ name, icon, filter }) {
       "lazy": true,
       "include-all": true,
       "hidden": true,
-
-      // 1. 清空不稳定的 filter
-      "filter": "",
-
-      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
-      "exclude-filter": EX_INFO,
-
+      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },
-    // 负载均衡组
     {
       ...groupBaseOption,
       "name": "负载均衡",
@@ -522,23 +455,17 @@ function createRegionGroups({ name, icon, filter }) {
       "lazy": true,
       "include-all": true,
       "hidden": true,
-
-      // 1. 清空不稳定的 filter
-      "filter": "",
-
-      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
-      "exclude-filter": EX_ALL,
-
+      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     }
   ];
-  // ========== 覆写 config["proxy-groups"] ==========
-  config["proxy-groups"] = [
-    ...manualGroups,
-    ...socialGroups,
-    ...cnAppGroups,
-    ...regionGroups,
-  ];
+// ========== 覆写 config["proxy-groups"] ==========
+config["proxy-groups"] = [
+  ...manualGroups,
+  ...socialGroups,
+  ...cnAppGroups,
+  ...regionGroups,
+];
   // 覆盖规则集
   config["rule-providers"] = {
     "115": {
@@ -1354,6 +1281,7 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,AppleTV,AppleTV",
       "RULE-SET,AppleMedia,AppleTV",
       "OR,((RULE-SET,AppleProxy),(DOMAIN-KEYWORD,smp-device),(DOMAIN-KEYWORD,testflight)),Apple",
+      "RULE-SET,BiliBili,哔哩哔哩",
       "RULE-SET,Biliintl,哔哩东南亚",
       "OR,((RULE-SET,TikTok),(DOMAIN-KEYWORD,tiktok)),TikTok",
       "OR,((RULE-SET,YouTube),(DOMAIN-KEYWORD,youtube)),YouTube",
@@ -1411,7 +1339,6 @@ function createRegionGroups({ name, icon, filter }) {
       "OR,((RULE-SET,Twitter),(DOMAIN-KEYWORD,twitter)),Twitter",
       "RULE-SET,Netflix,Netflix",
       "RULE-SET,Google,Google",
-      "RULE-SET,GlobalMedia,国际媒体",
       "RULE-SET,Cloudflare,Cloudflare",
       "RULE-SET,iCloud,iCloud",
       "OR,((RULE-SET,Siri),(RULE-SET,SystemOTA),(RULE-SET,AppleID),(RULE-SET,AppleDev),(RULE-SET,AppleFirmware),(RULE-SET,AppleHardware),(RULE-SET,Apple)),AppleCN",
@@ -1419,6 +1346,7 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,Mihoyo,游戏平台",
       "OR,((RULE-SET,OneDrive),(DOMAIN-KEYWORD,1drv),(DOMAIN-KEYWORD,onedrive),(DOMAIN-KEYWORD,skydrive)),OneDrive",
       "OR,((RULE-SET,Bing),(RULE-SET,Teams),(RULE-SET,MicrosoftEdge),(RULE-SET,Microsoft),(DOMAIN-KEYWORD,microsoft),(DOMAIN-KEYWORD,skydrive)),微软",
+      "RULE-SET,GlobalMedia,国际媒体",
       "RULE-SET,ChinaMedia,国内媒体",
     ],
     "SUB-IP": [
@@ -1442,8 +1370,8 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,Google-ip,Google,no-resolve",
       "RULE-SET,Tracker-ip,BT追踪器,no-resolve",
       "RULE-SET,YouTube-ip,YouTube,no-resolve",
-      "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
       "RULE-SET,Cloudflare-ip,Cloudflare,no-resolve"
+      "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
     ]
   };
 

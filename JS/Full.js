@@ -1371,7 +1371,7 @@ config["proxy-groups"] = [
       "RULE-SET,Google-ip,Google,no-resolve",
       "RULE-SET,Tracker-ip,BT追踪器,no-resolve",
       "RULE-SET,YouTube-ip,YouTube,no-resolve",
-      "RULE-SET,Cloudflare-ip,Cloudflare,no-resolve"
+      "RULE-SET,Cloudflare-ip,Cloudflare,no-resolve",
       "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
     ]
   };

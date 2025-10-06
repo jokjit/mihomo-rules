@@ -41,16 +41,17 @@ const main = (config) => {
 
   // 国内DNS服务器
   const domesticNameservers = [
-    "quic://dns.18bit.cn",
-    "quic://dns.ipv4dns.com",
-    "quic://dns.alidns.com",
-    "https://doh.pub/dns-query" // 腾讯DoH，
+    "quic://223.5.5.5",    // 阿里 DoQ（IP）
+    "quic://114.114.114.114",  // 114 DNS（DoQ）
+    "https://119.29.29.29/dns-query",  //腾讯 DoH
+    "https://182.140.225.38/dns-query"  // 18bit（DoH）
   ];
   // 国外DNS服务器
   const foreignNameservers = [
-    "quic://dns.adguard-dns.com",
-    "https://dns.google/dns-query",
-    "https://208.67.222.222/dns-query" // OpenDNS
+    "quic://176.103.130.130", // AdGuard DNS（quic）
+    "https://8.8.8.8/dns-query", //Google DNS（DoH）
+    "https://1.1.1.1/dns-query",  // Cloudflare DNS（DoH）
+    "https://9.9.9.9/dns-query" // Quad9 DNS（DoH）
   ];
 
   // 覆盖 dns 配置

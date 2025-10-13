@@ -415,9 +415,9 @@ rules:
   - RULE-SET,Private,🎯全球直连
   - RULE-SET,Privatecidr,🎯全球直连,no-resolve
   - RULE-SET,Fakeip-Filter,🎯全球直连
-  - RULE-SET,ByteDance,🎯直连
-  - RULE-SET,ByteDancecidr,🎯直连,no-resolve
-  - RULE-SET,SteamCN,🎯直连
+  - RULE-SET,ByteDance,🎯全球直连
+  - RULE-SET,ByteDancecidr,🎯全球直连,no-resolve
+  - RULE-SET,SteamCN,🎯全球直连
   - SUB-RULE,(NETWORK,UDP),SUB-DIRECT
   - RULE-SET,YouTube,YouTube
   - RULE-SET,Telegram,Telegram
@@ -450,10 +450,10 @@ rules:
   - RULE-SET,Proxy,🚀节点选择
   - RULE-SET,Gfw,🚀节点选择
   - RULE-SET,UScidr,🚀节点选择,no-resolve
-  - RULE-SET,ChinaMedia,🎯直连
-  - RULE-SET,ChinaMediacidr,🎯直连,no-resolve
-  - RULE-SET,CN,🎯直连
-  - RULE-SET,CNcidr,🎯直连,no-resolve
+  - RULE-SET,ChinaMedia,🎯全球直连
+  - RULE-SET,ChinaMediacidr,🎯全球直连,no-resolve
+  - RULE-SET,CN,🎯全球直连
+  - RULE-SET,CNcidr,🎯全球直连,no-resolve
   - MATCH,🐟漏网之鱼
 
 sub-rules:
@@ -498,8 +498,6 @@ rule-providers:
   UScidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/us.mrs" }
   Netflix: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflix.mrs" }
   Netflixcidr: { <<: *ip, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/netflixip.mrs" }
-  Media: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/media.mrs" }
-  Mediacidr: { <<: *ip,  url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/mediaip.mrs" }
   YouTube: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/youtube.mrs" }
   Speedtest: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs" }
   Talkatone: { <<: *domain, url: "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs" }

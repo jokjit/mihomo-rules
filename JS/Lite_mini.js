@@ -180,7 +180,8 @@ const main = (config) => {
 
   // 中国大陆节点
   const baseProxiesCN = [
-    "节点选择", "DIRECT",
+    "DIRECT",
+    "节点选择", 
     "香港节点",
     "台湾节点",
     "澳门节点",
@@ -362,11 +363,8 @@ function createRegionGroups({ name, icon, filter }) {
   const socialGroups = createGroups([
     ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
     ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
-    ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
     ["Twitter", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"],
     ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
-    ["Steam", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"],
-    ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
     ["国际媒体", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Pr_Media.png"],
   ]);
 
@@ -502,12 +500,6 @@ function createRegionGroups({ name, icon, filter }) {
   ];
   // 覆盖规则集
   config["rule-providers"] = {
-    "115": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/115/115_OCD_Domain.mrs",
-      "path": "./ruleset/115_Domain.mrs"
-    },
     "CN": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -537,36 +529,6 @@ function createRegionGroups({ name, icon, filter }) {
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_IP.mrs",
       "path": "./ruleset/ChinaMedia_IP.mrs"
-    },
-    "NetEase": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_Domain.mrs",
-      "path": "./ruleset/NetEase_Domain.mrs"
-    },
-    "Alibaba": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_Domain.mrs",
-      "path": "./ruleset/alibaba_Domain.mrs"
-    },
-    "Alibaba-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_IP.mrs",
-      "path": "./ruleset/Alibaba_IP.mrs"
-    },
-    "NetEase-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_IP.mrs",
-      "path": "./ruleset/NetEase_IP.mrs"
-    },
-    "Steam": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Steam/Steam_OCD_Domain.mrs",
-      "path": "./ruleset/Steam_Domain.mrs"
     },
     "SteamCN": {
       ...ruleProviderCommon,
@@ -622,30 +584,6 @@ function createRegionGroups({ name, icon, filter }) {
       "url": "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs",
       "path": "./ruleset/awavenue.mrs"
     },
-    "gaode": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GaoDe/GaoDe_OCD_Domain.mrs",
-      "path": "./ruleset/GaoDe_Domain.mrs"
-    },
-    "Baidu": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Baidu/Baidu_OCD_Domain.mrs",
-      "path": "./ruleset/Baidu_Domain.mrs"
-    },
-    "ByteDance": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs",
-      "path": "./ruleset/ByteDance_Domain.mrs"
-    },
-    "ByteDance-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_IP.mrs",
-      "path": "./ruleset/ByteDance_IP.mrs"
-    },
     "Claude": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -664,41 +602,11 @@ function createRegionGroups({ name, icon, filter }) {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_IP.mrs",
       "path": "./ruleset/Copilot_IP.mrs"
     },
-    "DingTalk": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/DingTalk/DingTalk_OCD_Domain.mrs",
-      "path": "./ruleset/DingTalk_Domain.mrs"
-    },
-    "DouYin": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/DouYin/DouYin_OCD_Domain.mrs",
-      "path": "./ruleset/DouYin_Domain.mrs"
-    },
     "Gemini": {
       ...ruleProviderCommon,
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Gemini/Gemini_OCD_Domain.mrs",
       "path": "./ruleset/Gemini_Domain.mrs"
-    },
-    "Tencent": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Tencent/Tencent_OCD_Domain.mrs",
-      "path": "./ruleset/Tencent_Domain.mrs"
-    },
-    "Tencent-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Tencent/Tencent_OCD_IP.mrs",
-      "path": "./ruleset/Tencent_IP.mrs"
-    },
-    "Emby": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Emby/Emby_OCD_Domain.mrs",
-      "path": "./ruleset/Emby_Domain.mrs"
     },
     "GlobalMedia": {
       ...ruleProviderCommon,
@@ -711,18 +619,6 @@ function createRegionGroups({ name, icon, filter }) {
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_IP.mrs",
       "path": "./ruleset/Media_IP.mrs"
-    },
-    "BlockHttpDNS": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_Domain.mrs",
-      "path": "./ruleset/Category_httpdns_Domain.mrs"
-    },
-    "BlockHttpDNS-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs",
-      "path": "./ruleset/Category_httpdns_IP.mrs"
     },
     "Private-ip": {
       ...ruleProviderCommon,
@@ -748,12 +644,6 @@ function createRegionGroups({ name, icon, filter }) {
       "url": "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/cncidr.mrs",
       "path": "./ruleset/CN_IP.mrs"
     },
-    "WeChat": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/WeChat/WeChat_Domain.mrs",
-      "path": "./ruleset/WeChat_Domain.mrs"
-    },
     "STUN": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -775,9 +665,7 @@ function createRegionGroups({ name, icon, filter }) {
   ];
   config["sub-rules"] = {
     "SUB-REJECT": [
-      "RULE-SET,BlockHttpDNS,REJECT-DROP",
       "RULE-SET,awavenue,REJECT-DROP",
-      "RULE-SET,BlockHttpDNS-ip,REJECT-DROP,no-resolve",
       "DOMAIN-KEYWORD,httpdns,REJECT-DROP",
       "RULE-SET,STUN,REJECT-DROP",
       "DST-PORT,3478,REJECT-DROP",
@@ -794,32 +682,16 @@ function createRegionGroups({ name, icon, filter }) {
     "SUB-DIRECT": [
       "RULE-SET,Private,DIRECT",
       "RULE-SET,Private-ip,DIRECT,no-resolve",
-      "RULE-SET,ByteDance,DIRECT",
-      "RULE-SET,Tencent,DIRECT",
       "RULE-SET,CN,DIRECT",
-      "RULE-SET,gaode,DIRECT",
-      "RULE-SET,DouYin,DIRECT",
-      "RULE-SET,Baidu,DIRECT",
-      "RULE-SET,Alibaba,DIRECT",
-      "RULE-SET,Alibaba-ip,DIRECT",
-      "RULE-SET,DingTalk,DIRECT",
       "RULE-SET,SteamCN,DIRECT",
-      "OR,((RULE-SET,115),(DOMAIN-SUFFIX,115vod.com)),DIRECT",
-      "RULE-SET,WeChat,DIRECT",
-      "RULE-SET,NetEase,DIRECT",
-      "RULE-SET,NetEase-ip,DIRECT,no-resolve",
-      "RULE-SET,ByteDance-ip,DIRECT,no-resolve",
-      "RULE-SET,Tencent-ip,DIRECT,no-resolve",
       "RULE-SET,CN-ip,DIRECT",
       "RULE-SET,Fakeip_Filter,DIRECT"
     ],
     "SUB-DOMAIN": [
       "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram)),Telegram",
-      "OR,((RULE-SET,GitHub),(DOMAIN-KEYWORD,github)),GitHub",
+      "OR,((RULE-SET,GitHub),(DOMAIN-KEYWORD,github)),节点选择",
       "OR,((RULE-SET,YouTube),(DOMAIN-KEYWORD,youtube)),YouTube",
       "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
-      "OR,((RULE-SET,Emby,Emby),(DOMAIN-KEYWORD,emby)),Emby",
-      "OR,((RULE-SET,Steam),(DOMAIN-KEYWORD,steambroadcast),(DOMAIN-KEYWORD,steamstore),(DOMAIN-KEYWORD,steamuserimages)),Steam",
       "OR,((RULE-SET,Twitter),(DOMAIN-KEYWORD,twitter)),Twitter",
       "RULE-SET,GlobalMedia,国际媒体",
       "RULE-SET,ChinaMedia,国内媒体",

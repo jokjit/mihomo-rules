@@ -68,20 +68,24 @@ const main = (config) => {
   config["global-client-fingerprint"] = "chrome";
 
 
-  // 国内DNS服务器
+  // 国内DNS服务器 (使用 DoH)
   const domesticNameservers = [
-    "quic://223.5.5.5",    // 阿里 DoQ（IP）
-    "quic://114.114.114.114",  // 114 DNS（DoQ）
-    "https://119.29.29.29/dns-query",  //腾讯 DoH
-    "https://182.140.225.38/dns-query"  // 18bit（DoH）
+  "quic://dns.alidns.com", // 阿里DoH
+  "https://doh.pub/dns-query", // 腾讯DoH
+  "quic://dns.18bit.cn"  // 18bit（DoH）
   ];
-  // 国外DNS服务器
+
+  // 国外 DNS 服务器（精简稳定版）
   const foreignNameservers = [
-    "quic://176.103.130.130", // AdGuard DNS（quic）
-    "https://8.8.8.8/dns-query", //Google DNS（DoH）
-    "https://1.1.1.1/dns-query",  // Cloudflare DNS（DoH）
-    "https://9.9.9.9/dns-query" // Quad9 DNS（DoH）
+  "quic://dns.adguard-dns.com",  //AdGuard DNS（quic
+  "https://1.1.1.1/dns-query",       // Cloudflare (快 + 稳定)
+  "https://8.8.8.8/dns-query",       // Google (广泛可用)
+  "https://9.9.9.9/dns-query",       // Quad9 (安全性好，过滤恶意域名)
   ];
+
+  // 默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
+  const defaultNameservers = ["223.5.5.5", "119.29.29.29"];
+
 
   // 覆盖 dns 配置
   config["dns"] = {
@@ -98,14 +102,15 @@ const main = (config) => {
       "dns.google",
       "dns.adguard-dns.com",
       "dns.18bit.cn",
+      "dns.ipv4dns.com",
       "RULE-SET:Fakeip_Filter",
       "RULE-SET:CN",
       "RULE-SET:Private"],
-    "default-nameserver": ["223.5.5.5", "1.2.4.8"],
+    "default-nameserver": [...defaultNameservers],
     "nameserver": [...foreignNameservers],
-    "proxy-server-nameserver": [...domesticNameservers],
-    "direct-nameserver": [...domesticNameservers],
-    "direct-nameserver-follow-policy": false,
+    "proxy-server-nameserver": [...defaultNameservers],
+    "direct-nameserver": [...defaultNameservers],
+    "direct-nameserver-follow-policy": true,
     "nameserver-policy": {
       "geosite:cn": [...domesticNameservers]
     }
@@ -358,6 +363,7 @@ function createRegionGroups({ name, icon, filter }) {
     ["AI", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/OpenAI.png"],
     ["Telegram", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Telegram.png"],
     ["GitHub", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/GitHub.png"],
+    ["Twitter", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Twitter.png"],
     ["YouTube", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/YouTube.png"],
     ["Steam", "https://cdn.jsdmirror.com/gh/jokjit/mihomo-rules@main/icon/Steam.png"],
     ["Emby", "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png"],
@@ -579,6 +585,18 @@ function createRegionGroups({ name, icon, filter }) {
       "behavior": "ipcidr",
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/YouTube/YouTube_OCD_IP.mrs",
       "path": "./ruleset/YouTube_IP.mrs"
+    },
+    "Twitter": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs",
+      "path": "./ruleset/Twitter_Domain.mrs"
+    },
+    "Twitter-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs",
+      "path": "./ruleset/Twitter_IP.mrs"
     },
     "OpenAI": {
       ...ruleProviderCommon,
@@ -802,6 +820,7 @@ function createRegionGroups({ name, icon, filter }) {
       "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
       "OR,((RULE-SET,Emby,Emby),(DOMAIN-KEYWORD,emby)),Emby",
       "OR,((RULE-SET,Steam),(DOMAIN-KEYWORD,steambroadcast),(DOMAIN-KEYWORD,steamstore),(DOMAIN-KEYWORD,steamuserimages)),Steam",
+      "OR,((RULE-SET,Twitter),(DOMAIN-KEYWORD,twitter)),Twitter",
       "RULE-SET,GlobalMedia,国际媒体",
       "RULE-SET,ChinaMedia,国内媒体",
     ],
@@ -810,6 +829,7 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,Telegram-ip,Telegram,no-resolve",
       "RULE-SET,Copilot-ip,AI,no-resolve",
       "RULE-SET,OpenAI-ip,AI,no-resolve",
+      "RULE-SET,Twitter-ip,Twitter,no-resolve",
       "RULE-SET,YouTube-ip,YouTube,no-resolve",
       "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
     ]

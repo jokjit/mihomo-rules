@@ -39,20 +39,24 @@ const main = (config) => {
   config["global-client-fingerprint"] = "chrome";
 
 
-  // 国内DNS服务器
+  // 国内DNS服务器 (使用 DoH)
   const domesticNameservers = [
-    "quic://223.5.5.5",    // 阿里 DoQ（IP）
-    "quic://114.114.114.114",  // 114 DNS（DoQ）
-    "https://119.29.29.29/dns-query",  //腾讯 DoH
-    "https://182.140.225.38/dns-query"  // 18bit（DoH）
+  "quic://dns.alidns.com", // 阿里DoH
+  "https://doh.pub/dns-query", // 腾讯DoH
+  "quic://dns.18bit.cn"  // 18bit（DoH）
   ];
-  // 国外DNS服务器
+
+  // 国外 DNS 服务器（精简稳定版）
   const foreignNameservers = [
-    "quic://176.103.130.130", // AdGuard DNS（quic）
-    "https://8.8.8.8/dns-query", //Google DNS（DoH）
-    "https://1.1.1.1/dns-query",  // Cloudflare DNS（DoH）
-    "https://9.9.9.9/dns-query" // Quad9 DNS（DoH）
+  "quic://dns.adguard-dns.com",  //AdGuard DNS（quic
+  "https://1.1.1.1/dns-query",       // Cloudflare (快 + 稳定)
+  "https://8.8.8.8/dns-query",       // Google (广泛可用)
+  "https://9.9.9.9/dns-query",       // Quad9 (安全性好，过滤恶意域名)
   ];
+
+  // 默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
+  const defaultNameservers = ["223.5.5.5", "119.29.29.29"];
+
 
   // 覆盖 dns 配置
   config["dns"] = {
@@ -73,11 +77,11 @@ const main = (config) => {
       "RULE-SET:Fakeip_Filter",
       "RULE-SET:CN",
       "RULE-SET:Private"],
-    "default-nameserver": ["223.5.5.5", "1.2.4.8"],
+    "default-nameserver": [...defaultNameservers],
     "nameserver": [...foreignNameservers],
-    "proxy-server-nameserver": [...domesticNameservers],
-    "direct-nameserver": [...domesticNameservers],
-    "direct-nameserver-follow-policy": false,
+    "proxy-server-nameserver": [...defaultNameservers],
+    "direct-nameserver": [...defaultNameservers],
+    "direct-nameserver-follow-policy": true,
     "nameserver-policy": {
       "geosite:cn": [...domesticNameservers]
     }

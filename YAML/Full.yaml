@@ -18,16 +18,22 @@ load-balance: &l {type: load-balance, include-all: true, url: 'https://www.gstat
 Direct: &D {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 
 #DNS配置锚点
-# 定义国内和国外 DoH 服务器列表（锚点）
+# 定义国外 DoH 服务器列表（锚点）
 foreign_nameservers: &foreign_nameservers
-  - "quic://dns.adguard-dns.com"
-  - "https://dns.google/dns-query"
-  - "https://208.67.222.222/dns-query"
+  - quic://dns.adguard-dns.com # AdGuard DNS（quic）
+  - https://8.8.8.8/dns-query # Google DNS（DoH）
+  - https://1.1.1.1/dns-query # Cloudflare DNS（DoH）
+  - https://9.9.9.9/dns-query # Quad9 DNS（DoH）
 
+# 定义国内 DoH/DoQ 服务器的 IP 地址
 domestic_nameservers: &domestic_nameservers
-  - "quic://dns.18bit.cn"
-  - "quic://dns.alidns.com"
-  - "https://doh.pub/dns-query"
+  - quic://dns.alidns.com # 阿里 DoQ（IP）
+  - https://doh.pub/dns-query # 腾讯 DoH
+  - quic://dns.18bit.cn # 18bit（DoH）
+#默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
+defaultNameservers: &defaultNameservers
+  - 223.5.5.5 
+  - 119.29.29.29 
   
 #规则集锚点  
 ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs, proxy: 🚀订阅更新}
@@ -174,16 +180,13 @@ dns:
       - dns.google
       - dns.adguard-dns.com
       - dns.18bit.cn
+      - dns.ipv4dns.com
     nameserver-policy:
       RULE-SET:CN,Private: *domestic_nameservers
-    default-nameserver:
-      - quic://223.5.5.5 
-      - 223.6.6.6
-      - 119.29.29.29
-      - 1.2.4.8
+    default-nameserver: *defaultNameservers
     nameserver: *foreign_nameservers
-    proxy-server-nameserver: *domestic_nameservers
-    direct-nameserver: *domestic_nameservers
+    proxy-server-nameserver: *defaultNameservers
+    direct-nameserver: *defaultNameservers
     direct-nameserver-follow-policy: true
       
 proxies:

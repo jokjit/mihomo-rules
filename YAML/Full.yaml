@@ -449,8 +449,10 @@ rules:
   - RULE-SET,Private,🎯全球直连
   - RULE-SET,Privatecidr,🎯全球直连,no-resolve
   - RULE-SET,Fakeip-Filter,🎯全球直连
-  - RULE-SET,ByteDance,🎯直连
-  - RULE-SET,ByteDancecidr,🎯直连,no-resolve
+  - RULE-SET,ChinaMedia,🎯全球直连
+  - RULE-SET,ChinaMediacidr,🎯全球直连,no-resolve
+  - RULE-SET,ByteDance,🎯全球直连
+  - RULE-SET,ByteDancecidr,🎯全球直连,no-resolve
   - SUB-RULE,(NETWORK,UDP),SUB-DIRECT
   - RULE-SET,AppleTV,AppleTV
   - RULE-SET,AppleMedia,AppleTV
@@ -498,7 +500,7 @@ rules:
   - RULE-SET,Wikipedia,维基百科
   - RULE-SET,Blizzard,游戏平台 
   - RULE-SET,Steam,游戏平台
-  - RULE-SET,SteamCN,🎯直连
+  - RULE-SET,SteamCN,🎯全球直连
   - RULE-SET,Rockstar,游戏平台
   - RULE-SET,PlayStation,游戏平台
   - RULE-SET,Epic,游戏平台 
@@ -542,10 +544,8 @@ rules:
   - RULE-SET,UScidr,🚀节点选择,no-resolve
   - RULE-SET,Tracker,BT追踪器
   - RULE-SET,Trackercidr,BT追踪器,no-resolve
-  - RULE-SET,ChinaMedia,🎯直连
-  - RULE-SET,ChinaMediacidr,🎯直连,no-resolve
-  - RULE-SET,CN,🎯直连
-  - RULE-SET,CNcidr,🎯直连,no-resolve
+  - RULE-SET,CN,🎯全球直连
+  - RULE-SET,CNcidr,🎯全球直连,no-resolve
   - MATCH,🐟漏网之鱼
 
 sub-rules:

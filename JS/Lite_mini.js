@@ -156,11 +156,9 @@ const main = (config) => {
       "any:53",
       "tcp://any:53"
     ],
-    "device": "utun0",
+    "device": "mihomo",
     "mtu": 1500,
     "strict-route": true,
-    "gso": true,
-    "gso-max-size": 65536,
     "udp-timeout": 300,
     "endpoint-independent-nat": false
   };

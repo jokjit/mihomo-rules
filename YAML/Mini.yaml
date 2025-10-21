@@ -145,6 +145,7 @@ sniffer:
 tun:
     enable: true
     stack: mixed
+    device: mihomo
     auto-route: true
     auto-detect-interface: true
     dns-hijack:
@@ -152,8 +153,6 @@ tun:
     - tcp://any:53
     mtu: 9000
     strict-route: true
-    gso: true
-    gso-max-size: 65536
     udp-timeout: 300
     endpoint-independent-nat: false
     

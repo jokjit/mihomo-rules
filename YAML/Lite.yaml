@@ -152,8 +152,7 @@ tun:
     - tcp://any:53
     mtu: 9000
     strict-route: true
-    gso: true
-    gso-max-size: 65536
+    device: mihomo
     udp-timeout: 300
     endpoint-independent-nat: false
     

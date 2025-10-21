@@ -114,8 +114,6 @@ const main = (config) => {
     },
     "force-domain": ["+.v2ex.com"],
     "skip-domain": ["Mijia.Cloud.com"],
-    "skip-src-address": ["192.168.0.3/32"],
-    "skip-dst-address": ["192.168.0.3/32"]
   };
 
 

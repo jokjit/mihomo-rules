@@ -22,7 +22,7 @@ Direct: &D {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 foreign_nameservers: &foreign_nameservers
   - quic://dns.adguard-dns.com # AdGuard DNS（quic）
   - https://8.8.8.8/dns-query # Google DNS（DoH）
-  - https://1.1.1.1/dns-query # Cloudflare DNS（DoH）
+  - https://cloudflare-dns.com/dns-query # Cloudflare DNS（DoH）
   - https://9.9.9.9/dns-query # Quad9 DNS（DoH）
 
 # 定义国内 DoH/DoQ 服务器的 IP 地址

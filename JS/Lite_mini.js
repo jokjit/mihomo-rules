@@ -78,7 +78,7 @@ const main = (config) => {
   // 国外 DNS 服务器（精简稳定版）
   const foreignNameservers = [
   "quic://dns.adguard-dns.com",  //AdGuard DNS（quic
-  "https://1.1.1.1/dns-query",       // Cloudflare (快 + 稳定)
+  "https://cloudflare-dns.com/dns-query",       // Cloudflare (快 + 稳定)
   "https://8.8.8.8/dns-query",       // Google (广泛可用)
   "https://9.9.9.9/dns-query",       // Quad9 (安全性好，过滤恶意域名)
   ];

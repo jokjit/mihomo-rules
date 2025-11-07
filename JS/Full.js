@@ -50,6 +50,8 @@ const main = (config) => {
   const foreignNameservers = [
   "quic://dns.adguard-dns.com",  //AdGuard DNS（quic
   "https://cloudflare-dns.com/dns-query",       // Cloudflare (快 + 稳定)
+  "https://8.8.8.8/dns-query",       // Google (广泛可用)
+  "https://9.9.9.9/dns-query",       // Quad9 (安全性好，过滤恶意域名)
   ];
 
   // 默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)

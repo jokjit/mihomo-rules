@@ -508,6 +508,7 @@ rules:
   - RULE-SET,HBO,HBO
   - RULE-SET,Signal,Signal
   - RULE-SET,Wise,Wise
+  - DOMAIN-KEYWORD,emby,Emby
   - RULE-SET,emby_domain,Emby
   - RULE-SET,emby_ip,Emby,no-resolve
   - RULE-SET,Talkatone,Talkatone

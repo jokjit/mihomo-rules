@@ -428,6 +428,7 @@ rules:
   - RULE-SET,GoogleFCMcidr,FCM,no-resolve
   - RULE-SET,Gemini,AI
   - RULE-SET,Speedtest,Speedtest
+  - DOMAIN-KEYWORD,emby,Emby
   - RULE-SET,emby_domain,Emby
   - RULE-SET,emby_ip,Emby,no-resolve
   - RULE-SET,Talkatone,Talkatone

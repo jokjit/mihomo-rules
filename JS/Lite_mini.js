@@ -77,7 +77,6 @@ const main = (config) => {
 
   // 国外 DNS 服务器（精简稳定版）
   const foreignNameservers = [
-  "quic://dns.adguard-dns.com",  //AdGuard DNS（quic
   "https://cloudflare-dns.com/dns-query",       // Cloudflare (快 + 稳定)
   "https://8.8.8.8/dns-query",       // Google (广泛可用)
   "https://9.9.9.9/dns-query",       // Quad9 (安全性好，过滤恶意域名)
@@ -92,7 +91,7 @@ const main = (config) => {
     "enable": true,
     "listen": "0.0.0.0:1053",
     "respect-rules": true,
-    "prefer-h3": false,
+    "prefer-h3": true,
     "ipv6": true,
     "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",
@@ -100,7 +99,7 @@ const main = (config) => {
     "fake-ip-filter": [
       "dns.alidns.com",
       "dns.google",
-      "dns.adguard-dns.com",
+      "cloudflare-dns.com",
       "dns.18bit.cn",
       "dns.ipv4dns.com",
       "RULE-SET:Fakeip_Filter",

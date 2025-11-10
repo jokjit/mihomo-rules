@@ -6,7 +6,32 @@ const ruleProviderCommon = {
   "format": "mrs",
 };
 
-// 策略组通用配置
+// 1. 排除所有杂项/管理/通知信息（例如：官网、到期、流量剩余）
+const EX_INFO = [
+  // 中文杂项/管理信息
+  "(?i)群|邀请|返利|循环|建议|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入",
+  // 英文/格式化信息（流量、日期等）
+  "可用|剩余|(\\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\\b|\\d{4}-\\d{2}-\\d{2}|\\d+G)"
+].join('|');
+
+// 2. 排除所有高倍率标识
+const EX_RATE = [
+  "高倍|高倍率|倍率[2-9]",
+  // 各种括号或无括号的倍率格式
+  "x[2-9]\\.?\\d*",
+  "\\([xX][2-9]\\.?\\d*\\)",
+  "\\[[xX][2-9]\\.?\\d*\\]",
+  "\\{[xX][2-9]\\.?\\d*\\}",
+  "（[xX][2-9]\\.?\\d*）",
+  "【[xX][2-9]\\.?\\d*】",
+  "【[2-9]x】",
+  "【\\d+[xX]】"
+].join('|');
+
+// 3. 组合最终的排除字符串
+const EX_ALL = `${EX_INFO}|${EX_RATE}`;
+
+// 策略组通用配置 (移除所有默认过滤，让工厂函数负责)
 const groupBaseOption = {
   "interval": 300,
   "url": "https://www.gstatic.com/generate_204",
@@ -15,8 +40,12 @@ const groupBaseOption = {
   "timeout": 5000,
   "max-failed-times": 5,
   "include-all": true,
-};
 
+  // ⭐ 关键修改：移除默认的 exclude-filter ⭐
+  // "exclude-filter": EX_INFO, // 移除这行！
+
+  "filter": ""  // 确保 filter 为空
+};
 // 程序入口
 
 const main = (config) => {
@@ -48,7 +77,6 @@ const main = (config) => {
 
   // 国外 DNS 服务器（精简稳定版）
   const foreignNameservers = [
-  "quic://dns.adguard-dns.com",  //AdGuard DNS（quic
   "https://cloudflare-dns.com/dns-query",       // Cloudflare (快 + 稳定)
   "https://8.8.8.8/dns-query",       // Google (广泛可用)
   "https://9.9.9.9/dns-query",       // Quad9 (安全性好，过滤恶意域名)
@@ -63,7 +91,7 @@ const main = (config) => {
     "enable": true,
     "listen": "0.0.0.0:1053",
     "respect-rules": true,
-    "prefer-h3": false,
+    "prefer-h3": true,
     "ipv6": true,
     "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",
@@ -71,7 +99,7 @@ const main = (config) => {
     "fake-ip-filter": [
       "dns.alidns.com",
       "dns.google",
-      "dns.adguard-dns.com",
+      "cloudflare-dns.com",
       "dns.18bit.cn",
       "dns.ipv4dns.com",
       "RULE-SET:Fakeip_Filter",
@@ -94,6 +122,19 @@ const main = (config) => {
     "geosite": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat",
     "mmdb": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb",
     "asn": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
+  };
+
+  config["hosts"] = {
+    "dns.google": [ 
+      "8.8.4.4",
+      "8.8.8.8",
+      "2001:4860:4860::8844",
+      "2001:4860:4860::8888"],
+    "dns.alidns.com": [      
+      "223.5.5.5",
+      "223.6.6.6",
+      "2400:3200::1",
+      "2400:3200:baba::1"]
   };
 
   // 覆盖 sniffer 配置

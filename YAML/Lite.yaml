@@ -7,8 +7,8 @@ PE: &Pe {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 # 定义国外 DoH 服务器列表（锚点）
 foreign_nameservers: &foreign_nameservers
   - quic://dns.adguard-dns.com # AdGuard DNS（quic）
+  - https://cloudflare-dns.com/dns-query#h3=true # Cloudflare DNS（DoH）
   - https://8.8.8.8/dns-query # Google DNS（DoH）
-  - https://cloudflare-dns.com/dns-query # Cloudflare DNS（DoH）
   - https://9.9.9.9/dns-query # Quad9 DNS（DoH）
 
 # 定义国内 DoH/DoQ 服务器的 IP 地址
@@ -19,7 +19,7 @@ domestic_nameservers: &domestic_nameservers
 #默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
 defaultNameservers: &defaultNameservers
   - 223.5.5.5 
-  - 119.29.29.29 
+  - 119.29.29.29
   
 # 自动选择组锚点
 UrlTest: &U {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, timeout: 5000, max-failed-times: 5, lazy: true, proxies: [香港自动, 新加坡自动, 日本自动, 台湾自动, 美国自动]}
@@ -105,14 +105,16 @@ experimental:
     dialer-ip4p-convert: false
     
 hosts:
-    ntp.ntsc.ac.cn:
-    - 114.118.7.161
-    - 114.118.7.163
-    dns.alidns.com:
+  dns.alidns.com:
     - 223.5.5.5
     - 223.6.6.6
-    - 2400:3200:baba::1
     - 2400:3200::1
+    - 2400:3200:baba::1
+  dns.google:
+    - 8.8.4.4
+    - 8.8.8.8
+    - 2001:4860:4860::8844
+    - 2001:4860:4860::8888
     
 profile:
     store-selected: true

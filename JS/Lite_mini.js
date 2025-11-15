@@ -78,7 +78,7 @@ const main = (config) => {
   // 国外 DNS 服务器（精简稳定版）
   const foreignNameservers = [
   "quic://dns.adguard-dns.com", 
-  "https://cloudflare-dns.com/dns-query",       // Cloudflare (快 + 稳定)
+  "https://cloudflare-dns.com/dns-query#h3=true",       // Cloudflare (快 + 稳定)
   "https://8.8.8.8/dns-query",       // Google (广泛可用)
   ];
 
@@ -91,7 +91,7 @@ const main = (config) => {
     "enable": true,
     "listen": "0.0.0.0:1053",
     "respect-rules": true,
-    "prefer-h3": true,
+    "prefer-h3": false,
     "ipv6": true,
     "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",

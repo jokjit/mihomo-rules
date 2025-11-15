@@ -21,8 +21,8 @@ Direct: &D {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 # 定义国外 DoH 服务器列表（锚点）
 foreign_nameservers: &foreign_nameservers
   - quic://dns.adguard-dns.com # AdGuard DNS（quic）
+  - https://cloudflare-dns.com/dns-query#h3=true # Cloudflare DNS（DoH）
   - https://8.8.8.8/dns-query # Google DNS（DoH）
-  - https://cloudflare-dns.com/dns-query # Cloudflare DNS（DoH）
   - https://9.9.9.9/dns-query # Quad9 DNS（DoH）
 
 # 定义国内 DoH/DoQ 服务器的 IP 地址
@@ -33,8 +33,22 @@ domestic_nameservers: &domestic_nameservers
 #默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
 defaultNameservers: &defaultNameservers
   - 223.5.5.5 
-  - 119.29.29.29 
+  - 119.29.29.29
   
+# 自动选择组锚点
+UrlTest: &U {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, timeout: 5000, max-failed-times: 5, lazy: true, proxies: [香港自动, 新加坡自动, 日本自动, 台湾自动, 美国自动]}
+# 自动选择节点配置锚点
+urltest: &u {type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, timeout: 5000, max-failed-times: 5, lazy: true, hidden: true}
+# 故障转移组锚点
+Fallback: &F {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5, proxies: [香港故转, 新加坡故转, 日本故转, 台湾故转, 美国故转]}
+# 故障转移节点配置锚点
+fallback: &f {type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', interval: 300, tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5}
+# 负载均衡组锚点
+Load-Balance: &L {type: select, url: 'https://www.gstatic.com/generate_204', interval: 300,tolerance: 20, lazy: true, timeout: 5000, max-failed-times: 5, proxies: [香港均衡, 新加坡均衡, 日本均衡, 台湾均衡, 美国均衡]} 
+# 负载均衡节点配置锚点
+load-balance: &l {type: load-balance, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, strategy: consistent-hashing, hidden: true, timeout: 5000, max-failed-times: 5}
+#直连
+Direct: &D {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 #规则集锚点  
 ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs, proxy: 🚀订阅更新}
 ip_text: &ip_text {type: http, interval: 86400, behavior: ipcidr, format: text, proxy: 🚀订阅更新}
@@ -44,7 +58,6 @@ domain_text: &domain_text {type: http, interval: 86400, behavior: domain, format
 domain_yaml: &domain_yaml {type: http, interval: 86400, behavior: domain, format: yaml, proxy: 🚀订阅更新}
 class: &class {type: http, interval: 86400, behavior: classical, format: text, proxy: 🚀订阅更新}
 class_yaml: &class_yaml {type: http, interval: 86400, behavior: classical, format: yaml, proxy: 🚀订阅更新}  
-
 # 订阅配置锚点
 P: &P {type: http, interval: 86400, health-check: {enable: true, url: 'https://edge.microsoft.com/captiveportal/generate_204', interval: 300}, filter: '^(?!.*(拒绝|等级|可用|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))'}
 # 机场名称不能重复,
@@ -59,10 +72,9 @@ proxy-providers:
     override:
       additional-prefix: '[前缀] '
       skip-cert-verify: true
-      udp: true                  
+      udp: true
       
-port: 7891
-socks-port: 7892
+
 mixed-port: 7890
 allow-lan: true
 bind-address: '*'
@@ -95,6 +107,7 @@ tcp-concurrent: true
 
 external-ui: ui
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+external-doh-server: /dns-query
 global-client-fingerprint: chrome
 disable-keep-alive: true
 keep-alive-idle: 15
@@ -106,14 +119,16 @@ experimental:
     dialer-ip4p-convert: false
     
 hosts:
-    ntp.ntsc.ac.cn:
-    - 114.118.7.161
-    - 114.118.7.163
-    dns.alidns.com:
+  dns.alidns.com:
     - 223.5.5.5
     - 223.6.6.6
-    - 2400:3200:baba::1
     - 2400:3200::1
+    - 2400:3200:baba::1
+  dns.google:
+    - 8.8.4.4
+    - 8.8.8.8
+    - 2001:4860:4860::8844
+    - 2001:4860:4860::8888
     
 profile:
     store-selected: true

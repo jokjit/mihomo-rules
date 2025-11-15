@@ -77,9 +77,9 @@ const main = (config) => {
 
   // 国外 DNS 服务器（精简稳定版）
   const foreignNameservers = [
-  "https://cloudflare-dns.com/dns-query",       // Cloudflare (快 + 稳定)
+  "quic://dns.adguard-dns.com", 
+  "https://cloudflare-dns.com/dns-query#h3=true",       // Cloudflare (快 + 稳定)
   "https://8.8.8.8/dns-query",       // Google (广泛可用)
-  "https://9.9.9.9/dns-query",       // Quad9 (安全性好，过滤恶意域名)
   ];
 
   // 默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
@@ -91,7 +91,7 @@ const main = (config) => {
     "enable": true,
     "listen": "0.0.0.0:1053",
     "respect-rules": true,
-    "prefer-h3": true,
+    "prefer-h3": false,
     "ipv6": true,
     "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",
@@ -113,7 +113,6 @@ const main = (config) => {
     "nameserver-policy": {
       "geosite:cn": [...domesticNameservers]
     }
-  };
 
   // 覆盖 geodata 配置
   config["geodata-mode"] = true;

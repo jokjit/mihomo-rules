@@ -183,6 +183,7 @@ dns:
     ipv6: true
     enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.0/15
+    fake-ip-range6: fdfe:dcba:9876::/64
     fake-ip-filter-mode: blacklist
     fake-ip-filter:
       - RULE-SET:Fakeip-Filter,Private,CN

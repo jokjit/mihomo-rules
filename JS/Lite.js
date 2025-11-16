@@ -96,6 +96,7 @@ const main = (config) => {
     "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
+    "fake-ip-range6": "fdfe:dcba:9876::/64",
     "fake-ip-filter": [
       "dns.alidns.com",
       "dns.google",

@@ -64,8 +64,8 @@ const main = (config) => {
   config["ipv6"] = true;
   config["log-level"] = "info";
   config["unified-delay"] = true;
-  config["find-process-mode"] = always;
-  config["global-client-fingerprint"] = chrome;
+  config["find-process-mode"] = "always";
+  config["global-client-fingerprint"] = "chrome";
 
 
   // 国内DNS服务器 (使用 DoH)

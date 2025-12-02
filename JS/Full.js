@@ -113,6 +113,7 @@ const main = (config) => {
     "nameserver-policy": {
       "geosite:cn": [...domesticNameservers]
     }
+  }
 
 
   // 覆盖 geodata 配置

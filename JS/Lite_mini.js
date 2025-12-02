@@ -58,14 +58,14 @@ const main = (config) => {
   }
 
   // 覆盖通用配置
-  config["mixed-port"] = "7890";
+  config["mixed-port"] = 7890;
   config["tcp-concurrent"] = true;
   config["allow-lan"] = true;
   config["ipv6"] = true;
-  config["log-level"] = "info";
-  config["unified-delay"] = "true";
-  config["find-process-mode"] = "strict";
-  config["global-client-fingerprint"] = "chrome";
+  config["log-level"] = info;
+  config["unified-delay"] = true;
+  config["find-process-mode"] = always;
+  config["global-client-fingerprint"] = chrome;
 
 
   // 国内DNS服务器 (使用 DoH)

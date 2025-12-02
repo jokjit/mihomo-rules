@@ -57,16 +57,15 @@ const main = (config) => {
     throw new Error("配置文件中未找到任何代理");
   }
 
-  // 覆盖通用配置
-  config["mixed-port"] = "7890";
+   // 覆盖通用配置
+  config["mixed-port"] = 7890;
   config["tcp-concurrent"] = true;
   config["allow-lan"] = true;
   config["ipv6"] = true;
   config["log-level"] = "info";
-  config["unified-delay"] = "true";
-  config["find-process-mode"] = "strict";
+  config["unified-delay"] = true;
+  config["find-process-mode"] = "always";
   config["global-client-fingerprint"] = "chrome";
-
 
   // 国内DNS服务器 (使用 DoH)
   const domesticNameservers = [

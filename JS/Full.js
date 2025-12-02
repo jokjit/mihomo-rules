@@ -57,7 +57,7 @@ const main = (config) => {
     throw new Error("配置文件中未找到任何代理");
   }
 
-   // 覆盖通用配置
+  // 覆盖通用配置
   config["mixed-port"] = 7890;
   config["tcp-concurrent"] = true;
   config["allow-lan"] = true;
@@ -66,6 +66,7 @@ const main = (config) => {
   config["unified-delay"] = true;
   config["find-process-mode"] = "always";
   config["global-client-fingerprint"] = "chrome";
+
 
   // 国内DNS服务器 (使用 DoH)
   const domesticNameservers = [
@@ -115,7 +116,6 @@ const main = (config) => {
     }
   };
 
-
   // 覆盖 geodata 配置
   config["geodata-mode"] = true;
   config["geox-url"] = {
@@ -123,19 +123,6 @@ const main = (config) => {
     "geosite": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat",
     "mmdb": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb",
     "asn": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
-  };
-
-  config["hosts"] = {
-    "dns.google": [ 
-      "8.8.4.4",
-      "8.8.8.8",
-      "2001:4860:4860::8844",
-      "2001:4860:4860::8888"],
-    "dns.alidns.com": [      
-      "223.5.5.5",
-      "223.6.6.6",
-      "2400:3200::1",
-      "2400:3200:baba::1"]
   };
 
   // 覆盖 sniffer 配置
@@ -176,160 +163,203 @@ const main = (config) => {
     "endpoint-independent-nat": false
   };
 
-// ========== 公共代理节点列表 ==========
+  // ========== 公共代理节点列表 ==========
 // 国际节点
 const baseProxies = [
-  "节点选择", "香港节点", "香港自动", "香港回退", "香港均衡",
-  "台湾节点", "台湾自动", "台湾回退", "台湾均衡",
-  "日本节点", "日本自动", "日本回退", "日本均衡",
-  "新加坡节点", "新加坡自动", "新加坡回退", "新加坡均衡",
-  "美国节点", "美国自动", "美国回退", "美国均衡",
-  "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT",
-  "尼日利亚节点", "尼日利亚自动", "尼日利亚回退", "尼日利亚均衡",
-  "马来西亚节点", "马来西亚自动", "马来西亚回退", "马来西亚均衡",
-  "英国节点", "英国自动", "英国回退", "英国均衡",
-  "德国节点", "德国自动", "德国回退", "德国均衡"
-];
-
-// 中国大陆节点
-const baseProxiesCN = [
-  "DIRECT",
   "节点选择", 
-  "香港节点", "香港自动", "香港回退", "香港均衡",
-  "台湾节点", "台湾自动", "台湾回退", "台湾均衡",
-  "澳门节点", "澳门自动", "澳门回退", "澳门均衡",  
-  "全部节点", "负载均衡", "自动选择", "自动回退"
+  "香港节点",
+  "台湾节点",
+  "日本节点",
+  "新加坡节点",
+  "美国节点",
+  "尼日利亚节点",
+  "马来西亚节点",
+  "英国节点",
+  "德国节点",
+  "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT",
 ];
 
-// ========== 工厂函数：生成社交/国际/大陆分组 ==========
-/**
- * groups 参数说明：
- * [name, icon, type, proxiesOrExtra, extra]
- * - name: 分组名称
- * - icon: 图标 URL
- * - type: select / url-test / fallback / load-balance（默认 select）
- * - proxiesOrExtra: 可以是 proxies 数组, 可以是布尔值 (true 代表 baseProxiesCN), 也可以是包含 filter 等信息的对象
- * - extra: 额外的补充字段
- */
-function createGroups(groups) {
-  return groups.map(groupArgs => {
-    // 先进行一次参数“挪位”修正
-    let [name, icon, type, proxiesOrExtra, extra] = groupArgs;
-
-    // ==================== 新增的判断逻辑 ====================
-    // 如果 type 参数不是字符串 (比如用户传入了 true 或一个对象),
-    // 说明用户省略了 type, 我们需要手动修正参数位置。
-    if (typeof type !== 'string') {
-      extra = proxiesOrExtra;      // 原来的第4个参数挪给第5个
-      proxiesOrExtra = type;       // 原来的第3个参数挪给第4个
-      type = 'select';             // 第3个参数手动设为默认值 'select'
-    }
-    // =======================================================
-
-    // 如果修正后 type 仍然为空，确保它有默认值
-    if (!type) {
-      type = 'select';
-    }
-    
-    // 后面的逻辑与之前版本类似，但现在参数位置绝对正确
-    let proxies; 
-    let extraOptions = extra || {};
-
-    if (Array.isArray(proxiesOrExtra)) {
-      proxies = proxiesOrExtra;
-    } else if (typeof proxiesOrExtra === 'boolean') {
-      proxies = proxiesOrExtra ? baseProxiesCN : baseProxies;
-    } else if (proxiesOrExtra && typeof proxiesOrExtra === 'object') {
-      proxies = proxiesOrExtra.proxies; 
-      extraOptions = { ...proxiesOrExtra, ...extraOptions };
-      delete extraOptions.proxies;
-    }
-
-    return {
-      ...groupBaseOption,
-      name,
-      type,
-      icon,
-      proxies: proxies || baseProxies,
-      ...extraOptions,
-    };
-  });
-}
-
-// ========== 工厂函数：生成地区分组（四种类型） ==========
-/**
- * createRegionGroups(region) 返回一个地区的 4 个分组
- * @param {string} name - 地区名称，例如 "香港"
- * @param {string} icon - 图标 URL
- * @param {Array<string>} proxies - select 分组的子节点（可选）
- * @param {string} filter - 正则匹配节点的 filter
- */
-function createRegionGroups({ name, icon, filter }) {
-  const subNames = ["自动", "回退", "均衡"];
-  
-  // 自动生成 select 分组的 proxies
-  const proxies = subNames.map(s => `${name}${s}`);
-
-  return [
-    {
-      ...groupBaseOption,
-      name: `${name}节点`,
-      type: "select",
-      proxies,  // 自动生成
-      filter,
-      icon
-    },
-    {
-      ...groupBaseOption,
-      name: `${name}自动`,
-      type: "url-test",
-      hidden: true,
-      filter,
-      icon
-    },
-    {
-      ...groupBaseOption,
-      name: `${name}回退`,
-      type: "fallback",
-      hidden: true,
-      filter,
-      icon
-    },
-    {
-      ...groupBaseOption,
-      name: `${name}均衡`,
-      type: "load-balance",
-      hidden: true,
-      strategy: "consistent-hashing",
-      filter,
-      icon
-    }
+  // 中国大陆节点
+  const baseProxiesCN = [
+    "DIRECT",
+    "节点选择", 
+    "香港节点",
+    "台湾节点",
+    "澳门节点",
+    "全部节点", "负载均衡", "自动选择", "自动回退"
   ];
+
+  // ========== 工厂函数：生成社交/国际/大陆分组 ==========
+  /**
+   * groups 参数说明：
+   * [name, icon, type, proxiesOrExtra, extra]
+   * - name: 分组名称
+   * - icon: 图标 URL
+   * - type: select / url-test / fallback / load-balance（默认 select）
+   * - proxiesOrExtra: 可以是 proxies 数组, 可以是布尔值 (true 代表 baseProxiesCN), 也可以是包含 filter 等信息的对象
+   * - extra: 额外的补充字段
+   */
+  // ========== 工厂函数：生成社交/国际/大陆分组 ==========
+  // ========== 工厂函数：生成社交/国际/大陆分组 (修正版) ==========
+  function createGroups(groups) {
+    return groups.map(groupArgs => {
+      // 先进行一次参数“挪位”修正
+      let [name, icon, type, proxiesOrExtra, extra] = groupArgs;
+
+      // 参数修正逻辑
+      if (typeof type !== 'string') {
+        extra = proxiesOrExtra;
+        proxiesOrExtra = type;
+        type = 'select';
+      }
+      if (!type) {
+        type = 'select';
+      }
+
+      let proxies;
+      let extraOptions = extra || {};
+
+      if (Array.isArray(proxiesOrExtra)) {
+        proxies = proxiesOrExtra;
+      } else if (typeof proxiesOrExtra === 'boolean') {
+        // cnAppGroups 使用此逻辑
+        proxies = proxiesOrExtra ? baseProxiesCN : baseProxies;
+      } else if (proxiesOrExtra && typeof proxiesOrExtra === 'object') {
+        proxies = proxiesOrExtra.proxies;
+        extraOptions = { ...proxiesOrExtra, ...extraOptions };
+        delete extraOptions.proxies;
+      }
+
+      // 1. 构造初始配置对象
+      const groupConfig = {
+        ...groupBaseOption,
+        name,
+        type,
+        icon,
+        proxies: proxies || baseProxies,
+        ...extraOptions,
+      };
+
+      // 2. ⭐ 关键修正：在返回前注入 exclude-filter ⭐
+      // 对于 select 组（如 AI, YouTube），我们通常希望保留所有节点。
+      // 但对于 cnAppGroups 中的 "国内媒体" 组 (type 仍为 select)，我们希望它能排除杂项。
+      // 在这里，我们只对非 select 组添加 EX_ALL (高倍率+杂项)，因为你的手动组已经处理了自动选择/回退/均衡。
+      // 但是，社交组（AI, YouTube等）默认是 select 组，如果想让他们排除杂项，需要在这里处理。
+
+      // 对于通过 createGroups 创建的【所有】分组，如果它们没有自定义 exclude-filter，则至少排除 EX_INFO（杂项/管理信息）。
+      if (!groupConfig["exclude-filter"]) {
+        // 国际分组的 select 组（AI, Telegram, YouTube）排除杂项
+        // 国内分组的 select 组（国内媒体）排除杂项
+        groupConfig["exclude-filter"] = EX_INFO;
+      }
+
+      // 地区分组和手动组已在外层处理，无需额外修改。
+
+      // 最终返回修改后的配置对象
+      return groupConfig;
+    });
+  }
+
+  // ========== 工厂函数：生成地区分组（四种类型） ==========
+  /**
+   * createRegionGroups(region) 返回一个地区的 4 个分组
+   * @param {string} name - 地区名称，例如 "香港"
+   * @param {string} icon - 图标 URL
+   * @param {Array<string>} proxies - select 分组的子节点（可选）
+   * @param {string} filter - 正则匹配节点的 filter
+   */
+  // ⭐ 确保 EXCLUDE_FILTER_STRING 已经定义，用于排除杂项和高倍率节点 ⭐
+
+  // ... [EXCLUDE_FILTER_STRING 的定义保持不变] ...
+
+  // ========== 工厂函数：生成地区分组（四种类型） ==========
+ // 假设 EX_INFO, EX_RATE, EX_ALL, groupBaseOption 都已定义
+// EX_ALL 是杂项和高倍率的组合：const EX_ALL = `${EX_INFO}|${EX_RATE}`;
+// EX_INFO 仅是杂项过滤：const EX_INFO = "...";
+
+function createRegionGroups({ name, icon, filter }) {
+    // 包含 "均衡"
+    const subNames = ["自动", "回退", "均衡"];
+
+    const proxies = subNames.map(s => `${name}${s}`); // 例如: "香港自动", "香港回退", "香港均衡"
+
+    const regionFilter = filter;
+    
+    // 自动选择/负载均衡 排除所有 (EX_INFO | EX_RATE)
+    const excludeForAutoGroups = EX_ALL; 
+    
+    // 自动回退 仅排除杂项 (EX_INFO)
+    const excludeForFallback = EX_INFO; 
+
+    return [
+      // 1. SELECT 组 (手动选择) - 只做地区过滤
+      {
+        ...groupBaseOption,
+        name: `${name}节点`,
+        type: "select",
+        proxies,
+        filter: regionFilter,
+        icon
+      },
+
+      // 2. URL-TEST 组 (自动选择) - 排除所有 (EX_ALL)
+      {
+        ...groupBaseOption,
+        name: `${name}自动`,
+        type: "url-test",
+        hidden: true,
+        filter: regionFilter, 
+        "exclude-filter": excludeForAutoGroups, // EX_ALL (排除杂项和高倍率)
+        icon
+      },
+
+      // 3. FALLBACK 组 (自动回退) - 仅排除杂项 (EX_INFO)
+      {
+        ...groupBaseOption,
+        name: `${name}回退`,
+        type: "fallback",
+        hidden: true,
+        filter: regionFilter,
+        "exclude-filter": excludeForFallback, // EX_INFO (只排除杂项)
+        icon
+      },
+      
+      // 4. LOAD-BALANCE 组 (负载均衡) - 排除所有 (EX_ALL)
+      {
+        ...groupBaseOption,
+        name: `${name}均衡`,
+        type: "load-balance", // ⭐ 新增的负载均衡类型
+        hidden: true,
+        filter: regionFilter,
+        "exclude-filter": excludeForAutoGroups, // EX_ALL (排除杂项和高倍率)
+        icon
+      }
+    ];
 }
 
-// ========== 定义所有分组 ==========
+  // ========== 定义所有分组 ==========
 
-// 示例灵活字段
-//  [
-//    "全部节点",
-//    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
-//    "select",
-//    ["自动选择", "负载均衡", "自动回退", "DIRECT"], // 自定义节点列表
-//    {
-//      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址)).*$"
-//    }
-//  ],
-//  [
-//    "自动选择",
-//    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
-//    "url-test",
-//    null,    // 不传 proxies，使用默认 baseProxies，true使用baseProxiesCN，false使用baseProxies
-//    {
-//      hidden: true,
-//      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环)).*$"
-//    }
-//  ]
-// 
+  // 示例灵活字段
+  //  [
+  //    "全部节点",
+  //    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
+  //    "select",
+  //    ["自动选择", "负载均衡", "自动回退", "DIRECT"], // 自定义节点列表
+  //    {
+  //      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址)).*$"
+  //    }
+  //  ],
+  //  [
+  //    "自动选择",
+  //    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
+  //    "url-test",
+  //    null,    // 不传 proxies，使用默认 baseProxies，true使用baseProxiesCN，false使用baseProxies
+  //    {
+  //      hidden: true,
+  //      filter: "(?=.*(.))(?!.*((?i)群|邀请|返利|循环)).*$"
+  //    }
+  //  ]
+  // 
 // 1️⃣ 社交/国际分组
 const socialGroups = createGroups([
   ["亚马逊电商", "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/icon/webp/100/AmazonPrimeVideo.webp"],
@@ -462,15 +492,23 @@ const regionGroups = [
       "proxies": ["自动选择", "自动回退","全部节点", "负载均衡", "DIRECT", "香港节点", "香港自动", "香港回退", "香港均衡","台湾节点","台湾自动", "台湾回退", "台湾均衡", "日本节点","日本自动", "日本回退", "日本均衡", "新加坡节点","新加坡自动", "新加坡回退", "新加坡均衡", "美国节点", "美国自动","美国回退","美国均衡", "尼日利亚节点", "尼日利亚自动", "尼日利亚回退", "尼日利亚均衡","马来西亚节点","马来西亚自动", "马来西亚回退", "马来西亚均衡", "英国节点", "英国自动", "英国回退", "英国均衡","德国节点","德国自动", "德国回退", "德国均衡"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
     },
-     {
+    {
       ...groupBaseOption,
       "name": "全部节点",
-      "proxies": ["自动选择", "负载均衡",  "自动回退", "DIRECT"],
+      "proxies": ["自动选择", "负载均衡", "自动回退", "DIRECT"],
       "type": "select",
       "include-all": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
+
+      // ❗ 移除复杂的 filter ❗ 
+      // "filter": "(?=.*(.))(?!.*((?i)群|邀请|...)...).*$", 
+      "filter": "", // 清空 filter
+
+      // ⭐ 关键：使用 EX_INFO 排除所有杂项/管理/通知信息 ⭐
+      "exclude-filter": EX_INFO,
+
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },
+    // 自动选择组
     {
       ...groupBaseOption,
       "name": "自动选择",
@@ -479,9 +517,16 @@ const regionGroups = [
       "lazy": true,
       "include-all": true,
       "hidden": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
+
+      // 1. 清空不稳定的 filter
+      "filter": "",
+
+      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
+      "exclude-filter": EX_ALL,
+
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },
+    // 自动回退组
     {
       ...groupBaseOption,
       "name": "自动回退",
@@ -489,9 +534,16 @@ const regionGroups = [
       "lazy": true,
       "include-all": true,
       "hidden": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
+
+      // 1. 清空不稳定的 filter
+      "filter": "",
+
+      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
+      "exclude-filter": EX_INFO,
+
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },
+    // 负载均衡组
     {
       ...groupBaseOption,
       "name": "负载均衡",
@@ -499,17 +551,23 @@ const regionGroups = [
       "lazy": true,
       "include-all": true,
       "hidden": true,
-      "filter": "(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|可用|剩余|(\b(USE|USED|TOTAL|Traffic|Expire|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$",
+
+      // 1. 清空不稳定的 filter
+      "filter": "",
+
+      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
+      "exclude-filter": EX_ALL,
+
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     }
   ];
-// ========== 覆写 config["proxy-groups"] ==========
-config["proxy-groups"] = [
-  ...manualGroups,
-  ...socialGroups,
-  ...cnAppGroups,
-  ...regionGroups,
-];
+  // ========== 覆写 config["proxy-groups"] ==========
+  config["proxy-groups"] = [
+    ...manualGroups,
+    ...socialGroups,
+    ...cnAppGroups,
+    ...regionGroups,
+  ];
   // 覆盖规则集
   config["rule-providers"] = {
     "115": {
@@ -731,7 +789,7 @@ config["proxy-groups"] = [
     "AppleTV": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleTV/AppleTV_OCD_Domain.mrs",
+      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleTV/AppleTV_OCD_Domain.mrs",
       "path": "./ruleset/AppleTV_Domain.mrs"
     },
     "Baidu": {
@@ -1068,14 +1126,8 @@ config["proxy-groups"] = [
     "Spotify": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Spotify/Spotify_OCD_Domain.mrs",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/spotify.mrs",
       "path": "./ruleset/Spotify_Domain.mrs"
-    },
-    "Spotify-ip": {
-      ...ruleProviderCommon,
-      "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Spotify/Spotify_OCD_IP.mrs",
-      "path": "./ruleset/Spotify_IP.mrs"
     },
     "YouTube": {
       ...ruleProviderCommon,
@@ -1281,8 +1333,448 @@ config["proxy-groups"] = [
       "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs",
       "path": "./ruleset/STUN_Domain.mrs"
     },
+  };
 
-
+  // 覆盖规则集
+  config["rule-providers"] = {
+    "115": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/115/115_OCD_Domain.mrs",
+      "path": "./ruleset/115_Domain.mrs"
+    },
+    "CN": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/direct.mrs",
+      "path": "./ruleset/CN_Domain.mrs"
+    },
+    "Private": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs",
+      "path": "./ruleset/Private_Domain.mrs"
+    },
+    "Fakeip_Filter": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs",
+      "path": "./ruleset/Fakeip_Filter_Domain.mrs"
+    },
+    "Apple": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Apple/Apple_OCD_Domain.mrs",
+      "path": "./ruleset/Apple_Domain.mrs"
+    },
+    "Apple-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Apple/Apple_OCD_IP.mrs",
+      "path": "./ruleset/Apple_IP.mrs"
+    },
+    "ChinaMedia": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_Domain.mrs",
+      "path": "./ruleset/ChinaMedia_Domain.mrs"
+    },
+    "ChinaMedia-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ChinaMedia/ChinaMedia_OCD_IP.mrs",
+      "path": "./ruleset/ChinaMedia_IP.mrs"
+    },
+    "NetEase": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_Domain.mrs",
+      "path": "./ruleset/NetEase_Domain.mrs"
+    },
+    "NetEase-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/NetEase/NetEase_OCD_IP.mrs",
+      "path": "./ruleset/NetEase_IP.mrs"
+    },
+    "OpenAI": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_Domain.mrs",
+      "path": "./ruleset/OpenAI_Domain.mrs"
+    },
+    "OpenAI-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_IP.mrs",
+      "path": "./ruleset/OpenAI_IP.mrs"
+    },
+    "GitHub": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GitHub/GitHub_OCD_Domain.mrs",
+      "path": "./ruleset/GitHub_Domain.mrs"
+    },
+    "awavenue": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs",
+      "path": "./ruleset/awavenue.mrs"
+    },
+    "gaode": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GaoDe/GaoDe_OCD_Domain.mrs",
+      "path": "./ruleset/GaoDe_Domain.mrs"
+    },
+    "AppleDev": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleDev/AppleDev_OCD_Domain.mrs",
+      "path": "./ruleset/AppleDev_Domain.mrs"
+    },
+    "AppleFirmware": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleFirmware/AppleFirmware_OCD_Domain.mrs",
+      "path": "./ruleset/AppleFirmware_Domain.mrs"
+    },
+    "AppleHardware": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleHardware/AppleHardware_OCD_Domain.mrs",
+      "path": "./ruleset/AppleHardware_Domain.mrs"
+    },
+    "AppleID": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleID/AppleID_OCD_Domain.mrs",
+      "path": "./ruleset/AppleID_Domain.mrs"
+    },
+    "AppleMusic": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleMusic/AppleMusic_OCD_Domain.mrs",
+      "path": "./ruleset/AppleMusic_Domain.mrs"
+    },
+    "AppleProxy": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/AppleProxy/AppleProxy_OCD_Domain.mrs",
+      "path": "./ruleset/AppleProxy_Domain.mrs"
+    },
+    "Baidu": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Baidu/Baidu_OCD_Domain.mrs",
+      "path": "./ruleset/Baidu_Domain.mrs"
+    },
+    "Bing": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Bing/Bing_OCD_Domain.mrs",
+      "path": "./ruleset/Bing_Domain.mrs"
+    },
+    "ByteDance": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_Domain.mrs",
+      "path": "./ruleset/ByteDance_Domain.mrs"
+    },
+    "ByteDance-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/ByteDance/ByteDance_OCD_IP.mrs",
+      "path": "./ruleset/ByteDance_IP.mrs"
+    },
+    "Claude": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Claude/Claude_OCD_Domain.mrs",
+      "path": "./ruleset/Claude_Domain.mrs"
+    },
+    "Copilot": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_Domain.mrs",
+      "path": "./ruleset/Copilot_Domain.mrs"
+    },
+    "Copilot-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Copilot/Copilot_OCD_IP.mrs",
+      "path": "./ruleset/Copilot_IP.mrs"
+    },
+    "DingTalk": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/DingTalk/DingTalk_OCD_Domain.mrs",
+      "path": "./ruleset/DingTalk_Domain.mrs"
+    },
+    "DouYin": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/DouYin/DouYin_OCD_Domain.mrs",
+      "path": "./ruleset/DouYin_Domain.mrs"
+    },
+    "EA": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/EA/EA_OCD_Domain.mrs",
+      "path": "./ruleset/EA_Domain.mrs"
+    },
+    "Epic": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Epic/Epic_OCD_Domain.mrs",
+      "path": "./ruleset/Epic_Domain.mrs"
+    },
+    "Gemini": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Gemini/Gemini_OCD_Domain.mrs",
+      "path": "./ruleset/Gemini_Domain.mrs"
+    },
+    "GoogleDrive": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleDrive/GoogleDrive_OCD_Domain.mrs",
+      "path": "./ruleset/GoogleDrive_Domain.mrs"
+    },
+    "GoogleFCM": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_Domain.mrs",
+      "path": "./ruleset/GoogleFCM_Domain.mrs"
+    },
+    "GoogleFCM-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GoogleFCM/GoogleFCM_OCD_IP.mrs",
+      "path": "./ruleset/GoogleFCM_IP.mrs"
+    },
+    "Instagram": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Instagram/Instagram_OCD_Domain.mrs",
+      "path": "./ruleset/Instagram_Domain.mrs"
+    },
+    "Microsoft": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Microsoft/Microsoft_OCD_Domain.mrs",
+      "path": "./ruleset/Microsoft_Domain.mrs"
+    },
+    "MicrosoftEdge": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/MicrosoftEdge/MicrosoftEdge_OCD_Domain.mrs",
+      "path": "./ruleset/MicrosoftEdge_Domain.mrs"
+    },
+    "Siri": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Siri/Siri_OCD_Domain.mrs",
+      "path": "./ruleset/Siri_Domain.mrs"
+    },
+    "Speedtest": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Speedtest/Speedtest_OCD_Domain.mrs",
+      "path": "./ruleset/Speedtest_Domain.mrs"
+    },
+    "Steam": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Steam/Steam_OCD_Domain.mrs",
+      "path": "./ruleset/Steam_Domain.mrs"
+    },
+    "SteamCN": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SteamCN/SteamCN_OCD_Domain.mrs",
+      "path": "./ruleset/SteamCN_Domain.mrs"
+    },
+    "SystemOTA": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/SystemOTA/SystemOTA_OCD_Domain.mrs",
+      "path": "./ruleset/SystemOTA_Domain.mrs"
+    },
+    "Teams": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Teams/Teams_OCD_Domain.mrs",
+      "path": "./ruleset/Teams_Domain.mrs"
+    },
+    "Tencent": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Tencent/Tencent_OCD_Domain.mrs",
+      "path": "./ruleset/Tencent_Domain.mrs"
+    },
+    "Tencent-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Tencent/Tencent_OCD_IP.mrs",
+      "path": "./ruleset/Tencent_IP.mrs"
+    },
+    "Alibaba": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_Domain.mrs",
+      "path": "./ruleset/alibaba_Domain.mrs"
+    },
+    "Alibaba-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://jsd.onmicrosoft.cn/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Alibaba/Alibaba_OCD_IP.mrs",
+      "path": "./ruleset/Alibaba_IP.mrs"
+    },
+    "Emby": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/Emby/Emby_OCD_Domain.mrs",
+      "path": "./ruleset/Emby_Domain.mrs"
+    },
+    "BiliBili": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BiliBili/BiliBili_OCD_Domain.mrs",
+      "path": "./ruleset/BiliBili_Domain.mrs"
+    },
+    "BiliBili-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BiliBili/BiliBili_OCD_IP.mrs",
+      "path": "./ruleset/BiliBili_IP.mrs"
+    },
+    "YouTube": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/YouTube/YouTube_OCD_Domain.mrs",
+      "path": "./ruleset/YouTube_Domain.mrs"
+    },
+    "YouTube-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/YouTube/YouTube_OCD_IP.mrs",
+      "path": "./ruleset/YouTube_IP.mrs"
+    },
+    "GlobalMedia": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_Domain.mrs",
+      "path": "./ruleset/Media_Domain.mrs"
+    },
+    "GlobalMedia-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GlobalMedia/GlobalMedia_OCD_IP.mrs",
+      "path": "./ruleset/Media_IP.mrs"
+    },
+    "BlockHttpDNS": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_Domain.mrs",
+      "path": "./ruleset/Category_httpdns_Domain.mrs"
+    },
+    "BlockHttpDNS-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/BlockHttpDNS/BlockHttpDNS_OCD_IP.mrs",
+      "path": "./ruleset/Category_httpdns_IP.mrs"
+    },
+    "Private-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs",
+      "path": "./ruleset/Private_IP.mrs"
+    },
+    "Telegram": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs",
+      "path": "./ruleset/Telegram_Domain.mrs"
+    },
+    "Telegram-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs",
+      "path": "./ruleset/Telegram_IP.mrs"
+    },
+    "Twitter": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs",
+      "path": "./ruleset/Twitter_Domain.mrs"
+    },
+    "Twitter-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs",
+      "path": "./ruleset/Twitter_IP.mrs"
+    },
+    "Netflix": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/netflix.mrs",
+      "path": "./ruleset/Netflix_Domain.mrs"
+    },
+    "Netflix-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/netflix.mrs",
+      "path": "./ruleset/Netflix_IP.mrs"
+    },
+    "Google": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google.mrs",
+      "path": "./ruleset/Google_Domain.mrs"
+    },
+    "Google-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/google.mrs",
+      "path": "./ruleset/Google_IP.mrs"
+    },
+    "CN-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/cncidr.mrs",
+      "path": "./ruleset/CN_IP.mrs"
+    },
+    "WeChat": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/WeChat/WeChat_Domain.mrs",
+      "path": "./ruleset/WeChat_Domain.mrs"
+    },
+    "Talkatone": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/domain/talkatone.mrs",
+      "path": "./ruleset/Talkatone_Domain.mrs"
+    },
+    "Talkatone-ip": {
+      ...ruleProviderCommon,
+      "behavior": "ipcidr",
+      "url": "https://cdn.jsdmirror.com/gh/qljsyph/ruleset-icon@main/mihomo/ipcidr/talkatone-ip.mrs",
+      "path": "./ruleset/Talkatone_IP.mrs"
+    },
+    "TikTok": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/TikTok/TikTok_Domain.mrs",
+      "path": "./ruleset/TikTok_Domain.mrs"
+    },
+    "STUN": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs",
+      "path": "./ruleset/STUN_Domain.mrs"
+    },
   };
 
   // 覆盖规则
@@ -1355,7 +1847,6 @@ config["proxy-groups"] = [
       "OR,((RULE-SET,AmazonPrimeVideo),(DOMAIN-KEYWORD,avoddashs)),亚马逊TV",
       "RULE-SET,IMDB,IMDB",
       "RULE-SET,Spotify,Spotify",
-      "OR,((RULE-SET,Spotify),(DOMAIN-KEYWORD,spotify)),Spotify",
       "OR,((RULE-SET,Twitch),(DOMAIN-KEYWORD,ttvnw)),Twitch",
       "OR,((RULE-SET,PikPak),(DOMAIN-KEYWORD,pikpak)),PikPak",
       "RULE-SET,Discord,Discord",
@@ -1411,7 +1902,6 @@ config["proxy-groups"] = [
       "RULE-SET,BiliBili-ip,哔哩哔哩,no-resolve",
       "RULE-SET,ChinaMedia-ip,国内媒体,no-resolve",
       "RULE-SET,Apple-ip,Apple,no-resolve",
-      "RULE-SET,Spotify-ip,Spotify,no-resolve",
       "RULE-SET,Twitch-ip,Twitch,no-resolve",
       "RULE-SET,Telegram-ip,Telegram,no-resolve",
       "RULE-SET,Amazon-ip,亚马逊电商,no-resolve",

@@ -1332,7 +1332,7 @@ const regionGroups = [
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs",
       "path": "./ruleset/STUN_Domain.mrs"
-    },
+    }
   };
 
   // 覆盖规则
@@ -1347,16 +1347,9 @@ const regionGroups = [
   config["sub-rules"] = {
     "SUB-REJECT": [
       "RULE-SET,BlockHttpDNS,REJECT-DROP",
-      "RULE-SET,awavenue,REJECT-DROP",
       "RULE-SET,BlockHttpDNS-ip,REJECT-DROP,no-resolve",
-      "DOMAIN-KEYWORD,httpdns,REJECT-DROP",
-      "RULE-SET,STUN,REJECT-DROP",
-      "DST-PORT,3478,REJECT-DROP",
-      "AND,(NETWORK,TCP),(DST-PORT,5349),REJECT-DROP",
-      "AND,(NETWORK,UDP),(DST-PORT,5350),REJECT-DROP",
-      "AND,(NETWORK,UDP),(DST-PORT,5351),REJECT-DROP",
-      "AND,(NETWORK,UDP),(DST-PORT,19302),REJECT-DROP",
-      "DOMAIN-KEYWORD,stun,REJECT-DROP"
+      "RULE-SET,awavenue,REJECT",
+      "OR,((AND,((NETWORK,TCP),(DST-PORT,5349))),(AND,((NETWORK,UDP),(DST-PORT,5350))),(AND,((NETWORK,UDP),(DST-PORT,5351))),(AND,((NETWORK,UDP),(DST-PORT,19302))),(RULE-SET,STUN),(DST-PORT,3478)),REJECT"
     ],
     "SUB-LAN": [
       "RULE-SET,Private,DIRECT",
@@ -1452,7 +1445,7 @@ const regionGroups = [
       "OR,((RULE-SET,OneDrive),(DOMAIN-KEYWORD,1drv),(DOMAIN-KEYWORD,onedrive),(DOMAIN-KEYWORD,skydrive)),OneDrive",
       "OR,((RULE-SET,Bing),(RULE-SET,Teams),(RULE-SET,MicrosoftEdge),(RULE-SET,Microsoft),(DOMAIN-KEYWORD,microsoft),(DOMAIN-KEYWORD,skydrive)),微软",
       "RULE-SET,GlobalMedia,国际媒体",
-      "RULE-SET,ChinaMedia,国内媒体",
+      "RULE-SET,ChinaMedia,国内媒体"
     ],
     "SUB-IP": [
       "RULE-SET,BiliBili-ip,哔哩哔哩,no-resolve",
@@ -1475,7 +1468,7 @@ const regionGroups = [
       "RULE-SET,Tracker-ip,BT追踪器,no-resolve",
       "RULE-SET,YouTube-ip,YouTube,no-resolve",
       "RULE-SET,Cloudflare-ip,Cloudflare,no-resolve",
-      "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
+      "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve"
     ]
   };
 

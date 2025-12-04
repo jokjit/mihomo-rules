@@ -575,12 +575,6 @@ function createRegionGroups({ name, icon, filter }) {
       "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/OpenAI/OpenAI_OCD_IP.mrs",
       "path": "./ruleset/OpenAI_IP.mrs"
     },
-    "GitHub": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/peiyingyao/Rule-for-OCD@master/rule/Clash/GitHub/GitHub_OCD_Domain.mrs",
-      "path": "./ruleset/GitHub_Domain.mrs"
-    },
     "awavenue": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -692,7 +686,6 @@ function createRegionGroups({ name, icon, filter }) {
     ],
     "SUB-DOMAIN": [
       "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram)),Telegram",
-      "OR,((RULE-SET,GitHub),(DOMAIN-KEYWORD,github)),节点选择",
       "OR,((RULE-SET,YouTube),(DOMAIN-KEYWORD,youtube)),YouTube",
       "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
       "OR,((RULE-SET,Twitter),(DOMAIN-KEYWORD,twitter)),Twitter",

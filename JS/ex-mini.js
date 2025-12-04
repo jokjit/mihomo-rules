@@ -171,7 +171,7 @@ const main = (config) => {
     "日本节点",
     "新加坡节点",
     "美国节点",
-    "负载均衡", "自动选择", "自动回退", "DIRECT",
+    "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT",
   ];
 
   // 中国大陆节点
@@ -181,7 +181,7 @@ const main = (config) => {
     "香港节点",
     "台湾节点",
     "澳门节点",
-    "负载均衡", "自动选择", "自动回退"
+    "全部节点", "负载均衡", "自动选择", "自动回退"
   ];
 
   // ========== 工厂函数：生成社交/国际/大陆分组 ==========
@@ -336,7 +336,7 @@ function createRegionGroups({ name, icon, filter }) {
 
   // 示例灵活字段
   //  [
-  //   
+  //    "全部节点",
   //    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
   //    "select",
   //    ["自动选择", "负载均衡", "自动回退", "DIRECT"], // 自定义节点列表
@@ -406,8 +406,19 @@ function createRegionGroups({ name, icon, filter }) {
       ...groupBaseOption,
       "name": "节点选择",
       "type": "select",
-      "proxies": ["自动选择", "自动回退", "负载均衡", "香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "DIRECT"],
+      "proxies": ["自动选择", "自动回退", "全部节点", "负载均衡", "香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "DIRECT"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
+    },
+    {
+      ...groupBaseOption,
+      "name": "全部节点",
+      "proxies": ["DIRECT"],
+      "type": "select",
+      "include-all": true,
+      "filter": "",
+      "exclude-filter": EX_INFO,
+
+      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
     },
     // 自动选择组
     {

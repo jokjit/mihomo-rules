@@ -1363,8 +1363,6 @@ const regionGroups = [
       "RULE-SET,Private-ip,DIRECT,no-resolve"
     ],
     "SUB-DIRECT": [
-      "RULE-SET,Private,DIRECT",
-      "RULE-SET,Private-ip,DIRECT,no-resolve",
       "RULE-SET,ByteDance,DIRECT",
       "RULE-SET,Tencent,DIRECT",
       "RULE-SET,CN,DIRECT",

@@ -677,8 +677,6 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,Private-ip,DIRECT,no-resolve"
     ],
     "SUB-DIRECT": [
-      "RULE-SET,Private,DIRECT",
-      "RULE-SET,Private-ip,DIRECT,no-resolve",
       "RULE-SET,CN,DIRECT",
       "RULE-SET,SteamCN,DIRECT",
       "RULE-SET,CN-ip,DIRECT",

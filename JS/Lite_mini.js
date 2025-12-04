@@ -646,9 +646,7 @@ function createRegionGroups({ name, icon, filter }) {
       "behavior": "domain",
       "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs",
       "path": "./ruleset/STUN_Domain.mrs"
-    },
-
-
+    }
   };
 
   // 覆盖规则
@@ -662,15 +660,8 @@ function createRegionGroups({ name, icon, filter }) {
   ];
   config["sub-rules"] = {
     "SUB-REJECT": [
-      "RULE-SET,awavenue,REJECT-DROP",
-      "DOMAIN-KEYWORD,httpdns,REJECT-DROP",
-      "RULE-SET,STUN,REJECT-DROP",
-      "DST-PORT,3478,REJECT-DROP",
-      "AND,(NETWORK,TCP),(DST-PORT,5349),REJECT-DROP",
-      "AND,(NETWORK,UDP),(DST-PORT,5350),REJECT-DROP",
-      "AND,(NETWORK,UDP),(DST-PORT,5351),REJECT-DROP",
-      "AND,(NETWORK,UDP),(DST-PORT,19302),REJECT-DROP",
-      "DOMAIN-KEYWORD,stun,REJECT-DROP"
+      "RULE-SET,awavenue,REJECT",
+      "OR,((AND,((NETWORK,TCP),(DST-PORT,5349))),(AND,((NETWORK,UDP),(DST-PORT,5350))),(AND,((NETWORK,UDP),(DST-PORT,5351))),(AND,((NETWORK,UDP),(DST-PORT,19302))),(RULE-SET,STUN),(DST-PORT,3478)),REJECT"
     ],
     "SUB-LAN": [
       "RULE-SET,Private,DIRECT",
@@ -689,7 +680,7 @@ function createRegionGroups({ name, icon, filter }) {
       "OR,((RULE-SET,Twitter),(DOMAIN-KEYWORD,twitter)),Twitter",
       "OR,((RULE-SET,Emby,Emby),(DOMAIN-KEYWORD,emby)),Emby",
       "RULE-SET,GlobalMedia,国际媒体",
-      "RULE-SET,ChinaMedia,国内媒体",
+      "RULE-SET,ChinaMedia,国内媒体"
     ],
     "SUB-IP": [
       "RULE-SET,ChinaMedia-ip,国内媒体,no-resolve",
@@ -698,7 +689,7 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,OpenAI-ip,AI,no-resolve",
       "RULE-SET,Twitter-ip,Twitter,no-resolve",
       "RULE-SET,YouTube-ip,YouTube,no-resolve",
-      "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve",
+      "RULE-SET,GlobalMedia-ip,国际媒体,no-resolve"
     ]
   };
 

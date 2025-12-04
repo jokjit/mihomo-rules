@@ -171,7 +171,7 @@ const main = (config) => {
     "日本节点",
     "新加坡节点",
     "美国节点",
-    "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT",
+    "负载均衡", "自动选择", "自动回退", "DIRECT",
   ];
 
   // 中国大陆节点
@@ -181,7 +181,7 @@ const main = (config) => {
     "香港节点",
     "台湾节点",
     "澳门节点",
-    "全部节点", "负载均衡", "自动选择", "自动回退"
+    "负载均衡", "自动选择", "自动回退"
   ];
 
   // ========== 工厂函数：生成社交/国际/大陆分组 ==========
@@ -243,7 +243,7 @@ const main = (config) => {
 
       // 对于通过 createGroups 创建的【所有】分组，如果它们没有自定义 exclude-filter，则至少排除 EX_INFO（杂项/管理信息）。
       if (!groupConfig["exclude-filter"]) {
-        // 国际分组的 select 组（AI, Telegram）排除杂项
+        // 国际分组的 select 组（AI,）排除杂项
         // 国内分组的 select 组（国内媒体）排除杂项
         groupConfig["exclude-filter"] = EX_INFO;
       }
@@ -336,7 +336,7 @@ function createRegionGroups({ name, icon, filter }) {
 
   // 示例灵活字段
   //  [
-  //    "全部节点",
+  //   
   //    "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
   //    "select",
   //    ["自动选择", "负载均衡", "自动回退", "DIRECT"], // 自定义节点列表
@@ -406,7 +406,7 @@ function createRegionGroups({ name, icon, filter }) {
       ...groupBaseOption,
       "name": "节点选择",
       "type": "select",
-      "proxies": ["自动选择", "自动回退", "全部节点", "负载均衡", "香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "DIRECT"],
+      "proxies": ["自动选择", "自动回退", "负载均衡", "香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "DIRECT"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
     },
     // 自动选择组

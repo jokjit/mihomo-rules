@@ -83,7 +83,7 @@ const main = (config) => {
   ];
 
   // 默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
-  const defaultNameservers = ["223.5.5.5", "119.29.29.29"];
+  const defaultNameservers = ["223.5.5.5", "1.12.12.12"];
 
 
   // 覆盖 dns 配置

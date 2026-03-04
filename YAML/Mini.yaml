@@ -172,12 +172,10 @@ dns:
     fake-ip-range6: fdfe:dcba:9876::/64
     fake-ip-filter-mode: blacklist
     fake-ip-filter:
-      - RULE-SET:Fakeip-Filter,Private,CN
-      - dns.alidns.com
-      - dns.google
-      - dns.adguard-dns.com
-      - dns.18bit.cn
-      - dns.ipv4dns.com
+      - RULE-SET,Fakeip-Filter,real-ip
+      - RULE-SET,Private,real-ip
+      - RULE-SET,CN,real-ip
+      - MATCH,fake-ip
     nameserver-policy:
       RULE-SET:CN,Private: *domestic_nameservers
     default-nameserver: *defaultNameservers

@@ -98,10 +98,9 @@ const main = (config) => {
     "fake-ip-range": "198.18.0.1/16",
     "fake-ip-range6": "fdfe:dcba:9876::/64",
     "fake-ip-filter": [
-      "RULE-SET,Fakeip-Filter,real-ip",
-      "RULE-SET,Private,real-ip",
-      "RULE-SET,CN,real-ip",
-      "MATCH,fake-ip"
+      "RULE-SET,Fakeip-Filter",
+      "RULE-SET,Private",
+      "RULE-SET,CN"
     ],
     "default-nameserver": [...defaultNameservers],
     "nameserver": [...foreignNameservers],

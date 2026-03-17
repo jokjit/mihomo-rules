@@ -1122,7 +1122,7 @@ const cnAppGroups = createGroups([
       "RULE-SET,BlockHttpDNS,REJECT-DROP",
       "RULE-SET,BlockHttpDNS-ip,REJECT-DROP,no-resolve",
       "RULE-SET,awavenue,REJECT",
-      "OR,((AND,((NETWORK,TCP),(DST-PORT,5349))),(AND,((NETWORK,UDP),(DST-PORT,5350))),(AND,((NETWORK,UDP),(DST-PORT,5351))),(AND,((NETWORK,UDP),(DST-PORT,19302))),(RULE-SET,STUN),(DST-PORT,3478)),REJECT"
+      "RULE-SET,STUN,REJECT"
     ],
     "SUB-LAN": [
       "RULE-SET,Private,DIRECT",

@@ -161,7 +161,7 @@ tun:
 dns:
     enable: true
     cache-algorithm: arc
-    prefer-h3: false
+    prefer-h3: true
     use-hosts: true
     use-system-hosts: false
     respect-rules: true
@@ -172,10 +172,9 @@ dns:
     fake-ip-range6: fdfe:dcba:9876::/64
     fake-ip-filter-mode: blacklist
     fake-ip-filter:
-      - RULE-SET,Fakeip-Filter,real-ip
-      - RULE-SET,Private,real-ip
-      - RULE-SET,CN,real-ip
-      - MATCH,fake-ip
+      - RULE-SET,Fakeip-Filter
+      - RULE-SET,Private
+      - RULE-SET,CN
     nameserver-policy:
       RULE-SET:CN,Private: *domestic_nameservers
     default-nameserver: *defaultNameservers
@@ -253,10 +252,6 @@ rules:
   - RULE-SET,BlockHttpDNScidr,🚫泄漏拦截,no-resolve
   - RULE-SET,Category-httpdns-cn,🚫泄漏拦截
   - RULE-SET,STUN,🚫泄漏拦截
-  - AND,(NETWORK,TCP),(DST-PORT,5349),🚫泄漏拦截
-  - AND,(NETWORK,UDP),(DST-PORT,5350),🚫泄漏拦截
-  - AND,(NETWORK,UDP),(DST-PORT,5351),🚫泄漏拦截
-  - AND,(NETWORK,UDP),(DST-PORT,19302),🚫泄漏拦截
   - DOMAIN-KEYWORD,stun,🚫泄漏拦截
   - RULE-SET,Private,🎯全球直连
   - RULE-SET,Privatecidr,🎯全球直连,no-resolve

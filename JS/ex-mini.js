@@ -91,17 +91,16 @@ const main = (config) => {
     "enable": true,
     "listen": "0.0.0.0:1053",
     "respect-rules": true,
-    "prefer-h3": false,
+    "prefer-h3": true,
     "ipv6": true,
     "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.1/16",
     "fake-ip-range6": "fdfe:dcba:9876::/64",
     "fake-ip-filter": [
-      "RULE-SET,Fakeip-Filter,real-ip",
-      "RULE-SET,Private,real-ip",
-      "RULE-SET,CN,real-ip",
-      "MATCH,fake-ip"
+      "RULE-SET,Fakeip-Filter",
+      "RULE-SET,Private",
+      "RULE-SET,CN"
     ],
     "default-nameserver": [...defaultNameservers],
     "nameserver": [...foreignNameservers],

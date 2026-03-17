@@ -91,7 +91,7 @@ const main = (config) => {
     "enable": true,
     "listen": "0.0.0.0:1053",
     "respect-rules": true,
-    "prefer-h3": false,
+    "prefer-h3": true,
     "ipv6": true,
     "cache-algorithm": "arc",
     "enhanced-mode": "fake-ip",

@@ -175,7 +175,7 @@ tun:
 dns:
     enable: true
     cache-algorithm: arc
-    prefer-h3: false
+    prefer-h3: true
     use-hosts: true
     use-system-hosts: false
     respect-rules: true
@@ -186,10 +186,9 @@ dns:
     fake-ip-range6: fdfe:dcba:9876::/64
     fake-ip-filter-mode: blacklist
     fake-ip-filter:
-      - RULE-SET,Fakeip-Filter,real-ip
-      - RULE-SET,Private,real-ip
-      - RULE-SET,CN,real-ip
-      - MATCH,fake-ip
+      - RULE-SET,Fakeip-Filter
+      - RULE-SET,Private
+      - RULE-SET,CN
     nameserver-policy:
       RULE-SET:CN,Private: *domestic_nameservers
     default-nameserver: *defaultNameservers

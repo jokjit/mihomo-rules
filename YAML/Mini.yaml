@@ -6,16 +6,16 @@ PE: &Pe {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 #DNS配置锚点
 # 定义国外 DoH 服务器列表（锚点）
 foreign_nameservers: &foreign_nameservers
-  - quic://dns.adguard-dns.com # AdGuard DNS（quic）
-  - https://cloudflare-dns.com/dns-query#h3=true # Cloudflare DNS（DoH）
-  - https://8.8.8.8/dns-query # Google DNS（DoH）
+  - https://dns.adguard-dns.com # AdGuard DNS（quic）
+  - https://cloudflare-dns.com/dns-query # Cloudflare DNS（DoH）
+  - https://dns.google/dns-query # Google DNS（DoH）
   - https://9.9.9.9/dns-query # Quad9 DNS（DoH）
 
 # 定义国内 DoH/DoQ 服务器的 IP 地址
 domestic_nameservers: &domestic_nameservers
-  - quic://dns.alidns.com # 阿里 DoQ（IP）
+  - https://dns.alidns.com # 阿里 DoQ（IP）
   - https://doh.pub/dns-query # 腾讯 DoH
-  - quic://dns.18bit.cn # 18bit（DoH）
+  - https://dns.18bit.cn # 18bit（DoH）
 #默认明文 DNS (用于 default-nameserver 和 proxy-server-nameserver 一致性)
 defaultNameservers: &defaultNameservers
   - 223.5.5.5 

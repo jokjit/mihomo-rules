@@ -512,6 +512,12 @@ function createRegionGroups({ name, icon, filter }) {
       "url": "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/cncidr.mrs",
       "path": "./ruleset/CN_IP.mrs"
     },
+    "STEAM-CN": {
+      ...ruleProviderCommon,
+      "behavior": "domain",
+      "url": "https://git.7171971.xyz/https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/steam%40cn.mrs",
+      "path": "./ruleset/STEAM-CN.mrs"
+    },
     "STUN": {
       ...ruleProviderCommon,
       "behavior": "domain",
@@ -538,6 +544,7 @@ function createRegionGroups({ name, icon, filter }) {
     ],
     "SUB-DIRECT": [
       "RULE-SET,CN,DIRECT",
+      "RULE-SET,STEAM-CN,DIRECT",
       "RULE-SET,CN-ip,DIRECT,no-resolve",
       "RULE-SET,Fakeip_Filter,DIRECT"
     ]

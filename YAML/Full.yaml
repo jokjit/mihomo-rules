@@ -21,7 +21,7 @@ Direct: &D {type: select, proxies: [🎯全球直连, 🚀节点选择]}
 # 定义国外 DoH 服务器列表（锚点）
 foreign_nameservers: &foreign_nameservers
   - https://dns.adguard-dns.com # AdGuard DNS（quic）
-  - https://cloudflare-dns.com/dns-query#h3=true # Cloudflare DNS（DoH）
+  - https://cloudflare-dns.com/dns-query # Cloudflare DNS（DoH）
   - https://dns.google/dns-query # Google DNS（DoH）
   - https://9.9.9.9/dns-query # Quad9 DNS（DoH）
 

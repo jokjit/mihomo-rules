@@ -162,21 +162,14 @@ const main = (config) => {
   // ========== 公共代理节点列表 ==========
   // 国际节点
   const baseProxies = [
-    "节点选择", "香港节点",
-    "台湾节点",
-    "日本节点",
-    "新加坡节点",
-    "美国节点",
+    "节点选择",
     "全部节点", "负载均衡", "自动选择", "自动回退", "DIRECT",
   ];
 
   // 中国大陆节点
   const baseProxiesCN = [
     "DIRECT",
-    "节点选择", 
-    "香港节点",
-    "台湾节点",
-    "澳门节点",
+    "节点选择",
     "全部节点", "负载均衡", "自动选择", "自动回退"
   ];
 
@@ -363,31 +356,7 @@ function createRegionGroups({ name, icon, filter }) {
 
   // 3️⃣ 地区分组
   const regionGroups = [
-    ...createRegionGroups({
-      name: "香港",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png",
-      filter: "(?i)🇭🇰|香港|(\\b(HK|Hong|HongKong)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "台湾",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png",
-      filter: "(?i)🇨🇳|🇹🇼|台湾|(\\b(TW|Tai|Taiwan)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "日本",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png",
-      filter: "(?i)🇯🇵|日本|东京|(\\b(JP|Japan)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "新加坡",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png",
-      filter: "(?i)🇸🇬|新加坡|狮|(\\b(SG|Singapore)\\b)"
-    }),
-    ...createRegionGroups({
-      name: "美国",
-      icon: "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png",
-      filter: "(?i)🇺🇸|美国|洛杉矶|圣何塞|(\\b(US|United States|America)\\b)"
-    }),
+    
   ];
 
   const manualGroups = [
@@ -402,7 +371,7 @@ function createRegionGroups({ name, icon, filter }) {
       ...groupBaseOption,
       "name": "节点选择",
       "type": "select",
-      "proxies": ["自动选择", "自动回退", "全部节点", "负载均衡", "香港节点", "台湾节点", "日本节点", "新加坡节点", "美国节点", "DIRECT"],
+      "proxies": ["自动选择", "全部节点","DIRECT"],
       "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
     },
     {
@@ -422,38 +391,6 @@ function createRegionGroups({ name, icon, filter }) {
       "name": "自动选择",
       "type": "url-test",
       "tolerance": 50,
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-
-      // 1. 清空不稳定的 filter
-      "filter": "",
-
-      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
-      "exclude-filter": EX_ALL,
-
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-    },
-    // 自动回退组
-    {
-      ...groupBaseOption,
-      "name": "自动回退",
-      "type": "fallback",
-      "lazy": true,
-      "include-all": true,
-      "hidden": true,
-      "filter": "",
-
-      // 2. ⭐ 关键：使用 EX_ALL 排除所有杂项和高倍率 ⭐
-      "exclude-filter": EX_INFO,
-
-      "icon": "https://gh-proxy.com/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
-    },
-    // 负载均衡组
-    {
-      ...groupBaseOption,
-      "name": "负载均衡",
-      "type": "load-balance",
       "lazy": true,
       "include-all": true,
       "hidden": true,
@@ -494,12 +431,6 @@ function createRegionGroups({ name, icon, filter }) {
       "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs",
       "path": "./ruleset/Fakeip_Filter_Domain.mrs"
     },
-    "awavenue": {
-      ...ruleProviderCommon,
-      "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.mrs",
-      "path": "./ruleset/awavenue.mrs"
-    },
     "Private-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
@@ -531,11 +462,11 @@ function createRegionGroups({ name, icon, filter }) {
     "SUB-RULE,(OR,((NETWORK,UDP),(NETWORK,TCP))),SUB-REJECT",
     "SUB-RULE,(OR,((NETWORK,UDP),(NETWORK,TCP))),SUB-LAN",
     "SUB-RULE,(OR,((NETWORK,UDP),(NETWORK,TCP))),SUB-DIRECT",
+    "DOMAIN-SUFFIX,push.apple.com,节点选择",
     "MATCH,Final"
   ];
   config["sub-rules"] = {
     "SUB-REJECT": [
-      "RULE-SET,awavenue,REJECT-DROP",
       "RULE-SET,STUN,REJECT-DROP"
     ],
     "SUB-LAN": [

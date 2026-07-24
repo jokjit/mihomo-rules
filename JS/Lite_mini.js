@@ -670,7 +670,7 @@ function createRegionGroups({ name, icon, filter }) {
       "RULE-SET,Fakeip_Filter,DIRECT"
     ],
     "SUB-DOMAIN": [
-      "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram)),Telegram",
+      "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram),(DOMAIN-SUFFIX,push.apple.com)),Telegram",
       "OR,((RULE-SET,YouTube),(DOMAIN-KEYWORD,youtube)),YouTube",
       "OR,((RULE-SET,Claude),(RULE-SET,OpenAI),(RULE-SET,Gemini),(AND,((RULE-SET,Copilot),(NOT,((DOMAIN,www.bing.com))))),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,openaicom-api),(DOMAIN-KEYWORD,colab),(DOMAIN-KEYWORD,developerprofiles),(DOMAIN-KEYWORD,generativelanguage)),AI",
       "OR,((RULE-SET,Twitter),(DOMAIN-KEYWORD,twitter)),Twitter",

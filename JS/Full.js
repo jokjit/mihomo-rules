@@ -1469,5 +1469,16 @@ const regionGroups = [
   };
 
   // 返回修改后的配置
+  // 统一通过 v6.gh-proxy.org 拉取 GitHub 规则，避免依赖失效的 jsDelivr 镜像。
+  Object.values(config["rule-providers"] || {}).forEach((provider) => {
+    if (typeof provider?.url !== "string") return;
+    provider.url = provider.url.replace(
+      /^https:\/\/(?:cdn\.jsdmirror\.com|jsd\.onmicrosoft\.cn)\/gh\/([^/]+)\/([^@/]+)@([^/]+)\/(.+)$/,
+      "https://v6.gh-proxy.org/https://raw.githubusercontent.com/$1/$2/$3/$4"
+    ).replace(
+      /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/(.+)$/,
+      "https://v6.gh-proxy.org/https://raw.githubusercontent.com/$1/$2/$3/$4"
+    );
+  });
   return config;
 };

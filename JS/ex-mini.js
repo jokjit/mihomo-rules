@@ -416,31 +416,31 @@ function createRegionGroups({ name, icon, filter }) {
     "CN": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/direct.mrs",
+      "url": "https://v6.gh-proxy.org/https://github.com/DustinWin/ruleset_geodata/blob/mihomo-ruleset/cn.mrs",
       "path": "./ruleset/CN_Domain.mrs"
     },
     "Private": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs",
+      "url": "https://v6.gh-proxy.org/https://github.com/DustinWin/ruleset_geodata/blob/mihomo-ruleset/private.mrs",
       "path": "./ruleset/Private_Domain.mrs"
     },
     "Fakeip_Filter": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs",
+      "url": "https://v6.gh-proxy.org/https://github.com/DustinWin/ruleset_geodata/blob/mihomo-ruleset/fakeip-filter.mrs",
       "path": "./ruleset/Fakeip_Filter_Domain.mrs"
     },
     "Private-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs",
+      "url": "https://v6.gh-proxy.org/https://github.com/DustinWin/ruleset_geodata/blob/mihomo-ruleset/privateip.mrs",
       "path": "./ruleset/Private_IP.mrs"
     },
     "CN-ip": {
       ...ruleProviderCommon,
       "behavior": "ipcidr",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/clash-rules@release/cncidr.mrs",
+      "url": "https://v6.gh-proxy.org/https://github.com/DustinWin/ruleset_geodata/blob/mihomo-ruleset/cnip.mrs",
       "path": "./ruleset/CN_IP.mrs"
     },
     "STEAM-CN": {
@@ -452,7 +452,7 @@ function createRegionGroups({ name, icon, filter }) {
     "STUN": {
       ...ruleProviderCommon,
       "behavior": "domain",
-      "url": "https://cdn.jsdmirror.com/gh/Kwisma/rules@main/rules/mihomo/STUN/STUN_Domain.mrs",
+      "url": "https://v6.gh-proxy.org/https://github.com/musiyun124/mihomo/blob/main/rules/WebRTC.mrs",
       "path": "./ruleset/STUN_Domain.mrs"
     }
   };
@@ -467,7 +467,8 @@ function createRegionGroups({ name, icon, filter }) {
   ];
   config["sub-rules"] = {
     "SUB-REJECT": [
-      "RULE-SET,STUN,REJECT-DROP"
+      "RULE-SET,STUN,REJECT-DROP",
+      "DOMAIN-KEYWORD,stun,REJECT-DROP"
     ],
     "SUB-LAN": [
       "RULE-SET,Private,DIRECT",

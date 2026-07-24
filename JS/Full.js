@@ -1395,7 +1395,7 @@ const regionGroups = [
       "OR,((RULE-SET,Twitch),(DOMAIN-KEYWORD,ttvnw)),Twitch",
       "OR,((RULE-SET,PikPak),(DOMAIN-KEYWORD,pikpak)),PikPak",
       "RULE-SET,Discord,Discord",
-      "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram)),Telegram",
+      "OR,((RULE-SET,Telegram),(DOMAIN-KEYWORD,nicegram),(DOMAIN-SUFFIX,push.apple.com)),Telegram",
       "OR,((RULE-SET,GitHub),(DOMAIN-KEYWORD,github)),GitHub",
       "OR,((RULE-SET,Amazon),(DOMAIN-KEYWORD,avoddashs)),亚马逊电商",
       "OR,((RULE-SET,Adobe),(DOMAIN-KEYWORD,adobe)),Adobe",
